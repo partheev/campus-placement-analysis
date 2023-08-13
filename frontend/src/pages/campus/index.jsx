@@ -2,6 +2,7 @@
 import { Container } from '@mui/material';
 import { UploadBox } from './UploadBox';
 import { PredictCampusPlacements } from '../../apis/campusAPI';
+import { Header } from '../../components/header';
 const Campus = () => {
     const onUploadClick = async (file) => {
         const formData = new FormData();
@@ -11,7 +12,8 @@ const Campus = () => {
     };
     return (
         <>
-            {/* <Header /> */}
+            <Header />
+
             <Container maxWidth='lg'>
                 <UploadBox onUploadClick={onUploadClick} />
             </Container>
