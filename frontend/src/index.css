@@ -1,19 +1,22 @@
 @font-face {
-  font-family: 'pacaembu';
-  src: url('/static/fonts/Pacaembu.tff');
-  src: url('/static/fonts/Pacaembu.woff') format('woff'),
-    url('/static/fonts/Pacaembu.otf') format('opentype');
+    font-family: 'pacaembu';
+    src: url('/static/fonts/Pacaembu.tff');
+    src: url('/static/fonts/Pacaembu.woff') format('woff'),
+        url('/static/fonts/Pacaembu.otf') format('opentype');
 }
 
 * {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 :root {
-  --font-secondary: 'mulish';
-  --font-primary: 'pacaembu';
+    --font-secondary: 'mulish';
+    --font-primary: 'pacaembu';
+    --campus-bg: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
+    --constract-blue: #2e5f8c;
+    --constract-gray: rgb(159, 174, 169);
 }
 
 body {
-  margin: 0;
+    margin: 0;
 }

@@ -39,6 +39,10 @@ export const UploadBox = ({ onUploadClick }) => {
                     borderRadius: '10px',
                     margin: '1rem',
                     padding: '1rem',
+                    backgroundColor: 'rgba(0,0,0,0.1)',
+                    ':hover': {
+                        backgroundColor: 'rgba(0,0,0,0.2)',
+                    },
                 }}
             >
                 <div
@@ -46,7 +50,7 @@ export const UploadBox = ({ onUploadClick }) => {
                         display: 'flex',
                         flexDirection: 'column',
                         alignItems: 'center',
-                        color: 'gray',
+                        color: 'black',
                     }}
                 >
                     <Typography
@@ -54,15 +58,15 @@ export const UploadBox = ({ onUploadClick }) => {
                         fontWeight={400}
                         fontFamily={'var(--font-primary)'}
                     >
-                        Upload .excel or .csv file to generate{' '}
+                        Upload .excel or .csv file in the mentioned format
                     </Typography>
-                    <Typography
+                    {/* <Typography
                         fontSize={'0.8rem'}
                         fontWeight={400}
                         fontFamily={'var(--font-primary)'}
                     >
                         placement predictions and insights
-                    </Typography>
+                    </Typography> */}
                     <UploadFileIcon sx={{ marginTop: '1rem' }} />
                 </div>
             </Container>
