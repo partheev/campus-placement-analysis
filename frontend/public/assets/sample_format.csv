@@ -1,0 +1,7 @@
+s_id,name,tier,gender,branch,cgpa,inter_gpa,ssc_gpa,internships,no_of_projects,is_participate_hackathon,is_participated_extracurricular,no_of_programming_languages,dsa,mobile_dev,web_dev,Machine Learning,cloud,other_skills
+1,Suraj,1,M,CSE,8.31,9.8,10,1,6,0,1,5,1,0,1,1,0,
+2,Reshma,1,F,CSE,8.1,9,9.1,0,6,0,1,4,1,0,1,1,0,
+3,Sunil,1,M,ECE,9.66,9.5,10,2,3,1,1,2,0,0,0,1,0,"verilog, digital electronics,vlsi"
+4,Sathish,1,M,CSE,8.5,9.2,9.7,1,3,1,1,4,1,0,1,1,1,
+5,Satheesh,1,M,ECE,8.99,9,10,2,4,1,1,2,0,0,0,1,0,"matlab, microcontrollers, embedded software"
+6,Rahul,1,M,ECE,7.56,8.9,10,1,2,1,1,3,1,0,1,0,0,"Design suite, matlab"

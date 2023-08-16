@@ -122,30 +122,38 @@ const Campus = () => {
                             >
                                 This file helps you to understand the format
                             </Typography>
-
-                            <Box
-                                sx={{
-                                    ':hover': {
-                                        backgroundPosition: 'right center',
-                                        color: 'rgb(1,20,253)',
-                                        textDecoration: 'none',
-                                    },
-                                    display: 'block',
-                                    color: 'black',
-                                    boxShadow: '0 0 20px #eee',
-                                    transition: '0.1s',
-                                    cursor: 'pointer',
-                                    marginLeft: '0.5rem',
-                                    backgroundImage:
-                                        'linear-gradient(to right, #F09819 0%, #EDDE5D  51%, #F09819  100%)',
-                                    padding: '0.5rem 0.3rem',
-                                    borderRadius: '8px',
-                                    fontSize: '0.9rem',
-                                    fontFamily: 'var(--font-primary)',
+                            <a
+                                href='/assets/sample_format.csv'
+                                download
+                                style={{
+                                    textDecoration: 'none',
                                 }}
                             >
-                                Download format
-                            </Box>
+                                <Box
+                                    sx={{
+                                        ':hover': {
+                                            backgroundPosition: 'right center',
+                                            color: 'rgb(1,20,253)',
+                                            textDecoration: 'none',
+                                            boxShadow: '0 0 10px #eee',
+                                        },
+                                        display: 'block',
+                                        color: 'black',
+                                        boxShadow: '0 0 5px #eee',
+                                        transition: '0.1s',
+                                        cursor: 'pointer',
+                                        marginLeft: '0.5rem',
+                                        backgroundImage:
+                                            'linear-gradient(to right, #F09819 0%, #EDDE5D  51%, #F09819  100%)',
+                                        padding: '0.5rem 0.3rem',
+                                        borderRadius: '8px',
+                                        fontSize: '0.9rem',
+                                        fontFamily: 'var(--font-primary)',
+                                    }}
+                                >
+                                    Download format
+                                </Box>
+                            </a>
                         </div>
                     </Container>
                     <UploadBox onUploadClick={onUploadClick} />
