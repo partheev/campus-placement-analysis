@@ -2,7 +2,7 @@
 import { Box, Container, Typography } from '@mui/material';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import { UploadBox } from './UploadBox';
-import { PredictCampusPlacements } from '../../apis/campusAPI';
+import { PredictCampusPlacements } from '../../apis/CampusAPI.js';
 import { Header } from '../../components/header';
 
 const NotePoints = [

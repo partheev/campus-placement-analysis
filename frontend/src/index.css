@@ -1,6 +1,5 @@
 @font-face {
     font-family: 'pacaembu';
-    src: url('/static/fonts/Pacaembu.tff');
     src: url('/static/fonts/Pacaembu.woff') format('woff'),
         url('/static/fonts/Pacaembu.otf') format('opentype');
 }
