@@ -4,6 +4,7 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import './index.css';
 import { Home } from './pages/home';
 import Campus from './pages/campus';
+import { PAGE_PATHS } from './constants/PagePaths';
 
 const router = createBrowserRouter([
     {
@@ -11,7 +12,11 @@ const router = createBrowserRouter([
         element: <Home />,
     },
     {
-        path: 'campus',
+        path: 'home',
+        element: <Home />,
+    },
+    {
+        path: PAGE_PATHS.CAMPUS_PLACEMENT_ANALYZER,
         element: <Campus />,
     },
 ]);

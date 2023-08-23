@@ -1,33 +1,36 @@
 .item {
-  font-size: 1rem;
-  font-family: var(--font-secondary);
-  font-weight: 680;
-  color: #181a1c;
-  line-height: 1.5;
-  border: 2px solid;
-
-  padding: 4px 6px;
-  cursor: pointer;
-  border-image: repeating-linear-gradient(
-      135deg,
-      #18122b 0 10px,
-      #393053 0 20px,
-      #443c68 0 30px
-    )
-    8;
-  -webkit-mask: conic-gradient(
-        from 180deg at top 8px right 8px,
-        #0000 90deg,
-        #000 0
-      )
-      var(--_i, 200%) 0 /200% var(--_i, 8px) border-box no-repeat,
-    conic-gradient(at bottom 8px left 8px, #0000 90deg, #000 0) 0
-      var(--_i, 200%) / var(--_i, 8px) 200% border-box no-repeat,
-    linear-gradient(#000 0 0) padding-box no-repeat;
-  transition: 0.3s, -webkit-mask-position 0.3s 0.3s;
+    font-size: 1rem;
+    font-family: var(--font-secondary);
+    font-weight: 680;
+    color: #181a1c;
+    line-height: 1.5;
+    border: 2px solid;
+    text-align: center;
+    padding: 4px 6px;
+    cursor: pointer;
+    border-image: repeating-linear-gradient(
+            135deg,
+            #18122b 0 10px,
+            #393053 0 20px,
+            #443c68 0 30px
+        )
+        8;
+    -webkit-mask: conic-gradient(
+                from 180deg at top 8px right 8px,
+                #0000 90deg,
+                #000 0
+            )
+            var(--_i, 200%) 0 /200% var(--_i, 8px) border-box no-repeat,
+        conic-gradient(at bottom 8px left 8px, #0000 90deg, #000 0) 0
+            var(--_i, 200%) / var(--_i, 8px) 200% border-box no-repeat,
+        linear-gradient(#000 0 0) padding-box no-repeat;
+    transition: 0.3s, -webkit-mask-position 0.3s 0.3s;
 }
 .item:hover {
-  --_i: 100%;
-  color: #443c68;
-  transition: 0.3s, -webkit-mask-size 0.3s 0.3s;
+    --_i: 100%;
+    color: #443c68;
+    transition: 0.3s, -webkit-mask-size 0.3s 0.3s;
+}
+.mobile_nav_hover:hover {
+    background-color: rgba(121, 121, 121, 0.1);
 }

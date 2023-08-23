@@ -1,6 +1,8 @@
+import { NavLink } from 'react-router-dom';
+import PropTypes from 'prop-types';
 import styles from './navbar.module.css';
 import { Container } from '@mui/material';
-const DesktopView = () => {
+const DesktopView = ({ NAV_PAGES }) => {
     return (
         <div>
             <div
@@ -33,9 +35,26 @@ const DesktopView = () => {
                             columnGap: '3rem',
                         }}
                     >
-                        <div className={styles.item}>Insights</div>
-                        <div className={styles.item}>Campus analysis</div>
-                        <div className={styles.item}>Placement prediction</div>
+                        {NAV_PAGES.map((nav, idx) => {
+                            return (
+                                <NavLink
+                                    key={idx}
+                                    to={nav.path}
+                                    className={styles.item}
+                                    style={({ isActive }) =>
+                                        isActive
+                                            ? {
+                                                  textDecoration: 'none',
+                                                  '--_i': '100%',
+                                                  color: '#443c68',
+                                              }
+                                            : { textDecoration: 'none' }
+                                    }
+                                >
+                                    {nav.name}
+                                </NavLink>
+                            );
+                        })}
                     </div>
                 </Container>
             </div>
@@ -43,4 +62,7 @@ const DesktopView = () => {
     );
 };
 
+DesktopView.propTypes = {
+    NAV_PAGES: PropTypes.array,
+};
 export default DesktopView;
