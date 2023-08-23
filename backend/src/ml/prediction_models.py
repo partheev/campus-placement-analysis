@@ -3,14 +3,14 @@
   and predicting the salary for those students.
 '''
 
-# Importing necessary libraries
-import numpy as np
 import pandas as pd
-import csv
+import numpy as np
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.tree import DecisionTreeRegressor
+from sklearn.metrics import mean_absolute_error,mean_absolute_percentage_error
 import pickle
+import csv
 
-
-# Function to predict placement status based on features and branch
 def placed(tier, cgpa, inter, ssc, internship, no_project, hackerthon, extracurricular, programming, dsa, mobile, web_dev, machine, cloud, branch):
     branch = str(branch)
     # Predict using the appropriate model based on the branch
@@ -48,25 +48,27 @@ def get_data(tier1):
     for i in range(len(tier1)):
         row = tier1.iloc[i]
         # Predict placement status using the placed function
-        a = placed(row[0], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[1])
-        # Predict salary using the salarypredict function
-        b = salarypredict(row[0], row[2], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], a[0], row[1])
+        a = placed(row[2], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[4])
+        #Predict salary using the salarypredict function
+        b = salarypredict(row[2], row[5], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], a[0], row[4])
         
         # Define columns for the CSV file
-        columns = ["tier", "Branch", "cgpa", "inter", "ssc", "internship", "no_project", "hackerthon", "extracurricular", "programming", "dsa", "mobile", "web_dev", "machine", "cloud", "Placed", "predict_salary"]
+        columns = ["S_id","name","tier","Gender", "Branch", "cgpa", "inter", "ssc", "internship", "no_project", "hackerthon", "extracurricular", "programming", "dsa", "mobile", "web_dev", "machine", "cloud", "Other_skills","Placed", "predict_salary"]
         
         # Open the CSV file for writing
-        with open("tier1_prediction.csv", "a") as csvfile:
+        with open("Output_file.csv", "a") as csvfile:
             csvwriter = csv.writer(csvfile, delimiter=",")
             # Write the header to the file
             if i == 0:
                 csvwriter.writerow(columns)
             # Write the data row to the file
-            csvwriter.writerow([row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], a[0], b[0]])
+            csvwriter.writerow([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11],row[12],row[13],row[14],row[15],row[16],row[17],row[18],a[0],b[0]])
 
-# Loading the trained models using pickle
+
 salary_model = pickle.load(open('sal_model.pkl', 'rb'))
-placed_model = pickle.load(open('Placed_model.pkl', 'rb'))
+placed_model=pickle.load(open('Placed_model.pkl','rb'))
+tier1=pd.read_csv('sample_format.csv')
+get_data(tier1)
 
 
 
