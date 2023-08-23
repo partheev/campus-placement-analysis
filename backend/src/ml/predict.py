@@ -35,17 +35,9 @@ import warnings
 warnings.filterwarnings("ignore")
 
 
-def predict_college_stats(excel_file):
-  df=pd.read_csv(excel_file)
-  data=df.drop(columns=['s_id','name','other_skills','gender'])
-  mean_value_1=data['inter_gpa'].mean()
-  mean_value_2=data['ssc_gpa'].mean()
-  mean_value_3=data['cgpa'].mean()
-  #to fill the null values in the dataset
-  data['inter_gpa'].fillna(value=mean_value_1, inplace=True)
-  data['ssc_gpa'].fillna(value=mean_value_2, inplace=True)
-  data['cgpa'].fillna(value=mean_value_3, inplace=True)
-  data=df.drop(columns=['s_id','name','profile_link','other_skills','gender'])
+def predict_college_stats(excel_file_camp):
+  df=pd.read_csv(excel_file_camp)
+  data=df.drop(['s_id','name','other_skills','gender'],axis=1)
   mean_value_1=data['inter_gpa'].mean()
   mean_value_2=data['ssc_gpa'].mean()
   mean_value_3=data['cgpa'].mean()
