@@ -1,8 +1,3 @@
-'''
-  These functions perform prediction operations such as predicting whether a particular student is safely placed or not,
-  and predicting the salary for those students.
-'''
-
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestRegressor
@@ -43,32 +38,31 @@ def salarypredict(tier, cgpa, internship, no_project, hackerthon, extracurricula
     return output
 
 
-# Loop through the rows of the dataset
-def get_data(tier1):
-    for i in range(len(tier1)):
-        row = tier1.iloc[i]
-        # Predict placement status using the placed function
-        a = placed(row[2], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[4])
-        #Predict salary using the salarypredict function
-        b = salarypredict(row[2], row[5], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], a[0], row[4])
-        
-        # Define columns for the CSV file
-        columns = ["S_id","name","tier","Gender", "Branch", "cgpa", "inter", "ssc", "internship", "no_project", "hackerthon", "extracurricular", "programming", "dsa", "mobile", "web_dev", "machine", "cloud", "Other_skills","Placed", "predict_salary"]
-        
-        # Open the CSV file for writing
-        with open("Output_file.csv", "a") as csvfile:
-            csvwriter = csv.writer(csvfile, delimiter=",")
-            # Write the header to the file
-            if i == 0:
-                csvwriter.writerow(columns)
-            # Write the data row to the file
-            csvwriter.writerow([row[0],row[1],row[2],row[3],row[4],row[5],row[6],row[7],row[8],row[9],row[10],row[11],row[12],row[13],row[14],row[15],row[16],row[17],row[18],a[0],b[0]])
+#<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->#
 
 
 salary_model = pickle.load(open('sal_model.pkl', 'rb'))
-placed_model=pickle.load(open('Placed_model.pkl','rb'))
-tier1=pd.read_csv('sample_format.csv')
+placed_model = pickle.load(open('Placed_model.pkl', 'rb'))
+
+# Function to predict and return 'placed' and 'salary' values for a row
+def get_row_data(row):
+    a = placed(row[2], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[4])
+    b = salarypredict(row[2], row[5], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], a[0], row[4])
+    return {'placed': a[0], 'salary': b[0]}
+
+
+
+# Loop through the rows of the dataset
+def get_data(tier1):
+    result_list = []
+    for i in range(len(tier1)):
+        row = tier1.iloc[i]
+        result = get_row_data(row)
+        result_list.append(result)
+    result_df = pd.DataFrame(result_list)
+    return result_df
+
+
+
+tier1 = pd.read_csv('sample_format.csv')
 get_data(tier1)
-
-
-
