@@ -7,7 +7,7 @@ Input - student data (cgpa, no_of_internships, no_of_projects, skills etc.)
 Output - student placement report | contains predicted salary, placement probability, skill suggestions etc.
 
 '''
-
+import os
 
 def predict_student_analytics(student):
     pass
@@ -32,11 +32,15 @@ def predict_college_results(excel_file):
 import pandas as pd
 import numpy as np
 import warnings
+import csv
 warnings.filterwarnings("ignore")
+from .prediction_models import get_data
 
 
-def predict_college_stats(excel_file_camp):
-  df=pd.read_csv(excel_file_camp)
+def predict_college_stats(excel_file):
+  print(excel_file)
+  df=get_data(tier1=excel_file)
+  print(df)
   data=df.drop(['s_id','name','other_skills','gender'],axis=1)
   mean_value_1=data['inter_gpa'].mean()
   mean_value_2=data['ssc_gpa'].mean()
