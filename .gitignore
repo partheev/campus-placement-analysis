@@ -26,3 +26,8 @@ dist-ssr
 # Backend
 __pycache__
 .pytest_cache
+
+
+# Common
+
+.env
