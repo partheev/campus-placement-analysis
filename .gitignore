@@ -31,3 +31,5 @@ __pycache__
 # Common
 
 .env
+.env.production
+.env.local
