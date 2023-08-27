@@ -28,10 +28,6 @@ const MobileView = () => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          position: 'sticky',
-          //   backgroundColor: 'hsla(0, 100%, 100%, 0.9)',
-          backgroundColor: '#F6F4EB',
-          top: 0,
         }}
       >
         {' '}
@@ -49,26 +45,25 @@ const MobileView = () => {
         </div>
       </div>
       {isOpen ? (
-        <motion.div
-          initial="offscreen"
-          whileInView="onscreen"
-          style={{
-            //   backgroundColor: 'hsla(0, 100%, 100%, 0.9)',
-            backgroundColor: '#F6F4EB',
-          }}
-        >
+        <motion.div initial="offscreen" whileInView="onscreen" style={{}}>
           <motion.div
-            style={{ width: '80%', margin: '0 auto' }}
+            style={{
+              width: '80%',
+              margin: '0 auto',
+              background: '#fff',
+              padding: '5px',
+            }}
             variants={menuVariant}
           >
             <div
               style={{
                 fontSize: '1rem',
                 fontFamily: 'var(--font-secondary)',
-                fontWeight: '680',
-                color: '#181a1c',
+                fontWeight: '500',
                 lineHeight: '1.5',
                 cursor: 'pointer',
+
+                color: 'black',
               }}
             >
               Insights
@@ -85,10 +80,11 @@ const MobileView = () => {
               style={{
                 fontSize: '1rem',
                 fontFamily: 'var(--font-secondary)',
-                fontWeight: '680',
-                color: '#181a1c',
+                fontWeight: '500',
                 lineHeight: '1.5',
                 cursor: 'pointer',
+
+                color: 'black',
               }}
             >
               Campus analysis
@@ -105,10 +101,10 @@ const MobileView = () => {
               style={{
                 fontSize: '1rem',
                 fontFamily: 'var(--font-secondary)',
-                fontWeight: '680',
-                color: '#181a1c',
+                fontWeight: '500',
                 lineHeight: '1.5',
                 cursor: 'pointer',
+                color: 'black',
               }}
             >
               Placement prediction
@@ -117,7 +113,7 @@ const MobileView = () => {
               style={{
                 width: '100%',
                 height: '1px',
-                margin: '10px auto',
+                margin: '5px auto',
               }}
             ></div>
           </motion.div>

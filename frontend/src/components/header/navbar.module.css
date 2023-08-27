@@ -1,8 +1,7 @@
 .item {
-  font-size: 1rem;
+  font-size: 1.1rem;
   font-family: var(--font-secondary);
-  font-weight: 680;
-  color: #181a1c;
+  font-weight: 500;
   line-height: 1.5;
   border: 2px solid;
 
@@ -28,6 +27,5 @@
 }
 .item:hover {
   --_i: 100%;
-  color: #443c68;
   transition: 0.3s, -webkit-mask-size 0.3s 0.3s;
 }

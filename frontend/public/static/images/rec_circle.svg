@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="518px" height="356px" viewBox="0 0 518 356" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>css-gradient-blog</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="100%" y1="50%" x2="3.061617e-15%" y2="50%" id="linearGradient-1">
+            <stop stop-color="#5F18AF" offset="0%"></stop>
+            <stop stop-color="#1F2667" stop-opacity="0.9" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="44.2150562%" x2="100%" y2="44.2150563%" id="linearGradient-2">
+            <stop stop-color="#FC466B" offset="0%"></stop>
+            <stop stop-color="#3F5EFB" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="50%" x2="100%" y2="50%" id="linearGradient-3">
+            <stop stop-color="#31CF45" stop-opacity="0.5" offset="0%"></stop>
+            <stop stop-color="#50E3C2" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="css-gradient-blog">
+            <rect id="Rectangle-16" fill="url(#linearGradient-1)" x="332" y="19" width="265" height="298"></rect>
+            <rect id="Rectangle-16-Copy" fill="url(#linearGradient-2)" x="-42" y="168" width="236" height="265"></rect>
+            <circle id="Oval-2-Copy" fill="url(#linearGradient-3)" style="mix-blend-mode: multiply;" cx="225" cy="210" r="107"></circle>
+        </g>
+    </g>
+</svg>

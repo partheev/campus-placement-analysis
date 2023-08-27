@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="518px" height="356px" viewBox="0 0 518 356" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
+    <title>css-gradient-examples</title>
+    <desc>Created with Sketch.</desc>
+    <defs>
+        <linearGradient x1="50%" y1="100%" x2="50%" y2="0%" id="linearGradient-1">
+            <stop stop-color="#150051" offset="0%"></stop>
+            <stop stop-color="#1C7CE0" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="44.2150562%" x2="100%" y2="44.2150563%" id="linearGradient-2">
+            <stop stop-color="#00C9FF" offset="0%"></stop>
+            <stop stop-color="#92FE9D" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="44.2150562%" x2="100%" y2="44.2150563%" id="linearGradient-3">
+            <stop stop-color="#A8C0FF" offset="0%"></stop>
+            <stop stop-color="#3F2B96" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="0%" y1="44.2150562%" x2="100%" y2="44.2150563%" id="linearGradient-4">
+            <stop stop-color="#FF5F1D" offset="0%"></stop>
+            <stop stop-color="#00BFF5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="css-gradient-examples">
+            <circle id="Oval" fill="url(#linearGradient-1)" cx="108" cy="199" r="100"></circle>
+            <circle id="Oval-Copy-4" fill="url(#linearGradient-2)" cx="413.5" cy="217.5" r="97.5"></circle>
+            <circle id="Oval-Copy-2" fill="url(#linearGradient-3)" cx="269.5" cy="115.5" r="67.5"></circle>
+            <circle id="Oval-Copy-3" fill="url(#linearGradient-4)" cx="261.5" cy="243.5" r="48.5"></circle>
+        </g>
+    </g>
+</svg>

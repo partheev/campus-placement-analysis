@@ -6,14 +6,10 @@ const DesktopView = () => {
       <div
         style={{
           height: '60.737px',
-          //    backgroundColor: 'hsla(0, 100%, 100%, 0.9)',
-          backgroundColor: '#F6F4EB',
+
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          position: 'sticky',
-
-          top: 0,
         }}
       >
         <Container
