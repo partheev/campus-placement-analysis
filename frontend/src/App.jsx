@@ -13,7 +13,7 @@ function App() {
     window.innerWidth <= 460 ? setIsMobile(true) : setIsMobile(false)
     window.addEventListener('resize', handleResize)
 
-    return () => window.removeEventListener('resize')
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
   return (
     <>
