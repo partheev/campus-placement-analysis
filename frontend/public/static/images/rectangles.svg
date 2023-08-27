@@ -1,0 +1,34 @@
+<svg width="520" height="360" viewBox="0 0 520 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="css-gradient-swatches" clip-path="url(#clip0)">
+<rect width="520" height="360" fill="none"/>
+<g id="Group 35">
+<g id="Group 33">
+<rect id="Rectangle 17" x="194.868" y="110.798" width="150" height="150" rx="8" transform="rotate(-45 194.868 110.798)" fill="url(#paint0_linear)"/>
+<rect id="Rectangle 16 Copy" x="112.137" y="254.34" width="150" height="150" rx="8" transform="rotate(-45 112.137 254.34)" fill="url(#paint1_linear)"/>
+<rect id="Rectangle 16 Copy 4" x="-1" y="141.203" width="150" height="150" rx="8" transform="rotate(-45 -1 141.203)" fill="url(#paint2_linear)"/>
+<rect id="Rectangle 16 Copy 5" x="308.006" y="223.935" width="150" height="150" rx="8" transform="rotate(-45 308.006 223.935)" fill="url(#paint3_linear)"/>
+</g>
+</g>
+</g>
+<defs>
+<linearGradient id="paint0_linear" x1="344.868" y1="110.798" x2="194.868" y2="110.798" gradientUnits="userSpaceOnUse">
+<stop stop-color="#09198A"/>
+<stop offset="1" stop-color="#1F2667" stop-opacity="0.9"/>
+</linearGradient>
+<linearGradient id="paint1_linear" x1="112.137" y1="395.663" x2="262.137" y2="395.663" gradientUnits="userSpaceOnUse">
+<stop stop-color="#00C9FF"/>
+<stop offset="1" stop-color="#92FE9D"/>
+</linearGradient>
+<linearGradient id="paint2_linear" x1="149" y1="291.203" x2="149" y2="141.203" gradientUnits="userSpaceOnUse">
+<stop stop-color="#522DB8"/>
+<stop offset="1" stop-color="#1C7CE0"/>
+</linearGradient>
+<linearGradient id="paint3_linear" x1="308.006" y1="365.257" x2="458.006" y2="365.257" gradientUnits="userSpaceOnUse">
+<stop stop-color="#3A1C71"/>
+<stop offset="1" stop-color="#FDBB2D"/>
+</linearGradient>
+<clipPath id="clip0">
+<rect width="520" height="360" fill="white"/>
+</clipPath>
+</defs>
+</svg>

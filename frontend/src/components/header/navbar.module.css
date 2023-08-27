@@ -1,13 +1,15 @@
 .item {
-    font-size: 1rem;
+    font-size: 1.1rem;
     font-family: var(--font-secondary);
-    font-weight: 680;
-    color: #181a1c;
+    font-weight: 500;
     line-height: 1.5;
     border: 2px solid;
-    text-align: center;
+    text-decoration: none;
     padding: 4px 6px;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
     cursor: pointer;
+    text-align: center;
     border-image: repeating-linear-gradient(
             135deg,
             #18122b 0 10px,
@@ -28,9 +30,5 @@
 }
 .item:hover {
     --_i: 100%;
-    color: #443c68;
     transition: 0.3s, -webkit-mask-size 0.3s 0.3s;
-}
-.mobile_nav_hover:hover {
-    background-color: rgba(121, 121, 121, 0.1);
 }

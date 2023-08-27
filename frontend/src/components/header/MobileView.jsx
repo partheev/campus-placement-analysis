@@ -14,7 +14,6 @@ const MobileView = ({ NAV_PAGES }) => {
         },
         onscreen: {
             y: 0,
-
             opacity: 1,
             transition: {
                 type: 'spring',
@@ -30,9 +29,6 @@ const MobileView = ({ NAV_PAGES }) => {
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    position: 'sticky',
-                    backgroundColor: 'white',
-                    top: 0,
                 }}
             >
                 {' '}
@@ -51,19 +47,18 @@ const MobileView = ({ NAV_PAGES }) => {
                     </div>
                 </div>
             </div>
-            {isOpen ? (
+            {isOpen && (
                 <motion.div
                     initial='offscreen'
                     whileInView='onscreen'
-                    style={{
-                        backgroundColor: 'white',
-                    }}
+                    style={{}}
                 >
                     <motion.div
                         style={{
                             width: '80%',
                             margin: '0 auto',
-                            paddingBottom: '1rem',
+                            background: '#fff',
+                            padding: '5px',
                         }}
                         variants={menuVariant}
                     >
@@ -111,29 +106,9 @@ const MobileView = ({ NAV_PAGES }) => {
                                 </>
                             );
                         })}
-                        {/* <div
-                            style={{
-                                fontSize: '1rem',
-                                fontFamily: 'var(--font-secondary)',
-                                fontWeight: '680',
-                                color: '#181a1c',
-                                lineHeight: '1.5',
-                                cursor: 'pointer',
-                            }}
-                        >
-                            Insights
-                        </div>
-                        <div
-                            style={{
-                                width: '100%',
-                                height: '1px',
-                                margin: '10px auto',
-                                backgroundColor: '#ccc',
-                            }}
-                        ></div> */}
                     </motion.div>
                 </motion.div>
-            ) : null}
+            )}
         </div>
     );
 };

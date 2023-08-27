@@ -17,20 +17,22 @@ const Campus = () => {
         console.log(res);
     };
     return (
-        <>
+        <div style={{ color: 'black' }}>
             <Header />
             <div
                 style={{
-                    position: 'relative',
-                    minHeight: '90vh',
+                    position: 'absolute',
+                    minHeight: '100vh',
+                    width: '100%',
                     backgroundImage: 'var(--campus-bg)',
+                    top: 0,
                 }}
             >
                 <img
                     src='/assets/images/chart-clip-art.png'
                     style={{
                         zIndex: 0,
-                        top: '2rem',
+                        top: '8rem',
                         left: '5rem',
                         position: 'absolute',
                         height: '60vh',
@@ -46,7 +48,7 @@ const Campus = () => {
                     }}
                 >
                     <Typography
-                        paddingTop={'5rem'}
+                        paddingTop={'10rem'}
                         color={'white'}
                         fontWeight={'700'}
                         fontSize={'3.5rem'}
@@ -159,7 +161,7 @@ const Campus = () => {
                     <UploadBox onUploadClick={onUploadClick} />
                 </Container>
             </div>
-        </>
+        </div>
     );
 };
 
