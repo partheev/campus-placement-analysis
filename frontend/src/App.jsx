@@ -1,5 +1,3 @@
-import { useEffect, useState } from 'react';
-import { Header } from './components/header';
 import {
     createBrowserRouter,
     Navigate,

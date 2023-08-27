@@ -1,3 +1,4 @@
+import { useContext } from 'react';
 import { Header } from '../../components/header';
 import { BranchWiseLAH } from './charts/BranchWiseLAH';
 import { Cgpa } from './charts/Cgpa';
@@ -9,8 +10,10 @@ import { PlacedVsNot } from './charts/PlacedVsNot';
 import { TopFactors } from './charts/TopFactors';
 import styles from './home.module.css';
 import PropTypes from 'prop-types';
+import { AppContext } from '../../contexts/useAppState';
 
-export const Home = ({ isMobile }) => {
+export const Home = () => {
+    const { isMobile } = useContext(AppContext);
     return (
         <>
             <Header />
