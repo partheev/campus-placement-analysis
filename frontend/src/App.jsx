@@ -6,7 +6,7 @@ import {
 import { Home } from './pages/home';
 import Campus from './pages/campus';
 import { PAGE_PATHS } from './constants/PagePaths';
-import { AppContextProvider } from './contexts/useAppState';
+import { AppContextProvider } from './contexts/AppContext';
 import { PageNotFound } from './pages/notfound';
 
 const router = createBrowserRouter([

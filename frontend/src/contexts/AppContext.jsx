@@ -20,7 +20,7 @@ export const AppContextProvider = ({ children }) => {
         return () => window.removeEventListener('resize', handleResize);
     }, []);
     return (
-        <AppContext.Provider value={{ isMobile: isMobile }}>
+        <AppContext.Provider value={{ isMobile }}>
             {children}
         </AppContext.Provider>
     );

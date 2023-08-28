@@ -10,7 +10,7 @@ import { PlacedVsNot } from './charts/PlacedVsNot';
 import { TopFactors } from './charts/TopFactors';
 import styles from './home.module.css';
 import PropTypes from 'prop-types';
-import { AppContext } from '../../contexts/useAppState';
+import { AppContext } from '../../contexts/AppContext';
 
 export const Home = () => {
     const { isMobile } = useContext(AppContext);

@@ -1,11 +1,10 @@
 import { useContext, useEffect, useState } from 'react';
 import DesktopView from './DesktopView';
 import MobileView from './MobileView';
-import { Home } from '../../pages/home';
 import PropTypes from 'prop-types';
 
 import { PAGE_PATHS } from '../../constants/PagePaths';
-import { AppContext } from '../../contexts/useAppState';
+import { AppContext } from '../../contexts/AppContext';
 
 const NAV_PAGES = [
     {
