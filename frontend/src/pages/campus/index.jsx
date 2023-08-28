@@ -1,171 +1,22 @@
-// import Header from '../../components/header';
-import { Box, Container, Typography } from '@mui/material';
-import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
-import { UploadBox } from './UploadBox';
-import { PredictCampusPlacements } from '../../apis/CampusAPI.js';
-import { Header } from '../../components/header';
-import { useContext } from 'react';
-import { AppContext } from '../../contexts/AppContext';
+import { useState } from 'react';
+import { Overview } from './Overview';
+import { Analysis } from './analysis';
 
-const NotePoints = [
-    'Prepare & fill a excel file with your college student details.',
-    'Generate excel file with placement predictions and suggetions for each student.',
-];
 const Campus = () => {
-    const { isMobile } = useContext(AppContext);
-    const onUploadClick = async (file) => {
-        const formData = new FormData();
-        formData.append('file', file);
-        const res = await PredictCampusPlacements(formData);
-        console.log(res);
-    };
+    let [campusStats, setcampusStats] = useState(
+        '{"Highest_avg_least_sal_in_each_branch":{"CSE":{"average_sal":24,"highest_sal":26,"least_sal":20},"ECE":{"average_sal":19,"highest_sal":22,"least_sal":17}},"Overall_highest_average":{"Average":21,"highest":26},"above_10_bar":{"CSE":3,"ECE":3},"above_10_pie":{"labels":["CSE","ECE"],"values":[50,50]},"above_20_bar":{"CSE":2,"ECE":1},"above_20_pie":{"labels":["CSE","ECE"],"values":[67,33]},"avg_projects_vs_technical_skills":{"Without skills":0,"with Skills":4},"cdf_sal_by_branch":{"CSE":[19,26],"ECE":[17,18,22]},"expected_sal_by_no_of_internships":{"X":[1,0,2,1,2,1],"Y":[26,26,18,19,17,22]},"expected_sal_by_no_of_programming_lan":{"X":[5,4,2,4,2,3],"Y":[26,26,18,19,17,22]},"expected_sal_by_no_of_projects":{"X":[6,6,3,3,4,2],"Y":[26,26,18,19,17,22]},"highest_sal_in_each_branch":{"branches":["ECE","CSE"],"highest_sal":[22,26]},"imp_technical_skills":[],"min_no_of_internships_to_get_avg_sal":1,"min_no_of_projects_to_get_avg_sal":6,"percent_placed_notplaced_ineach_branch":{"branch":["CSE","ECE"],"is_not_placed_percent":[0,0],"is_placed_percent":[100,100]},"programming_lang_vs_skilled_in_dsa":{"Poor in DSA":2,"Skilled in DSA":4},"salary_distribution":{"17.0":1,"18.0":1,"19.5":1,"22.0":1,"26.0":2},"skills_req_to_get_avg_sal":["Machine Learning","dsa","web_dev"],"top_factors_affecting_placements":["cgpa","inter_gpa","ssc_gpa","internships","no_of_projects"]}'
+    );
+
+    campusStats = JSON.parse(campusStats);
+
     return (
-        <div style={{ color: 'black' }}>
-            <Header />
-            <div
-                style={{
-                    position: 'absolute',
-                    minHeight: '100vh',
-                    width: '100%',
-                    backgroundImage: 'var(--campus-bg)',
-                    top: 0,
-                }}
-            >
-                <img
-                    src='/assets/images/chart-clip-art.png'
-                    style={{
-                        zIndex: 0,
-                        width: isMobile ? '70vw' : '30vw',
-                        top: '8rem',
-                        left: '5rem',
-                        position: 'absolute',
-                        objectFit: 'contain',
-                        maxHeight: '60vh',
-                        opacity: 0.25,
-                    }}
-                />
-                <Container
-                    maxWidth='lg'
-                    sx={{
-                        position: 'relative',
-                        zIndex: 1,
-                    }}
-                >
-                    <Typography
-                        paddingTop={'10rem'}
-                        color={'white'}
-                        fontWeight={'700'}
-                        fontSize={'3.5rem'}
-                        textAlign={'center'}
-                        fontFamily={'var(--font-secondary)'}
-                    >
-                        Predict & Analyze
-                    </Typography>
-                    <Typography
-                        color={'white'}
-                        fontWeight={'700'}
-                        fontSize={'3.5rem'}
-                        textAlign={'center'}
-                        fontFamily={'var(--font-secondary)'}
-                    >
-                        Campus Placements
-                    </Typography>
-                    <Typography
-                        color={'black'}
-                        marginY={'1rem'}
-                        fontWeight={'700'}
-                        fontSize={'1rem'}
-                        textAlign={'center'}
-                        fontFamily={'var(--font-primary)'}
-                    >
-                        Generate predictions and analysis report with
-                        interactive charts
-                    </Typography>
-                    <Container maxWidth='sm'>
-                        {NotePoints.map((point, index) => {
-                            return (
-                                <div
-                                    key={index}
-                                    style={{
-                                        alignItems: 'start',
-                                        display: 'flex',
-                                        marginBottom: '0.5rem',
-                                    }}
-                                >
-                                    <DoneOutlineIcon
-                                        sx={{
-                                            marginRight: '1rem',
-                                        }}
-                                    />
-                                    <Typography
-                                        color={'white'}
-                                        // fontWeight={'700'}
-                                        fontSize={'1rem'}
-                                        fontFamily={'var(--font-primary)'}
-                                    >
-                                        {point}
-                                    </Typography>
-                                </div>
-                            );
-                        })}
-                        <div
-                            style={{
-                                alignItems: 'center',
-                                display: 'flex',
-                                marginBottom: '0.5rem',
-                            }}
-                        >
-                            <DoneOutlineIcon
-                                sx={{
-                                    marginRight: '1rem',
-                                }}
-                            />
-                            <Typography
-                                color={'white'}
-                                // fontWeight={'700'}
-                                fontSize={'1rem'}
-                                fontFamily={'var(--font-primary)'}
-                            >
-                                This file helps you to understand the format
-                            </Typography>
-                            <a
-                                href='/assets/sample_format.csv'
-                                download
-                                style={{
-                                    textDecoration: 'none',
-                                }}
-                            >
-                                <Box
-                                    sx={{
-                                        ':hover': {
-                                            backgroundPosition: 'right center',
-                                            color: 'rgb(1,20,253)',
-                                            textDecoration: 'none',
-                                            boxShadow: '0 0 10px #eee',
-                                        },
-                                        display: 'block',
-                                        color: 'black',
-                                        boxShadow: '0 0 5px #eee',
-                                        transition: '0.1s',
-                                        cursor: 'pointer',
-                                        marginLeft: '0.5rem',
-                                        backgroundImage:
-                                            'linear-gradient(to right, #F09819 0%, #EDDE5D  51%, #F09819  100%)',
-                                        padding: '0.5rem 0.3rem',
-                                        borderRadius: '8px',
-                                        fontSize: '0.9rem',
-                                        fontFamily: 'var(--font-primary)',
-                                    }}
-                                >
-                                    Download format
-                                </Box>
-                            </a>
-                        </div>
-                    </Container>
-                    <UploadBox onUploadClick={onUploadClick} />
-                </Container>
-            </div>
-        </div>
+        <>
+            {campusStats ? (
+                <Analysis campusStats={campusStats} />
+            ) : (
+                <Overview setcampusStats={setcampusStats} />
+            )}
+        </>
     );
 };
 
