@@ -6,6 +6,92 @@ from sklearn.metrics import mean_absolute_error,mean_absolute_percentage_error
 import pickle
 import csv
 
+
+
+def get_domain_skills(domain_name):
+    domain_skills = {
+    "Machine Learning": {
+        "Programming Languages of ml": ["Python", "R"],
+        "ML_Algorithms": ["Supervised Learning", "Unsupervised Learning", "Reinforcement Learning"],
+        "ML_Frameworks": ["TensorFlow", "PyTorch", "scikit-learn"],
+        "Feature Engineering_technique": ["Feature Selection", "Feature Extraction"],
+        "Model_Evaluation_metrics": ["Accuracy", "Precision", "Recall", "F1-score"],
+        "Deployment_platforms": ["Cloud Platforms", "Docker", "Kubernetes"],
+        "Version Control": "Git",
+        "Software Engineering_tools": ["Code Review", "Debugging"],
+        "Math and Statistics": ["Linear Algebra", "Calculus", "Probability"],
+        "Ethical Considerations": ["Bias Mitigation", "Fairness"],
+    },
+    "Data Science": {
+        "Data Manipulation": ["Pandas", "NumPy"],
+        "Data Visualization": ["Matplotlib", "Seaborn", "Plotly"],
+        "Statistical Analysis": ["Hypothesis Testing", "Regression Analysis"],
+        "Data Cleaning": ["Data Preprocessing", "Handling Missing Data"],
+        "Big Data": ["Hadoop", "Spark","SQL"],
+    },
+    "Web Development": {
+        "Frontend_languages": ["HTML", "CSS", "JavaScript", "React", "Vue.js"],
+        "Backend_Languages": ["Python", "Node.js", "Django", "Flask"],
+        "Databases": ["SQL", "NoSQL"],
+        "Version Control": "Git",
+        "API Integrations": ["RESTful APIs", "GraphQL"],
+        "Security_methods": ["Authentication", "Authorization"],
+        "Software Engineering_concepts": ["Code Review", "Design Patterns"],
+    },
+    "Cloud Computing": {
+        "Cloud Platforms[Amazon AWS, Microsoft Azure, Google Cloud]": ["Amazon AWS", "Microsoft Azure", "Google Cloud","Networking","severless_computing"],
+        "Container[Docker, Kubernetes]": ["Docker", "Kubernetes"],
+        "Security": ["Identity and Access Management"]
+    },
+    "Android Development": {
+        "Programming Languages": ["Java", "Kotlin"],
+        "Version Control": "Git",
+        "Security": ["App Permissions", "Secure Communication","API Integration"],
+        "Software Engineering": ["Code Review", "Design Patterns","UI/UX design"],
+    },
+    "Natural Language Processing (NLP)": {
+        "Text Processing": True,
+        "NLP Libraries": ["NLTK", "spaCy", "Transformers"],
+        "Sentiment Analysis": True,
+        "Language Modeling": True,
+        "Named Entity Recognition (NER)": True,
+        "Topic Modeling": True,
+    },
+    "Software Engineering": {
+        "programming_languages":['java','python','.net'],
+        "Version Control": ["Git", "SVN"],
+        "Code Review": True,
+        "Agile Methodologies": ["Scrum", "Kanban"],
+        "Debugging": True,
+        "Testing": ["Unit Testing", "Integration Testing", "Test Automation"],
+        "Clean Code": True,
+        "Design Patterns": True,
+        "Continuous Integration and Continuous Deployment (CI/CD)": True,
+    },
+    "dsa" : {
+        "Basics": ["Arrays", "Linked Lists", "Stacks", "Queues"],
+        "Searching": ["Linear Search", "Binary Search"],
+        "Sorting": ["Bubble Sort", "Selection Sort", "Insertion Sort", "Merge Sort", "Quick Sort"],
+        "Hashing": ["Hash Tables", "Hash Maps"],
+        "Trees": ["Binary Trees", "Binary Search Trees", "AVL Trees", "Heap"],
+        "Graphs": ["Graph Representation", "Depth-First Search (DFS)", "Breadth-First Search (BFS)"],
+        "Divide and Conquer": ["Merge Sort", "Quick Sort"],
+        "Recursion": ["Recursive Functions", "Recursion Trees"],
+        "Complexity Analysis": ["Time Complexity", "Space Complexity", "Big O Notation"],
+        "Algorithmic Paradigms": ["Brute Force", "Divide and Conquer", "Dynamic Programming", "Greedy Algorithms"],
+        "Problem Solving": ["Problem Decomposition", "Algorithm Design"],
+        "Data Structures": ["Arrays", "Linked Lists", "Stacks", "Queues", "Hash Tables", "Trees", "Graphs", "Heaps"]
+    }
+}
+    
+    
+    # Check if the provided domain_name exists in the domain_skills dictionary
+    if domain_name in domain_skills:
+        return domain_skills[domain_name]
+    else:
+        return None  # Domain not found
+
+
 def placed(tier, cgpa, inter, ssc, internship, no_project, hackerthon, extracurricular, programming, dsa, mobile, web_dev, machine, cloud, branch):
     branch = str(branch)
     # Predict using the appropriate model based on the branch
@@ -39,8 +125,6 @@ def salarypredict(tier, cgpa, internship, no_project, hackerthon, extracurricula
 
 
 #<---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->#
-
-
 salary_model = pickle.load(open('sal_model.pkl', 'rb'))
 placed_model = pickle.load(open('Placed_model.pkl', 'rb'))
 
@@ -48,9 +132,18 @@ placed_model = pickle.load(open('Placed_model.pkl', 'rb'))
 def get_row_data(row):
     a = placed(row[2], row[5], row[6], row[7], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], row[4])
     b = salarypredict(row[2], row[5], row[8], row[9], row[10], row[11], row[12], row[13], row[14], row[15], row[16], row[17], a[0], row[4])
-    return {'placed': a[0], 'salary': b[0]}
-
-
+    
+    # Create a list to store the relevant domain skills
+    relevant_skills = []
+    if row['cloud'] == 1:
+        relevant_skills.extend(get_domain_skills("Cloud Computing"))
+    if row['Machine Learning'] == 1:
+        relevant_skills.extend(get_domain_skills("Machine Learning"))
+    if row['web_dev'] == 1:
+        relevant_skills.extend(get_domain_skills("Web Development"))
+    if row['dsa']==0:
+       relevant_skills.extend(get_domain_skills("dsa"))
+    return {'placed': a[0], 'salary': b[0], 'other_skills': relevant_skills}
 
 # Loop through the rows of the dataset
 def get_data(tier1):
@@ -62,7 +155,5 @@ def get_data(tier1):
     result_df = pd.DataFrame(result_list)
     return result_df
 
-
-
 tier1 = pd.read_csv('sample_format.csv')
-get_data(tier1)
+final=get_data(tier1)
