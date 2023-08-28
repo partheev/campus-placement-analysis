@@ -53,6 +53,9 @@ def predict_college_stats(excel_file):
     correlation_Data = data_1.corr()['is_placed'][:-1]
     corr_data = correlation_Data.sort_values(ascending=False)
     Final_list = {}
+    Final_list['total_no_of_students']=len(data)
+    Final_list['total_placed']=len(data[data['is_placed']>0])
+    Final_list['total_not_placed']=len(data[data['is_placed']==0])
     # Top Factors affecting placements
     # print("The top Parameters effecting the students placement are :\n")
     top_factors_affecting_placements = list()
