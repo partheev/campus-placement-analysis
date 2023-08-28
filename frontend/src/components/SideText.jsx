@@ -1,16 +1,18 @@
 import PropTypes from 'prop-types'
-
-export const SideText = ({ children, style }) => {
+import styles from './text.module.css'
+import { MdInsights } from 'react-icons/md'
+export const SideText = ({ children, style, noIcon }) => {
   return (
-    <div>
+    <div className={styles.sideText_div}>
       <h2
+        className={styles.sideText}
         style={{
-          fontSize: '25px',
-          fontWeight: 600,
-          fontFamily: 'var(--font-secondary)',
+          textAlign: 'center',
+
           ...style,
         }}
       >
+        {!noIcon ? <MdInsights style={{ marginRight: '8px' }} /> : ''}
         {children}
       </h2>
     </div>
@@ -20,4 +22,5 @@ export const SideText = ({ children, style }) => {
 SideText.propTypes = {
   children: PropTypes.string,
   style: PropTypes.object,
+  noIcon: PropTypes.bool,
 }

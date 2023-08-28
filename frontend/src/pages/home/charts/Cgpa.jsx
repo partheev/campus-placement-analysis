@@ -7,12 +7,13 @@ import { HeadText } from '../../../components/Headtext'
 import { CgpaTier1 } from '../../../components/charts/CgpaTier1'
 import { CgpaTier2 } from '../../../components/charts/CgpaTier2'
 import { CgpaTier3 } from '../../../components/charts/CgpaTier3'
+import { SideText } from '../../../components/SideText'
 
 function useParallax(value, distance) {
   return useTransform(value, [0, 1], [-distance, distance])
 }
 
-const Chart = ({ img, tier, isMobile }) => {
+const Chart = ({ img, tier, isMobile, insight }) => {
   const ref = useRef(null)
   const { scrollYProgress } = useScroll({ target: ref })
   const y = useParallax(scrollYProgress, 260)
@@ -20,8 +21,11 @@ const Chart = ({ img, tier, isMobile }) => {
     <div
       style={{
         position: 'relative',
-        margin: '2rem 0',
         zIndex: 4,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'center',
+        alignItems: 'center',
       }}
     >
       <div
@@ -56,18 +60,7 @@ const Chart = ({ img, tier, isMobile }) => {
           <h3 style={{ textAlign: 'center' }}>TIER {tier}</h3>
         )}
       </div>
-      {/* <div
-        style={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          marginTop: '20px',
-        }}
-      >
-        <Legend color="#f7ca18" value="CSE" />
-        <Legend color="#e23759" value="ECE" />
-        <Legend color="#51628f" value="MECH" />
-      </div> */}
+      <SideText>{insight}</SideText>
     </div>
   )
 }
@@ -113,12 +106,15 @@ export const Cgpa = ({ isMobile }) => {
 
         zIndex: 1,
         position: 'relative',
-        backgroundImage: 'linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%)',
+        //backgroundImage: 'linear-gradient(0deg, #D9AFD9 0%, #97D9E1 100%)',
+        // backgroundColor: '#f6f6f6',
+        // backgroundImage: 'linear-gradient(0deg, #D9AFD9 0%, #f6f6f6 100%)',
+        backgroundImage: 'linear-gradient(0deg, #D9AFD9 0%, #f6f6f6 47%)',
       }}
     >
       <Container maxWidth="lg">
         <HeadText style={{ padding: '2rem 0 0 0' }}>
-          CGPA VS SALARY(LPA)
+          CGPA vs. Salary Scatter Plots Across Tiers
         </HeadText>
 
         <div
@@ -149,7 +145,12 @@ export const Cgpa = ({ isMobile }) => {
             ></motion.img>
           </motion.div>
 
-          <Chart img={<CgpaTier1 />} tier={1} isMobile={isMobile} />
+          <Chart
+            img={<CgpaTier1 />}
+            tier={1}
+            isMobile={isMobile}
+            insight="Tier 1 students experience higher salaries as their CGPA increases, highlighting the significance of academic performance in shaping career outcomes."
+          />
 
           <motion.div
             initial="offscreen"
@@ -170,7 +171,12 @@ export const Cgpa = ({ isMobile }) => {
               src="/static/images/circles_gradient.svg"
             ></motion.img>
           </motion.div>
-          <Chart img={<CgpaTier2 />} tier={2} isMobile={isMobile} />
+          <Chart
+            img={<CgpaTier2 />}
+            tier={2}
+            isMobile={isMobile}
+            insight="Tier 2 students demonstrates that CGPA has a role in determining salaries. Higher CGPA values generally correspond to better earning prospects"
+          />
           {!isMobile && (
             <motion.div
               initial="offscreen"
@@ -192,7 +198,12 @@ export const Cgpa = ({ isMobile }) => {
             </motion.div>
           )}
 
-          <Chart img={<CgpaTier3 />} tier={3} isMobile={isMobile} />
+          <Chart
+            img={<CgpaTier3 />}
+            tier={3}
+            isMobile={isMobile}
+            insight="Strong CGPA impacts placements despite moderate salaries, highlighting academic influence."
+          />
         </div>
       </Container>
     </div>
@@ -201,8 +212,9 @@ export const Cgpa = ({ isMobile }) => {
 
 Chart.propTypes = {
   tier: PropTypes.number,
-  img: PropTypes.func,
+  img: PropTypes.object,
   isMobile: PropTypes.bool,
+  insight: PropTypes.string,
 }
 
 Cgpa.propTypes = {
