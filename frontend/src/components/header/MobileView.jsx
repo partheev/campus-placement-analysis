@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import Menu from './Menu';
 import { motion } from 'framer-motion';
@@ -64,10 +64,9 @@ const MobileView = ({ NAV_PAGES }) => {
                     >
                         {NAV_PAGES.map((nav, idx) => {
                             return (
-                                <>
+                                <Fragment key={idx}>
                                     <NavLink
                                         className={styles.mobile_nav_hover}
-                                        key={idx}
                                         to={nav.path}
                                         style={({ isActive }) => {
                                             const mystyles = {
@@ -103,7 +102,7 @@ const MobileView = ({ NAV_PAGES }) => {
                                             backgroundColor: '#ccc',
                                         }}
                                     ></div>
-                                </>
+                                </Fragment>
                             );
                         })}
                     </motion.div>
