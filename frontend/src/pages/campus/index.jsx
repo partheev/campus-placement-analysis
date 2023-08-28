@@ -4,12 +4,15 @@ import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import { UploadBox } from './UploadBox';
 import { PredictCampusPlacements } from '../../apis/CampusAPI.js';
 import { Header } from '../../components/header';
+import { useContext } from 'react';
+import { AppContext } from '../../contexts/AppContext';
 
 const NotePoints = [
     'Prepare & fill a excel file with your college student details.',
     'Generate excel file with placement predictions and suggetions for each student.',
 ];
 const Campus = () => {
+    const { isMobile } = useContext(AppContext);
     const onUploadClick = async (file) => {
         const formData = new FormData();
         formData.append('file', file);
@@ -32,11 +35,12 @@ const Campus = () => {
                     src='/assets/images/chart-clip-art.png'
                     style={{
                         zIndex: 0,
+                        width: isMobile ? '70vw' : '30vw',
                         top: '8rem',
                         left: '5rem',
                         position: 'absolute',
-                        height: '60vh',
-                        // width: '20vw',
+                        objectFit: 'contain',
+                        maxHeight: '60vh',
                         opacity: 0.25,
                     }}
                 />
