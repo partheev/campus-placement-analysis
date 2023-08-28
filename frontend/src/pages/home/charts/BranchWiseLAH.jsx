@@ -1,5 +1,8 @@
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
+import { HeadText } from '../../../components/Headtext'
+import { Container } from '@mui/material'
+import { SideText } from '../../../components/SideText'
 
 export const BranchWiseLAH = ({ isMobile }) => {
   const imgVariants = {
@@ -25,45 +28,47 @@ export const BranchWiseLAH = ({ isMobile }) => {
         margin: '5rem 0',
       }}
     >
-      {/* <h1
+      <Container maxWidth="lg">
+        <HeadText>
+          Branch-wise Salary Overview (High, Average, and Low Earnings)
+        </HeadText>
+        <div
           style={{
-            textAlign: 'center',
-            margin: '5rem 0',
+            display: 'flex',
+            flexDirection: 'row',
+            justifyContent: 'space-evenly',
+            alignItems: 'center',
+            flexWrap: 'wrap',
           }}
         >
-          Least Average Highest Salaries
-        </h1> */}
-      <div
-        style={{
-          display: 'flex',
-          flexDirection: 'row',
-          justifyContent: 'space-evenly',
-          alignItems: 'center',
-          flexWrap: 'wrap',
-        }}
-      >
-        <div style={{ width: '40rem' }}>
-          <img
-            style={{ width: '100%' }}
-            src="/static/charts/branch_wise_least_avg,highest.png"
-          />
-        </div>
-
-        {!isMobile && (
-          <motion.div
-            initial="offscreen"
-            whileInView="onscreen"
-            viewport={{ once: true, amount: 0.8 }}
-            style={{ width: '20rem' }}
-          >
-            <motion.img
-              variants={imgVariants}
+          <div style={{ width: '40rem' }}>
+            <img
               style={{ width: '100%' }}
-              src="/static/images/illustrator2.png"
+              src="/static/charts/branch_wise_least_avg,highest.png"
             />
-          </motion.div>
-        )}
-      </div>
+          </div>
+
+          {!isMobile && (
+            <motion.div
+              initial="offscreen"
+              whileInView="onscreen"
+              viewport={{ once: true, amount: 0.8 }}
+              style={{ width: '20rem' }}
+            >
+              <motion.img
+                variants={imgVariants}
+                style={{ width: '100%' }}
+                src="/static/images/illustrator2.png"
+              />
+            </motion.div>
+          )}
+        </div>
+        <SideText>
+          This bar graph summarizes high, average, and low salaries across
+          branches, disregarding tiers, for a swift understanding of earning
+          trends within branches.
+        </SideText>
+      </Container>
     </div>
   )
 }

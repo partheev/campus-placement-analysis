@@ -2,6 +2,7 @@ import { Container } from '@mui/material'
 import styles from '../home.module.css'
 import PropTypes from 'prop-types'
 import { HeadText } from '../../../components/Headtext'
+import { SideText } from '../../../components/SideText'
 
 const Chart = ({ img, tier }) => {
   return (
@@ -45,7 +46,7 @@ export const DistributionOfSalary = () => {
     >
       <Container maxWidth="lg">
         <HeadText style={{ marginBottom: '5rem' }}>
-          Student Percentage in acquiring various annual Packages
+          A Comparative Analysis on Tier-wise Student Salary Distribution{' '}
         </HeadText>
 
         <div
@@ -60,6 +61,11 @@ export const DistributionOfSalary = () => {
           <Chart img="/static/charts/distribution_tier2_mobile.png" tier={2} />
           <Chart img="/static/charts/distribution_tier3_mobile.png" tier={3} />
         </div>
+        <SideText>
+          In the tier spectrum, Tier 1 and 2 favor mid-range salaries, while
+          Tier 3 leans to lower pay, reflecting diverse student package
+          acquisition.
+        </SideText>
       </Container>
     </div>
   )

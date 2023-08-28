@@ -83,7 +83,7 @@
   -webkit-backdrop-filter: blur(14.4px);
   border: 1px solid rgba(255, 255, 255, 0.56);
   padding: 10px 18px 0 18px;
-  width: 50rem;
+  width: 42rem;
 }
 .cgpa_tier {
   font-size: 40px;
@@ -105,7 +105,7 @@
   border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .factors_chart {
-  width: 50rem;
+  width: 40rem;
 }
 .item {
   background: rgba(255, 255, 255, 0);

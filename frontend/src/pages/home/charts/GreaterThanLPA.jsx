@@ -3,6 +3,7 @@ import styles from '../home.module.css'
 import PropTypes from 'prop-types'
 import { motion } from 'framer-motion'
 import { HeadText } from '../../../components/Headtext'
+import { SideText } from '../../../components/SideText'
 
 const Chart = ({ img, sal }) => {
   return (
@@ -36,7 +37,7 @@ export const GreaterThanLPA = () => {
       }}
     >
       <Container maxWidth="lg">
-        <HeadText>Student Percentage with the Package of</HeadText>
+        <HeadText>Tier-based Student Earnings Patterns</HeadText>
         <div
           style={{
             display: 'flex',
@@ -48,6 +49,11 @@ export const GreaterThanLPA = () => {
           <Chart img="/static/charts/salaray_10lpa.png" sal={10} />
           <Chart img="/static/charts/salaray_20lpa.png" sal={20} />
         </div>
+        <SideText>
+          Tier 1 and Tier 2 students often earn 20 lakhs per annum, with more
+          overall above 10 lakhs per annum, while Tier 3 students are less seen
+          in both brackets.
+        </SideText>
       </Container>
     </div>
   )
