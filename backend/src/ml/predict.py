@@ -118,16 +118,16 @@ def predict_college_stats(excel_file):
     Final_list['Highest_avg_least_sal_in_each_branch'] = branch_list
 
     # Overall Campus Highest and average salary
-    grouped_data = data['salary_as_fresher'].agg(['max', 'mean']).tolist()
+    grouped_data = data[data['salary_as_fresher']>0]['salary_as_fresher'].agg(['max', 'mean','min']).tolist()
 
     annotation_val = []
 
-    for i in range(2):
+    for i in range(3):
         annotation_val.append(np.round(grouped_data[i]))
     annotation_val_dict = {
-        'highest': annotation_val[0], 'Average': annotation_val[1]}
+        'highest': annotation_val[0], 'Average': annotation_val[1],'least':annotation_val[2]}
     # annotation_val_json = json.dumps(annotation_val_dict)
-    Final_list['Overall_highest_average'] = annotation_val_dict
+    Final_list['Overall_highest_average_least'] = annotation_val_dict
 
     # stats based on Range of salary
     above_20_lakhs = data[data['salary_as_fresher'] > 20]
