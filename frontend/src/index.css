@@ -14,6 +14,7 @@
     --campus-bg: linear-gradient(-20deg, #b721ff 0%, #21d4fd 100%);
     --constract-blue: #2e5f8c;
     --constract-gray: rgb(159, 174, 169);
+    --campus-analysis-bg: rgb(232, 244, 249);
 }
 
 body {
