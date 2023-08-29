@@ -1,5 +1,5 @@
 import ReactApexChart from 'react-apexcharts';
-import { ChartCard } from '../../ChartCard';
+import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
 export const SalaryDistribution = ({ branches, highest_salaries }) => {
     return (
