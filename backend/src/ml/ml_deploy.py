@@ -45,8 +45,6 @@ def predict_salary_api(feature_values):
     payload_scoring = {"input_data": [{"fields": [
         "tier",
         "cgpa",
-        "inter_gpa",
-        "ssc_gpa",
         "internships",
         "no_of_projects",
         "is_participate_hackathon",
@@ -56,6 +54,7 @@ def predict_salary_api(feature_values):
         "mobile_dev",
         "web_dev",
         "Machine Learning",
+        "isplaced"
         "cloud",
         "CSE",
         "ECE",
@@ -65,7 +64,6 @@ def predict_salary_api(feature_values):
 
     response_scoring = requests.post('https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/e91a8129-b756-4fd3-8533-b22f4219d8bf/predictions?version=2021-05-01', json=payload_scoring,
                                      headers={'Authorization': 'Bearer ' + mltoken})
-
     return response_scoring
 
 

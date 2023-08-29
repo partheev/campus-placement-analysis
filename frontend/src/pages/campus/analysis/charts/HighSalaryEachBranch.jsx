@@ -6,6 +6,14 @@ export const HighSalaryEachBranch = ({ branches, highest_salaries }) => {
         <ChartCard>
             <ReactApexChart
                 options={{
+                    yaxis: {
+                        title: {
+                            text: 'Branch',
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
+                        },
+                    },
                     title: {
                         text: 'Highest Salary in Each Branch',
                         align: 'center',
@@ -33,13 +41,9 @@ export const HighSalaryEachBranch = ({ branches, highest_salaries }) => {
                         categories: branches,
                     },
                 }}
-                series={[
-                    {
-                        data: highest_salaries,
-                    },
-                ]}
+                series={[{ name: 'Salary', data: highest_salaries }]}
                 type='bar'
-                height={350}
+                // height={350}
             />
         </ChartCard>
     );

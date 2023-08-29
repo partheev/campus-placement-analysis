@@ -3,10 +3,10 @@ export const ChartCard = ({ children, style = {} }) => {
     return (
         <div
             style={{
-                ...style,
                 backgroundColor: 'white',
                 borderRadius: '30px',
                 padding: '1rem',
+                ...style,
             }}
         >
             {children}

@@ -39,7 +39,7 @@ export const SalaryDistribution = ({ branches, highest_salaries }) => {
                     },
                 ]}
                 type='bar'
-                height={350}
+                // height={350}
             />
         </ChartCard>
     );
