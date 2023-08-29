@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import { HighSalaryEachBranch } from './charts/HighSalaryEachBranch';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Typography } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { HighAvgLeastEachBranch } from './charts/HighAvgLeastEachBranch';
 import { StudPercent20LPABranch } from './charts/StudPercent20LPABranch';
 import { StudPercent10LPABranch } from './charts/StudPercent10LPABranch';
@@ -13,6 +14,7 @@ import {
     StudentsPlacedPercent,
     TotalStudents,
 } from './charts/DataBoxes';
+import { DownloadExcel } from './DownloadExcel';
 
 export const Analysis = ({ campusStats }) => {
     console.log(campusStats);
@@ -25,6 +27,57 @@ export const Analysis = ({ campusStats }) => {
             }}
         >
             <Container maxWidth='lg'>
+                <div
+                    style={{
+                        justifyContent: 'space-between',
+                        display: 'flex',
+                    }}
+                >
+                    <div
+                        style={{
+                            cursor: 'pointer',
+                            display: 'flex',
+                            alignItems: 'center',
+                            columnGap: '0.5rem',
+                        }}
+                    >
+                        <ArrowBackIcon
+                            fontSize='large'
+                            sx={{
+                                color: 'var(--blue-black)',
+                            }}
+                        />
+                        <span
+                            style={{
+                                color: 'var(--blue-black)',
+                                fontSize: '1.3rem',
+                                fontFamily: 'var(--font-primary)',
+                            }}
+                        >
+                            Back
+                        </span>
+                    </div>
+                </div>
+                <Typography
+                    textAlign={'center'}
+                    sx={{
+                        margin: '1rem 0',
+                        color: 'var(--blue-black)',
+                        fontFamily: 'var(--font-primary)',
+                        fontSize: '2rem',
+                        fontWeight: '600',
+                    }}
+                >
+                    Campus Placements Analytics
+                </Typography>
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'flex-end',
+                    }}
+                >
+                    <DownloadExcel />
+                </div>
                 <Grid
                     sx={{ marginTop: '0.5rem', marginBottom: '1rem' }}
                     container

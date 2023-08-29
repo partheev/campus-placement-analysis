@@ -47,5 +47,5 @@ StudentsNotPlaced.propTypes = {
     studentsNotPlaced: PropTypes.number,
 };
 StudentsPlacedPercent.propTypes = {
-    studentsPlacedPercent: PropTypes.number,
+    studentsPlacedPercent: PropTypes.string,
 };
