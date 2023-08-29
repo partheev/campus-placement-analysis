@@ -19,15 +19,16 @@ def create_app(test_config=None):
     def PredictCampusPlacements():
         print('hello')
         campus_data_file = request.files.get('file', None)
-        if campus_data_file is None:
-            return {
-                'message': '[file] key not found in the form-data. Please upload excel file to fetch insights.'
-            }, 400
+        print(campus_data_file.filename)
+        # if campus_data_file is None:
+        #     return {
+        #         'message': '[file] key not found in the form-data. Please upload excel file to fetch insights.'
+        #     }, 400
         stats = predict_college_stats(campus_data_file)
-        print(stats)
+        # print(stats)
         return {
             'status': 'file uploaded....',
-            'stats': stats
+            # 'stats': stats
         }
 
     return app
