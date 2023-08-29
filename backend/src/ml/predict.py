@@ -58,9 +58,17 @@ def predict_college_stats(excel_file):
     Final_list['total_not_placed']=len(data[data['is_placed']==0])
     # Top Factors affecting placements
     # print("The top Parameters effecting the students placement are :\n")
+    Full_abbrevation={
+       'tier':'College Tier', 'cgpa':"CGPA",
+       'inter_gpa':"XII Standard CGPA", 'ssc_gpa':"X Standard CGPA", 'internships':'Number of Internships Done', 
+       'no_of_projects':'No of Projects Done', 'is_participate_hackathon':'Participated in Hackathon',
+       'no_of_programming_languages':'No of Programming Languages Known', 'dsa':"Data Structures and Algorithms", 
+       'mobile_dev':"Android Development", 'web_dev':"Web Development",
+       'Machine Learning':"Machine Learning", 'cloud':"Cloud Computing"
+        }
     top_factors_affecting_placements = list()
     for i in corr_data[1:6].index:
-        top_factors_affecting_placements.append(i)
+        top_factors_affecting_placements.append(Full_abbrevation[i])
     Final_list['top_factors_affecting_placements'] = top_factors_affecting_placements
 
     # Important technical skills which show impact on placements
@@ -69,7 +77,7 @@ def predict_college_stats(excel_file):
     imp_technical_skills = list()
     for i in corr_data.index:
         if i in technical_skills and corr_data[i] > 0.4:
-            imp_technical_skills.append(i)
+            imp_technical_skills.append(Full_abbrevation[i])
     Final_list['imp_technical_skills'] = imp_technical_skills
 
     correlation_Data_1 = correlation_Data.values.tolist()
@@ -195,7 +203,7 @@ def predict_college_stats(excel_file):
         if(data.loc[i, 'salary_as_fresher'] > Avg_salary):
             for j in range(3):
                 if(data.loc[i, skills[j]] == 1):
-                    final_list.append(skills[j])
+                    final_list.append(Full_abbrevation[skills[j]])
         if(len(l) != 0):
             final_list.append(l)
 
