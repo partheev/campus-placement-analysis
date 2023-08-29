@@ -53,11 +53,22 @@ def predict_college_stats(excel_file):
     correlation_Data = data_1.corr()['is_placed'][:-1]
     corr_data = correlation_Data.sort_values(ascending=False)
     Final_list = {}
+    Final_list['total_no_of_students']=len(data)
+    Final_list['total_placed']=len(data[data['is_placed']>0])
+    Final_list['total_not_placed']=len(data[data['is_placed']==0])
     # Top Factors affecting placements
     # print("The top Parameters effecting the students placement are :\n")
+    Full_abbrevation={
+       'tier':'College Tier', 'cgpa':"CGPA",
+       'inter_gpa':"XII Standard CGPA", 'ssc_gpa':"X Standard CGPA", 'internships':'Number of Internships Done', 
+       'no_of_projects':'No of Projects Done', 'is_participate_hackathon':'Participated in Hackathon',
+       'no_of_programming_languages':'No of Programming Languages Known', 'dsa':"Data Structures and Algorithms", 
+       'mobile_dev':"Android Development", 'web_dev':"Web Development",
+       'Machine Learning':"Machine Learning", 'cloud':"Cloud Computing"
+        }
     top_factors_affecting_placements = list()
     for i in corr_data[1:6].index:
-        top_factors_affecting_placements.append(i)
+        top_factors_affecting_placements.append(Full_abbrevation[i])
     Final_list['top_factors_affecting_placements'] = top_factors_affecting_placements
 
     # Important technical skills which show impact on placements
@@ -66,7 +77,7 @@ def predict_college_stats(excel_file):
     imp_technical_skills = list()
     for i in corr_data.index:
         if i in technical_skills and corr_data[i] > 0.4:
-            imp_technical_skills.append(i)
+            imp_technical_skills.append(Full_abbrevation[i])
     Final_list['imp_technical_skills'] = imp_technical_skills
 
     correlation_Data_1 = correlation_Data.values.tolist()
@@ -115,16 +126,16 @@ def predict_college_stats(excel_file):
     Final_list['Highest_avg_least_sal_in_each_branch'] = branch_list
 
     # Overall Campus Highest and average salary
-    grouped_data = data['salary_as_fresher'].agg(['max', 'mean']).tolist()
+    grouped_data = data[data['salary_as_fresher']>0]['salary_as_fresher'].agg(['max', 'mean','min']).tolist()
 
     annotation_val = []
 
-    for i in range(2):
+    for i in range(3):
         annotation_val.append(np.round(grouped_data[i]))
     annotation_val_dict = {
-        'highest': annotation_val[0], 'Average': annotation_val[1]}
+        'highest': annotation_val[0], 'Average': annotation_val[1],'least':annotation_val[2]}
     # annotation_val_json = json.dumps(annotation_val_dict)
-    Final_list['Overall_highest_average'] = annotation_val_dict
+    Final_list['Overall_highest_average_least'] = annotation_val_dict
 
     # stats based on Range of salary
     above_20_lakhs = data[data['salary_as_fresher'] > 20]
@@ -192,7 +203,7 @@ def predict_college_stats(excel_file):
         if(data.loc[i, 'salary_as_fresher'] > Avg_salary):
             for j in range(3):
                 if(data.loc[i, skills[j]] == 1):
-                    final_list.append(skills[j])
+                    final_list.append(Full_abbrevation[skills[j]])
         if(len(l) != 0):
             final_list.append(l)
 
