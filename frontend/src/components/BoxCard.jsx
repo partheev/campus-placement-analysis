@@ -5,15 +5,18 @@ export const BoxCard = ({
     borderColor,
     title,
     value,
+    backgroundColor = 'white',
 }) => {
     return (
         <div
             style={{
-                backgroundColor: 'white',
+                backgroundColor,
                 padding: '1rem',
                 display: 'flex',
+                height: '100%',
                 flexDirection: 'column',
                 alignItems: 'center',
+                justifyContent: 'center',
                 borderTop: '3px solid ' + borderColor,
                 ...style,
             }}
@@ -48,4 +51,5 @@ BoxCard.propTypes = {
     borderColor: PropTypes.string,
     title: PropTypes.string,
     value: PropTypes.string,
+    backgroundColor: PropTypes.string,
 };

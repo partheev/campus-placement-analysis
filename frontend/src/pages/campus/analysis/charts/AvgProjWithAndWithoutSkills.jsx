@@ -5,27 +5,15 @@ import PropTypes from 'prop-types';
 export const AvgProjWithAndWithoutSkills = ({ data }) => {
     const labels = Object.keys(data);
     const values = Object.values(data);
-    console.log(labels, values);
     return (
-        <ChartCard>
+        <ChartCard
+            subTitle={
+                'Students with and without Web Development and Machine Learning skills'
+            }
+            headingTitle={'Average Number of Projects'}
+        >
             <ReactApexChart
                 options={{
-                    title: {
-                        text: 'Average Number of Projects',
-                        align: 'center',
-
-                        style: {
-                            fontFamily: 'var(--font-secondary)',
-                        },
-                    },
-                    subtitle: {
-                        text: 'Students with and without Web Development and Machine Learning skills',
-                        align: 'center',
-
-                        style: {
-                            fontFamily: 'var(--font-secondary)',
-                        },
-                    },
                     chart: {
                         toolbar: {
                             show: false,
@@ -53,6 +41,9 @@ export const AvgProjWithAndWithoutSkills = ({ data }) => {
                     },
                     yaxis: {
                         title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
                             text: 'Projects',
                         },
                     },

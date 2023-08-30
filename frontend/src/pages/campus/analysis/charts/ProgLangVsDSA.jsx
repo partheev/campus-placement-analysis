@@ -5,28 +5,13 @@ import PropTypes from 'prop-types';
 export const ProgLangVsDSA = ({ data }) => {
     const labels = Object.keys(data);
     const values = Object.values(data);
-    console.log(labels, values);
     return (
-        <ChartCard>
+        <ChartCard
+            headingTitle={'DSA vs Programming Languages Impact'}
+            subTitle={'Average Number of Programming Languagues impact on DSA'}
+        >
             <ReactApexChart
                 options={{
-                    subtitle: {
-                        text: 'Average Number of Programming Languagues impact on DSA',
-                        align: 'center',
-
-                        style: {
-                            fontFamily: 'var(--font-secondary)',
-                        },
-                    },
-                    title: {
-                        text: 'DSA vs Programming Languages Impact',
-                        align: 'center',
-
-                        style: {
-                            fontFamily: 'var(--font-secondary)',
-                        },
-                    },
-
                     chart: {
                         toolbar: {
                             show: false,
@@ -54,6 +39,9 @@ export const ProgLangVsDSA = ({ data }) => {
                     },
                     yaxis: {
                         title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
                             text: 'Projects',
                         },
                     },

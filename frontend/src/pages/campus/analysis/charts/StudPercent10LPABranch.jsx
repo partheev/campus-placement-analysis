@@ -3,17 +3,13 @@ import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
 export const StudPercent10LPABranch = ({ data }) => {
     return (
-        <ChartCard>
+        <ChartCard
+            headingTitle={
+                'Percentage of Students with Salary > 10 LPA by Branch'
+            }
+        >
             <ReactApexChart
                 options={{
-                    title: {
-                        text: 'Percentage of Students with Salary > 10 LPA by Branch',
-                        align: 'center',
-                        style: {
-                            fontFamily: 'var(--font-secondary)',
-                        },
-                    },
-
                     chart: {
                         // width: 380,
                         type: 'pie',

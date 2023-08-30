@@ -1,10 +1,10 @@
 import { UploadBox } from './UploadBox';
-import { Box, Container, Typography } from '@mui/material';
+import { Alert, Box, Container, Snackbar, Typography } from '@mui/material';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import { PredictCampusPlacements } from '../../apis/CampusAPI.js';
 import { Header } from '../../components/header';
 import PropTypes from 'prop-types';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 import { AppContext } from '../../contexts/AppContext';
 
 const NotePoints = [
@@ -14,6 +14,7 @@ const NotePoints = [
 
 export const Overview = ({ setcampusStats }) => {
     const { isMobile } = useContext(AppContext);
+    const [error, setError] = useState(null);
 
     const onUploadClick = async (file) => {
         const formData = new FormData();
@@ -22,13 +23,41 @@ export const Overview = ({ setcampusStats }) => {
             const res = await PredictCampusPlacements(formData);
             setcampusStats(res.stats);
         } catch (err) {
-            console.log(err);
+            if (err.response) {
+                // The request was made and the server responded with a status code
+                // that falls out of the range of 2xx
+                setError(err.response.data);
+            } else {
+                // Something happened in setting up the request that triggered an err
+                setError(err.message);
+            }
         }
+    };
+
+    const handleClose = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setError(null);
     };
 
     return (
         <div style={{ color: 'black' }}>
             <Header />
+            <Snackbar
+                open={error !== null}
+                autoHideDuration={6000}
+                onClose={handleClose}
+            >
+                <Alert
+                    onClose={handleClose}
+                    severity='error'
+                    sx={{ width: '100%' }}
+                >
+                    {error}
+                </Alert>
+            </Snackbar>
             <div
                 style={{
                     position: 'absolute',

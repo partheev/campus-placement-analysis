@@ -13,19 +13,11 @@ export const HighAvgLeastEachBranch = ({ data }) => {
         leastSalaries.push(data[categories[i]].least_sal);
     }
     return (
-        <ChartCard>
+        <ChartCard
+            headingTitle={'Highest, Average and Least Salary for Each Branch'}
+        >
             <ReactApexChart
                 options={{
-                    // xaxis: {
-                    //     type: 'numeric',
-                    //     title: {
-                    //         text: 'Salary',
-                    //         style: {
-                    //             color: 'red',
-                    //         },
-                    //     },
-                    //     position: 'bottom',
-                    // },
                     yaxis: {
                         title: {
                             text: 'Branch',
@@ -35,13 +27,6 @@ export const HighAvgLeastEachBranch = ({ data }) => {
                         },
                     },
 
-                    title: {
-                        align: 'center',
-                        text: 'Highest, Average and Least Salary for Each Branch',
-                        style: {
-                            fontFamily: 'var(--font-secondary)',
-                        },
-                    },
                     labels: ['Highest', 'Highest', 'Highest'],
                     chart: {
                         toolbar: {
@@ -76,6 +61,12 @@ export const HighAvgLeastEachBranch = ({ data }) => {
                         intersect: false,
                     },
                     xaxis: {
+                        title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
+                            text: 'Salary',
+                        },
                         categories: categories,
                     },
                 }}

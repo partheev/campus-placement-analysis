@@ -38,6 +38,12 @@ export const HighSalaryEachBranch = ({ branches, highest_salaries }) => {
                         enabled: true,
                     },
                     xaxis: {
+                        title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
+                            text: 'Salary',
+                        },
                         categories: branches,
                     },
                 }}
