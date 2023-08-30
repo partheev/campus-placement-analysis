@@ -2,7 +2,7 @@ import { Box } from '@mui/material';
 import PropTypes from 'prop-types';
 export const DownloadExcel = ({ downloadURL }) => {
     return (
-        <a href={downloadURL} download='campus_predictions.csv'>
+        <a href={downloadURL} download='predictions.csv'>
             <Box
                 sx={{
                     ':hover': {

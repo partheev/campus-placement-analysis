@@ -37,9 +37,10 @@ def create_app(test_config=None):
             return {
                 'message': str(type_error)
             }, 400
-        except:
+        except Exception as e:
             return {
-                'message': 'Something went wrong.'
+                'message': 'Something went wrong.',
+                'stack': str(e.__traceback__)
             }, 500
 
     return app

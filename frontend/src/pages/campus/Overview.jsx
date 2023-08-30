@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { useContext, useState } from 'react';
 import { AppContext } from '../../contexts/AppContext';
 
+const backend_endpoint = import.meta.env.VITE_BACKEND_URL;
 const NotePoints = [
     'Prepare & fill a excel file with your college student details.',
     'Generate excel file with placement predictions and suggetions for each student.',
@@ -21,14 +22,15 @@ export const Overview = ({ setcampusStats, setdownloadURL }) => {
         formData.append('file', file);
         try {
             const res = await PredictCampusPlacements(formData);
-            setcampusStats(res.stats);
-            const backend_endpoint = import.meta.env.VITE_BACKEND_URL;
+
             setdownloadURL(backend_endpoint + res.download_url);
+            setcampusStats(res.stats);
         } catch (err) {
+            console.log(err);
             if (err.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
-                setError(err.response.data);
+                setError(err.response.data.message);
             } else {
                 // Something happened in setting up the request that triggered an err
                 setError(err.message);
