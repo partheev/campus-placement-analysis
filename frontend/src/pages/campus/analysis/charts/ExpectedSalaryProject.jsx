@@ -2,15 +2,11 @@ import ReactApexChart from 'react-apexcharts';
 import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
 
-export const ExpectedSalaryProgLang = ({ data }) => {
-    const labels = data.No_of_programming_languages;
+export const ExpectedSalaryProject = ({ data }) => {
+    const labels = data.No_of_projects;
     const values = data.Salary;
     return (
-        <ChartCard
-            headingTitle={
-                'Expected Salary based on Number of Programming Languages'
-            }
-        >
+        <ChartCard headingTitle={'Expected Salary based on Number of Projects'}>
             <ReactApexChart
                 options={{
                     chart: {
@@ -34,7 +30,7 @@ export const ExpectedSalaryProgLang = ({ data }) => {
                             style: {
                                 fontFamily: 'var(--font-secondary)',
                             },
-                            text: 'Number of Programming Languages',
+                            text: 'Number of Projects',
                         },
                         type: 'categories',
                         categories: labels,
@@ -67,6 +63,6 @@ export const ExpectedSalaryProgLang = ({ data }) => {
     );
 };
 
-ExpectedSalaryProgLang.propTypes = {
+ExpectedSalaryProject.propTypes = {
     data: PropTypes.object,
 };

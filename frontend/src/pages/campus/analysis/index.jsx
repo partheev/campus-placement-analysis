@@ -18,6 +18,9 @@ import { DownloadExcel } from './DownloadExcel';
 import { SkillsRequiredForAvgSalary } from './SkillsRequiredForAvgSalary';
 import { ImpTechnicalSkills } from './ImpTechnicalSkills';
 import { MinimumInternshipProjectsAvgSalary } from './MinimumInternshipProjectsAvgSalary';
+import { ExpectedSalaryInternships } from './charts/ExpectedSalaryInternships';
+import { ExpectedSalaryProgLang } from './charts/ExpectedSalaryProgLang';
+import { ExpectedSalaryProject } from './charts/ExpectedSalaryProject';
 
 export const Analysis = ({ campusStats, onBack }) => {
     return (
@@ -36,6 +39,7 @@ export const Analysis = ({ campusStats, onBack }) => {
                     }}
                 >
                     <div
+                        onClick={onBack}
                         style={{
                             cursor: 'pointer',
                             display: 'flex',
@@ -50,7 +54,6 @@ export const Analysis = ({ campusStats, onBack }) => {
                             }}
                         />
                         <span
-                            onClick={onBack}
                             style={{
                                 color: 'var(--blue-black)',
                                 fontSize: '1.3rem',
@@ -127,10 +130,7 @@ export const Analysis = ({ campusStats, onBack }) => {
                         />
                     </Grid>
                 </Grid>
-                {/* <CDFSalaryBranch />
-                <ExpectedSalaryInternships
-                    data={campusStats.expected_sal_by_no_of_internships}
-                /> */}
+                {/* <CDFSalaryBranch /> */}
 
                 <Grid container columnSpacing={'1rem'} rowSpacing={'1rem'}>
                     <Grid item md={6} xs={12}>
@@ -168,12 +168,12 @@ export const Analysis = ({ campusStats, onBack }) => {
                             rowSpacing={'1rem'}
                             columnSpacing={'1rem'}
                         >
-                            <Grid item xs={6} sm={12}>
+                            <Grid item xs={12} sm={6} md={12}>
                                 <StudPercent20LPABranch
                                     data={campusStats.above_20_pie}
                                 />
                             </Grid>
-                            <Grid item xs={6} sm={12}>
+                            <Grid item xs={12} sm={6} md={12}>
                                 <StudPercent10LPABranch
                                     data={campusStats.above_10_pie}
                                 />
@@ -187,7 +187,7 @@ export const Analysis = ({ campusStats, onBack }) => {
                             }
                         />
                     </Grid>
-                    <Grid item sm={4} xs={12}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <HighSalaryEachBranch
                             branches={
                                 campusStats.highest_sal_in_each_branch.branches
@@ -198,22 +198,37 @@ export const Analysis = ({ campusStats, onBack }) => {
                             }
                         />
                     </Grid>
-                    <Grid item sm={4} xs={12}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <ProgLangVsDSA
                             data={
                                 campusStats.programming_lang_vs_skilled_in_dsa
                             }
                         />
                     </Grid>
-                    <Grid item sm={4} xs={12}>
+                    <Grid item lg={4} md={6} xs={12}>
                         <AvgProjWithAndWithoutSkills
                             data={campusStats.avg_projects_vs_technical_skills}
                         />
                     </Grid>
 
-                    <Grid item></Grid>
-                    <Grid item></Grid>
-                    <Grid item></Grid>
+                    <Grid item lg={4} md={6} xs={12}>
+                        <ExpectedSalaryInternships
+                            data={campusStats.expected_sal_by_no_of_internships}
+                        />
+                    </Grid>
+                    <Grid item lg={4} md={6} xs={12}>
+                        <ExpectedSalaryProgLang
+                            data={
+                                campusStats.expected_sal_by_no_of_programming_lan
+                            }
+                        />
+                    </Grid>
+                    <Grid item lg={4} md={6} xs={12}>
+                        <ExpectedSalaryProject
+                            data={campusStats.expected_sal_by_no_of_projects}
+                        />
+                    </Grid>
+
                     <Grid item></Grid>
                 </Grid>
             </Container>

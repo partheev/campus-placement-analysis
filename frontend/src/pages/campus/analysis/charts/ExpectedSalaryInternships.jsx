@@ -3,13 +3,18 @@ import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
 
 export const ExpectedSalaryInternships = ({ data }) => {
-    const labels = data.X;
-    const values = data.Y;
+    const labels = data.No_of_internships;
+    const values = data.Salary;
     return (
-        <ChartCard>
+        <ChartCard
+            headingTitle={'Expected Salary based on Number of Internships'}
+        >
             <ReactApexChart
                 options={{
                     chart: {
+                        toolbar: {
+                            show: false,
+                        },
                         type: 'bar',
                         height: 350,
                     },
@@ -23,8 +28,22 @@ export const ExpectedSalaryInternships = ({ data }) => {
                         enabled: false,
                     },
                     xaxis: {
+                        title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
+                            text: 'Number of Projects',
+                        },
                         type: 'categories',
                         categories: labels,
+                    },
+                    yaxis: {
+                        title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
+                            text: 'Avg. Salary in INR LPA',
+                        },
                     },
                 }}
                 series={[

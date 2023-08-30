@@ -4,7 +4,7 @@ import { Analysis } from './analysis';
 
 const Campus = () => {
     const [campusStats, setcampusStats] = useState(null);
-
+    console.log(campusStats);
     return (
         <>
             {campusStats ? (
