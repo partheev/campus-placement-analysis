@@ -1,5 +1,10 @@
 
 
+from .prediction_models import get_predicted_data
+import numpy as np
+import pandas as pd
+
+
 '''
 This function provides a single student placement analytics report
 
@@ -7,10 +12,6 @@ Input - student data (cgpa, no_of_internships, no_of_projects, skills etc.)
 Output - student placement report | contains predicted salary, placement probability, skill suggestions etc.
 
 '''
-from .prediction_models import get_data
-import warnings
-import numpy as np
-import pandas as pd
 
 
 def predict_student_analytics(student):
@@ -28,16 +29,9 @@ Output - college placement report and new excel sheet with predictions and sugge
 '''
 
 
-def predict_college_results(excel_file):
-    pass
-
-
-warnings.filterwarnings("ignore")
-
-
 def predict_college_stats(excel_file):
 
-    df = get_data(tier1=excel_file)
+    df = get_predicted_data(excel_file)
 
     data = df.drop(['s_id', 'name', 'other_skills', 'gender'], axis=1)
     mean_value_1 = data['inter_gpa'].mean()
@@ -53,19 +47,19 @@ def predict_college_stats(excel_file):
     correlation_Data = data_1.corr()['is_placed'][:-1]
     corr_data = correlation_Data.sort_values(ascending=False)
     Final_list = {}
-    Final_list['total_no_of_students']=len(data)
-    Final_list['total_placed']=len(data[data['is_placed']>0])
-    Final_list['total_not_placed']=len(data[data['is_placed']==0])
+    Final_list['total_no_of_students'] = len(data)
+    Final_list['total_placed'] = len(data[data['is_placed'] > 0])
+    Final_list['total_not_placed'] = len(data[data['is_placed'] == 0])
     # Top Factors affecting placements
     # print("The top Parameters effecting the students placement are :\n")
-    Full_abbrevation={
-       'tier':'College Tier', 'cgpa':"CGPA",
-       'inter_gpa':"XII Standard CGPA", 'ssc_gpa':"X Standard CGPA", 'internships':'Number of Internships Done', 
-       'no_of_projects':'No of Projects Done', 'is_participate_hackathon':'Participated in Hackathon',
-       'no_of_programming_languages':'No of Programming Languages Known', 'dsa':"Data Structures and Algorithms", 
-       'mobile_dev':"Android Development", 'web_dev':"Web Development",
-       'Machine Learning':"Machine Learning", 'cloud':"Cloud Computing"
-        }
+    Full_abbrevation = {
+        'tier': 'College Tier', 'cgpa': "CGPA",
+        'inter_gpa': "XII Standard CGPA", 'ssc_gpa': "X Standard CGPA", 'internships': 'Number of Internships Done',
+        'no_of_projects': 'No of Projects Done', 'is_participate_hackathon': 'Participated in Hackathon',
+        'no_of_programming_languages': 'No of Programming Languages Known', 'dsa': "Data Structures and Algorithms",
+        'mobile_dev': "Android Development", 'web_dev': "Web Development",
+        'Machine Learning': "Machine Learning", 'cloud': "Cloud Computing"
+    }
     top_factors_affecting_placements = list()
     for i in corr_data[1:6].index:
         top_factors_affecting_placements.append(Full_abbrevation[i])
@@ -126,14 +120,15 @@ def predict_college_stats(excel_file):
     Final_list['Highest_avg_least_sal_in_each_branch'] = branch_list
 
     # Overall Campus Highest and average salary
-    grouped_data = data[data['salary_as_fresher']>0]['salary_as_fresher'].agg(['max', 'mean','min']).tolist()
+    grouped_data = data[data['salary_as_fresher'] > 0]['salary_as_fresher'].agg(
+        ['max', 'mean', 'min']).tolist()
 
     annotation_val = []
 
     for i in range(3):
         annotation_val.append(np.round(grouped_data[i]))
     annotation_val_dict = {
-        'highest': annotation_val[0], 'Average': annotation_val[1],'least':annotation_val[2]}
+        'highest': annotation_val[0], 'Average': annotation_val[1], 'least': annotation_val[2]}
     # annotation_val_json = json.dumps(annotation_val_dict)
     Final_list['Overall_highest_average_least'] = annotation_val_dict
 
@@ -295,21 +290,21 @@ def predict_college_stats(excel_file):
     Final_list['cdf_sal_by_branch'] = cdf_sal_by_branch
 
     expected_sal_by_no_of_projects = {
-      'No_of_projects':data.groupby('no_of_projects')['salary_as_fresher'].mean().index.tolist(),
-      'Salary':np.round(data.groupby('no_of_projects')['salary_as_fresher'].mean().values).tolist()
+        'No_of_projects': data.groupby('no_of_projects')['salary_as_fresher'].mean().index.tolist(),
+        'Salary': np.round(data.groupby('no_of_projects')['salary_as_fresher'].mean().values).tolist()
     }
     Final_list['expected_sal_by_no_of_projects'] = expected_sal_by_no_of_projects
 
     expected_sal_by_no_of_internships = {
-     'No_of_internships':data.groupby('internships')['salary_as_fresher'].mean().index.tolist(),
-      'Salary':np.round(data.groupby('internships')['salary_as_fresher'].mean().values).tolist()
+        'No_of_internships': data.groupby('internships')['salary_as_fresher'].mean().index.tolist(),
+        'Salary': np.round(data.groupby('internships')['salary_as_fresher'].mean().values).tolist()
     }
     Final_list['expected_sal_by_no_of_internships'] = expected_sal_by_no_of_internships
 
     expected_sal_by_no_of_programming_lan = {
-     'No_of_programming_languages':data.groupby('no_of_programming_languages')['salary_as_fresher'].mean().index.tolist(),
-      'Salary':np.round(data.groupby('no_of_programming_languages')['salary_as_fresher'].mean().values).tolist()
+        'No_of_programming_languages': data.groupby('no_of_programming_languages')['salary_as_fresher'].mean().index.tolist(),
+        'Salary': np.round(data.groupby('no_of_programming_languages')['salary_as_fresher'].mean().values).tolist()
     }
     Final_list['expected_sal_by_no_of_programming_lan'] = expected_sal_by_no_of_programming_lan
-    Final_list['Average_sal']=np.round(data['salary_as_fresher'].mean())
+    Final_list['Average_sal'] = np.round(data['salary_as_fresher'].mean())
     return Final_list

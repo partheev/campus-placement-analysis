@@ -17,17 +17,28 @@ def create_app(test_config=None):
     @app.post("/api/predict-campus-placements")
     @cross_origin(origins='*')
     def PredictCampusPlacements():
-        print('hello')
-        campus_data_file = request.files.get('file', None)
-        if campus_data_file is None:
+        try:
+
+            campus_data_file = request.files.get('file', None)
+
+            if campus_data_file is None:
+                return {
+                    'message': '[file] key not found in the form-data. Please upload excel file to fetch insights.'
+                }, 400
+
+            stats = predict_college_stats(campus_data_file)
+
             return {
-                'message': '[file] key not found in the form-data. Please upload excel file to fetch insights.'
+                'status': 'file uploaded....',
+                'stats': stats
+            }
+        except TypeError as type_error:
+            return {
+                'message': str(type_error)
             }, 400
-        stats = predict_college_stats(campus_data_file)
-        print(stats)
-        return {
-            'status': 'file uploaded....',
-            'stats': stats
-        }
+        except:
+            return {
+                'message': 'Something went wrong.'
+            }, 500
 
     return app

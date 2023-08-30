@@ -42,29 +42,42 @@ def predict_salary_api(feature_values):
               'Authorization': 'Bearer ' + mltoken}
 
     # NOTE: manually define and pass the array(s) of values to be scored in the next line
-    payload_scoring = {"input_data": [{"fields": [
-        "tier",
-        "cgpa",
-        "internships",
-        "no_of_projects",
-        "is_participate_hackathon",
-        "is_participated_extracurricular",
-        "no_of_programming_languages",
-        "dsa",
-        "mobile_dev",
-        "web_dev",
-        "Machine Learning",
-        "isplaced"
-        "cloud",
-        "CSE",
-        "ECE",
-        "IT",
-        "MECH"
-    ], "values": feature_values}]}
+    payload_scoring = {
+        "input_data": [
+            {
+                "fields": [
+                    "tier",
+                    "cgpa",
+                    "internships",
+                    "no_of_projects",
+                    "is_participate_hackathon",
+                    "is_participated_extracurricular",
+                    "no_of_programming_languages",
+                    "dsa",
+                    "mobile_dev",
+                    "web_dev",
+                    "Machine Learning",
+                    "cloud",
+                    "CSE",
+                    "ECE",
+                    "IT",
+                    "MECH"
+                ],
+                "values": feature_values
+            }
+        ]
+    }
 
-    response_scoring = requests.post('https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/e91a8129-b756-4fd3-8533-b22f4219d8bf/predictions?version=2021-05-01', json=payload_scoring,
+    response_scoring = requests.post('https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/98b08fa0-f51c-4818-9a79-66acf66c2f55/predictions?version=2021-05-01', json=payload_scoring,
                                      headers={'Authorization': 'Bearer ' + mltoken})
-    return response_scoring
+    data = response_scoring.json()['predictions'][0]['values']
+
+    predictions = []
+
+    for pred in data:
+        predictions.append(pred[0])
+
+    return predictions
 
 
 def predict_isplaced_api(feature_values):
@@ -97,4 +110,11 @@ def predict_isplaced_api(feature_values):
     response_scoring = requests.post('https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/e91a8129-b756-4fd3-8533-b22f4219d8bf/predictions?version=2021-05-01', json=payload_scoring,
                                      headers={'Authorization': 'Bearer ' + mltoken})
 
-    return response_scoring
+    data = response_scoring.json()['predictions'][0]['values']
+
+    predictions = []
+
+    for pred in data:
+        predictions.append(pred[0])
+
+    return predictions
