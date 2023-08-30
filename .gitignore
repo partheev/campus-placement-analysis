@@ -33,3 +33,6 @@ __pycache__
 .env
 # .env.production
 # .env.local
+
+backend/src/static/temp/*
+!hello.txt

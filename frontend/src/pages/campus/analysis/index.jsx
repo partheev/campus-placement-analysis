@@ -22,7 +22,7 @@ import { ExpectedSalaryInternships } from './charts/ExpectedSalaryInternships';
 import { ExpectedSalaryProgLang } from './charts/ExpectedSalaryProgLang';
 import { ExpectedSalaryProject } from './charts/ExpectedSalaryProject';
 
-export const Analysis = ({ campusStats, onBack }) => {
+export const Analysis = ({ campusStats, onBack, downloadURL }) => {
     return (
         <div
             style={{
@@ -97,7 +97,7 @@ export const Analysis = ({ campusStats, onBack }) => {
                         justifyContent: 'flex-end',
                     }}
                 >
-                    <DownloadExcel />
+                    <DownloadExcel downloadURL={downloadURL} />
                 </div>
                 <Grid
                     sx={{ marginTop: '0.5rem', marginBottom: '1rem' }}
@@ -239,4 +239,5 @@ export const Analysis = ({ campusStats, onBack }) => {
 Analysis.propTypes = {
     campusStats: PropTypes.object,
     onBack: PropTypes.func,
+    downloadURL: PropTypes.string,
 };

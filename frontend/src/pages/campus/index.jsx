@@ -4,16 +4,21 @@ import { Analysis } from './analysis';
 
 const Campus = () => {
     const [campusStats, setcampusStats] = useState(null);
+    const [downloadURL, setdownloadURL] = useState(null);
     console.log(campusStats);
     return (
         <>
             {campusStats ? (
                 <Analysis
                     campusStats={campusStats}
+                    downloadURL={downloadURL}
                     onBack={() => setcampusStats(null)}
                 />
             ) : (
-                <Overview setcampusStats={setcampusStats} />
+                <Overview
+                    setcampusStats={setcampusStats}
+                    setdownloadURL={setdownloadURL}
+                />
             )}
         </>
     );

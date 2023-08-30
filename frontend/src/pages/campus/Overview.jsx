@@ -12,7 +12,7 @@ const NotePoints = [
     'Generate excel file with placement predictions and suggetions for each student.',
 ];
 
-export const Overview = ({ setcampusStats }) => {
+export const Overview = ({ setcampusStats, setdownloadURL }) => {
     const { isMobile } = useContext(AppContext);
     const [error, setError] = useState(null);
 
@@ -22,6 +22,8 @@ export const Overview = ({ setcampusStats }) => {
         try {
             const res = await PredictCampusPlacements(formData);
             setcampusStats(res.stats);
+            const backend_endpoint = import.meta.env.VITE_BACKEND_URL;
+            setdownloadURL(backend_endpoint + res.download_url);
         } catch (err) {
             if (err.response) {
                 // The request was made and the server responded with a status code
@@ -207,4 +209,5 @@ export const Overview = ({ setcampusStats }) => {
 
 Overview.propTypes = {
     setcampusStats: PropTypes.func,
+    setdownloadURL: PropTypes.func,
 };

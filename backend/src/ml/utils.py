@@ -1,6 +1,6 @@
 import os
 import pickle
-
+from uuid import uuid4
 # Prepared data in the format required by deployed model
 
 
@@ -95,6 +95,16 @@ def load_pickle_models():
     is_placed_model = pickle.load(open(placed_model_path, 'rb'))
 
     return is_placed_model, salary_model
+
+
+def save_df_to_temp(df):
+    unique_id = str(uuid4())
+    temp_file_url_path = os.path.join(
+        os.path.dirname(__file__), '..', 'static', 'temp', unique_id+'.csv')
+
+    df.to_csv(temp_file_url_path, index=True)
+
+    return '/temp/'+unique_id+'.csv'
 
 
 def convert_is_placed_to_zero_ifnot_placed(is_placed, salary):

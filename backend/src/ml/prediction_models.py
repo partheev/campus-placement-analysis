@@ -1,7 +1,7 @@
 import pandas as pd
 import numpy as np
 import os
-from src.ml.utils import convert_is_placed_to_zero_ifnot_placed, load_pickle_models, transform_placed_prediction, transform_salary_prediction
+from src.ml.utils import convert_is_placed_to_zero_ifnot_placed, load_pickle_models, transform_placed_prediction, transform_salary_prediction, save_df_to_temp
 from src.ml.ml_deploy import predict_isplaced_api, predict_salary_api
 
 
@@ -149,6 +149,7 @@ def get_data2(tier1):
         result_list.append(result)
     result_df = pd.DataFrame(result_list)
     result_df.to_csv('Output.csv', index=True)
+
 
 # Function to predict and return 'placed' and 'salary' values for a row
 

@@ -5,7 +5,7 @@ from src.ml.predict import predict_college_stats
 
 
 def create_app(test_config=None):
-    app = Flask(__name__)
+    app = Flask(__name__, static_url_path='', static_folder='static')
     CORS(app)
 
     @app.get('/')
@@ -26,11 +26,12 @@ def create_app(test_config=None):
                     'message': '[file] key not found in the form-data. Please upload excel file to fetch insights.'
                 }, 400
 
-            stats = predict_college_stats(campus_data_file)
+            stats, download_url = predict_college_stats(campus_data_file)
 
             return {
                 'status': 'file uploaded....',
-                'stats': stats
+                'stats': stats,
+                'download_url': download_url
             }
         except TypeError as type_error:
             return {

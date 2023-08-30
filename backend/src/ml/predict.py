@@ -1,5 +1,6 @@
 
 
+from src.ml.utils import save_df_to_temp
 from .prediction_models import get_predicted_data
 import numpy as np
 import pandas as pd
@@ -32,6 +33,7 @@ Output - college placement report and new excel sheet with predictions and sugge
 def predict_college_stats(excel_file):
 
     df = get_predicted_data(excel_file)
+    download_url = save_df_to_temp(df)
 
     data = df.drop(['s_id', 'name', 'other_skills', 'gender'], axis=1)
     mean_value_1 = data['inter_gpa'].mean()
@@ -307,4 +309,4 @@ def predict_college_stats(excel_file):
     }
     Final_list['expected_sal_by_no_of_programming_lan'] = expected_sal_by_no_of_programming_lan
     Final_list['Average_sal'] = np.round(data['salary_as_fresher'].mean())
-    return Final_list
+    return Final_list, download_url
