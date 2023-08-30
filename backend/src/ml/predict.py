@@ -37,8 +37,8 @@ warnings.filterwarnings("ignore")
 
 def predict_college_stats(excel_file):
 
-    df = get_data(tier1=excel_file)
-
+    df = get_data(excel_file=excel_file)
+    return ''
     data = df.drop(['s_id', 'name', 'other_skills', 'gender'], axis=1)
     mean_value_1 = data['inter_gpa'].mean()
     mean_value_2 = data['ssc_gpa'].mean()
