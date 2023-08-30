@@ -6,33 +6,22 @@ export const PlacedVsNotPlacedEachBranch = ({ data }) => {
     const branches = data.branch;
     const placed_percentages = data.is_placed_percent;
     const not_placed_percentages = data.is_not_placed_percent;
-    console.log(branches, placed_percentages, not_placed_percentages);
     return (
-        <ChartCard>
+        <ChartCard
+            headingTitle={'Placed and Not Placed in Each Branch'}
+            subTitle={
+                'Percentage of Students Placed and Not Placed in Each Branch'
+            }
+        >
             <ReactApexChart
                 options={{
-                    title: {
-                        text: 'Placed and Not Placed in Each Branch',
-                        align: 'center',
-
-                        style: {
-                            fontFamily: 'var(--font-secondary)',
-                        },
-                    },
-                    subtitle: {
-                        text: 'Percentage of Students Placed and Not Placed in Each Branch ',
-                        align: 'center',
-
-                        style: {
-                            fontFamily: 'var(--font-secondary)',
-                        },
-                    },
                     chart: {
                         toolbar: {
                             show: false,
                         },
                         type: 'bar',
-                        height: 350,
+                        // height: 350,
+                        // height: '100%',
                     },
                     plotOptions: {
                         bar: {
@@ -50,10 +39,19 @@ export const PlacedVsNotPlacedEachBranch = ({ data }) => {
                         colors: ['transparent'],
                     },
                     xaxis: {
+                        title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
+                            text: 'Branch',
+                        },
                         categories: branches,
                     },
                     yaxis: {
                         title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
                             text: 'Percentage',
                         },
                     },
@@ -66,7 +64,7 @@ export const PlacedVsNotPlacedEachBranch = ({ data }) => {
                     { name: 'Not Placed', data: not_placed_percentages },
                 ]}
                 type='bar'
-                // height={350}
+                // height={'100%'}
             />
         </ChartCard>
     );

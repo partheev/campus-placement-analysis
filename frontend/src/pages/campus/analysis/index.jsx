@@ -1,6 +1,6 @@
 import PropTypes from 'prop-types';
 import { HighSalaryEachBranch } from './charts/HighSalaryEachBranch';
-import { Container, Grid, Typography } from '@mui/material';
+import { Container, Grid, Stack, Typography } from '@mui/material';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { HighAvgLeastEachBranch } from './charts/HighAvgLeastEachBranch';
 import { StudPercent20LPABranch } from './charts/StudPercent20LPABranch';
@@ -15,9 +15,14 @@ import {
     TotalStudents,
 } from './charts/DataBoxes';
 import { DownloadExcel } from './DownloadExcel';
+import { SkillsRequiredForAvgSalary } from './SkillsRequiredForAvgSalary';
+import { ImpTechnicalSkills } from './ImpTechnicalSkills';
+import { MinimumInternshipProjectsAvgSalary } from './MinimumInternshipProjectsAvgSalary';
+import { ExpectedSalaryInternships } from './charts/ExpectedSalaryInternships';
+import { ExpectedSalaryProgLang } from './charts/ExpectedSalaryProgLang';
+import { ExpectedSalaryProject } from './charts/ExpectedSalaryProject';
 
-export const Analysis = ({ campusStats }) => {
-    console.log(campusStats);
+export const Analysis = ({ campusStats, onBack }) => {
     return (
         <div
             style={{
@@ -34,6 +39,7 @@ export const Analysis = ({ campusStats }) => {
                     }}
                 >
                     <div
+                        onClick={onBack}
                         style={{
                             cursor: 'pointer',
                             display: 'flex',
@@ -68,7 +74,22 @@ export const Analysis = ({ campusStats }) => {
                         fontWeight: '600',
                     }}
                 >
-                    Campus Placements Analytics
+                    Campus Placements Predictions & Analytics
+                </Typography>
+
+                <Typography
+                    textAlign={'left'}
+                    sx={{
+                        margin: '1rem 0',
+                        color: 'var(--blue-black)',
+                        fontFamily: 'var(--font-primary)',
+                        fontSize: '0.9rem',
+                        fontWeight: '400',
+                    }}
+                >
+                    * Note: These analytics are generated from the placement
+                    predictions. Below shown statistics are expected placement
+                    results of your campus.
                 </Typography>
                 <div
                     style={{
@@ -109,26 +130,107 @@ export const Analysis = ({ campusStats }) => {
                         />
                     </Grid>
                 </Grid>
-                <HighSalaryEachBranch
-                    branches={campusStats.highest_sal_in_each_branch.branches}
-                    highest_salaries={
-                        campusStats.highest_sal_in_each_branch.highest_sal
-                    }
-                />
-                <HighAvgLeastEachBranch
-                    data={campusStats.Highest_avg_least_sal_in_each_branch}
-                />
-                <StudPercent20LPABranch data={campusStats.above_20_pie} />
-                <StudPercent10LPABranch data={campusStats.above_10_pie} />
-                <AvgProjWithAndWithoutSkills
-                    data={campusStats.avg_projects_vs_technical_skills}
-                />
-                <ProgLangVsDSA
-                    data={campusStats.programming_lang_vs_skilled_in_dsa}
-                />
-                <PlacedVsNotPlacedEachBranch
-                    data={campusStats.percent_placed_notplaced_ineach_branch}
-                />
+                {/* <CDFSalaryBranch /> */}
+
+                <Grid container columnSpacing={'1rem'} rowSpacing={'1rem'}>
+                    <Grid item md={6} xs={12}>
+                        <Stack rowGap={'1rem'}>
+                            <MinimumInternshipProjectsAvgSalary
+                                minimumInternships={
+                                    campusStats.min_no_of_internships_to_get_avg_sal
+                                }
+                                minimumProjects={
+                                    campusStats.min_no_of_projects_to_get_avg_sal
+                                }
+                            />
+                            <SkillsRequiredForAvgSalary
+                                skills={campusStats.skills_req_to_get_avg_sal}
+                            />
+                            <ImpTechnicalSkills
+                                technical_skills={
+                                    campusStats.imp_technical_skills
+                                }
+                            />
+                        </Stack>
+                    </Grid>
+
+                    <Grid item md={6} xs={12}>
+                        <HighAvgLeastEachBranch
+                            data={
+                                campusStats.Highest_avg_least_sal_in_each_branch
+                            }
+                        />
+                    </Grid>
+
+                    <Grid item md={4} xs={12}>
+                        <Grid
+                            container
+                            rowSpacing={'1rem'}
+                            columnSpacing={'1rem'}
+                        >
+                            <Grid item xs={12} sm={6} md={12}>
+                                <StudPercent20LPABranch
+                                    data={campusStats.above_20_pie}
+                                />
+                            </Grid>
+                            <Grid item xs={12} sm={6} md={12}>
+                                <StudPercent10LPABranch
+                                    data={campusStats.above_10_pie}
+                                />
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                    <Grid item md={8} xs={12} sx={{ height: '100%' }}>
+                        <PlacedVsNotPlacedEachBranch
+                            data={
+                                campusStats.percent_placed_notplaced_ineach_branch
+                            }
+                        />
+                    </Grid>
+                    <Grid item lg={4} md={6} xs={12}>
+                        <HighSalaryEachBranch
+                            branches={
+                                campusStats.highest_sal_in_each_branch.branches
+                            }
+                            highest_salaries={
+                                campusStats.highest_sal_in_each_branch
+                                    .highest_sal
+                            }
+                        />
+                    </Grid>
+                    <Grid item lg={4} md={6} xs={12}>
+                        <ProgLangVsDSA
+                            data={
+                                campusStats.programming_lang_vs_skilled_in_dsa
+                            }
+                        />
+                    </Grid>
+                    <Grid item lg={4} md={6} xs={12}>
+                        <AvgProjWithAndWithoutSkills
+                            data={campusStats.avg_projects_vs_technical_skills}
+                        />
+                    </Grid>
+
+                    <Grid item lg={4} md={6} xs={12}>
+                        <ExpectedSalaryInternships
+                            data={campusStats.expected_sal_by_no_of_internships}
+                        />
+                    </Grid>
+                    <Grid item lg={4} md={6} xs={12}>
+                        <ExpectedSalaryProgLang
+                            data={
+                                campusStats.expected_sal_by_no_of_programming_lan
+                            }
+                        />
+                    </Grid>
+                    <Grid item lg={4} md={6} xs={12}>
+                        <ExpectedSalaryProject
+                            data={campusStats.expected_sal_by_no_of_projects}
+                        />
+                    </Grid>
+
+                    <Grid item></Grid>
+                </Grid>
             </Container>
         </div>
     );
@@ -136,4 +238,5 @@ export const Analysis = ({ campusStats }) => {
 
 Analysis.propTypes = {
     campusStats: PropTypes.object,
+    onBack: PropTypes.func,
 };

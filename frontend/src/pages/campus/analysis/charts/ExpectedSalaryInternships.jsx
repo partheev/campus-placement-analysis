@@ -2,13 +2,12 @@ import ReactApexChart from 'react-apexcharts';
 import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
 
-export const ProgLangVsDSA = ({ data }) => {
-    const labels = Object.keys(data);
-    const values = Object.values(data);
+export const ExpectedSalaryInternships = ({ data }) => {
+    const labels = data.No_of_internships;
+    const values = data.Salary;
     return (
         <ChartCard
-            headingTitle={'DSA vs Programming Languages Impact'}
-            subTitle={'Average Number of Programming Languagues impact on DSA'}
+            headingTitle={'Expected Salary based on Number of Internships'}
         >
             <ReactApexChart
                 options={{
@@ -21,20 +20,21 @@ export const ProgLangVsDSA = ({ data }) => {
                     },
                     plotOptions: {
                         bar: {
+                            borderRadius: 4,
                             horizontal: false,
-                            columnWidth: '55%',
-                            endingShape: 'rounded',
                         },
                     },
                     dataLabels: {
                         enabled: false,
                     },
-                    stroke: {
-                        show: true,
-                        width: 2,
-                        colors: ['transparent'],
-                    },
                     xaxis: {
+                        title: {
+                            style: {
+                                fontFamily: 'var(--font-secondary)',
+                            },
+                            text: 'Number of Projects',
+                        },
+                        type: 'categories',
                         categories: labels,
                     },
                     yaxis: {
@@ -42,18 +42,21 @@ export const ProgLangVsDSA = ({ data }) => {
                             style: {
                                 fontFamily: 'var(--font-secondary)',
                             },
-                            text: 'Projects',
+                            text: 'Avg. Salary in INR LPA',
                         },
-                    },
-                    fill: {
-                        opacity: 1,
                     },
                 }}
                 series={[
                     {
-                        name: 'Avg. Number of Programming Languages',
+                        name: 'Salary',
+                        type: 'column',
                         data: values,
                     },
+                    // {
+                    //     name: 'Social Media',
+                    //     type: 'line',
+                    //     data: [23, 42, 35, 27, 43, 22, 17, 31, 22, 22, 12, 16],
+                    // },
                 ]}
                 type='bar'
                 // height={350}
@@ -62,6 +65,6 @@ export const ProgLangVsDSA = ({ data }) => {
     );
 };
 
-ProgLangVsDSA.propTypes = {
+ExpectedSalaryInternships.propTypes = {
     data: PropTypes.object,
 };
