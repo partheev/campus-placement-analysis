@@ -31,8 +31,9 @@ __pycache__
 # Common
 
 .env
-# .env.production
+.env.production
 # .env.local
 
 backend/src/static/temp/*
 !hello.txt
+frontend/.env.production
