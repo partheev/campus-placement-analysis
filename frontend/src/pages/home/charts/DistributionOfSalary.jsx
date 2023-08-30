@@ -48,6 +48,11 @@ export const DistributionOfSalary = () => {
         <HeadText style={{ marginBottom: '5rem' }}>
           A Comparative Analysis on Tier-wise Student Salary Distribution{' '}
         </HeadText>
+        <SideText>
+          In the tier spectrum, Tier 1 and 2 favor mid-range salaries, while
+          Tier 3 leans to lower pay, reflecting diverse student package
+          acquisition.
+        </SideText>
 
         <div
           style={{
@@ -61,11 +66,6 @@ export const DistributionOfSalary = () => {
           <Chart img="/static/charts/distribution_tier2_mobile.png" tier={2} />
           <Chart img="/static/charts/distribution_tier3_mobile.png" tier={3} />
         </div>
-        <SideText>
-          In the tier spectrum, Tier 1 and 2 favor mid-range salaries, while
-          Tier 3 leans to lower pay, reflecting diverse student package
-          acquisition.
-        </SideText>
       </Container>
     </div>
   )

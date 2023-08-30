@@ -53,10 +53,12 @@ def create_app(test_config=None):
         }
         headers = {
             "accept": "application/json",
-            "authorization": "Bearer "+os.environ['RESUME_PARSER_API']
+            "authorization": "Bearer "+os.getenv('RESUME_PARSER_API')
         }
 
         response = requests.post(url, data=payload, files=files, headers=headers)
+
+        
         return response.text
 
     return app

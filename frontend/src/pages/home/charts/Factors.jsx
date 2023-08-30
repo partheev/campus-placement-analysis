@@ -14,7 +14,7 @@ export const Factors = ({ isMobile }) => {
       opacity: 0,
     },
     onscreen: {
-      y: -200,
+      y: -190,
       x: 0,
       opacity: 0.5,
       transition: {
@@ -52,6 +52,10 @@ export const Factors = ({ isMobile }) => {
       </motion.div>
       <Container maxWidth="lg">
         <HeadText>Key Placement Influencers</HeadText>
+        <SideText style={{ width: '100%' }}>
+          The pie chart gives an overview of diverse factors in placements,
+          highlighting their intricate role in shaping student employability.
+        </SideText>
         <div
           style={{
             display: 'flex',
@@ -68,13 +72,7 @@ export const Factors = ({ isMobile }) => {
               src="/static/charts/factors_affect_on.png"
             />
           </div>
-          <div>
-            <SideText style={{ width: '25rem' }}>
-              The pie chart gives an overview of diverse factors in placements,
-              highlighting their intricate role in shaping student
-              employability.
-            </SideText>
-          </div>
+          <div></div>
         </div>
       </Container>
     </div>

@@ -38,6 +38,11 @@ export const GreaterThanLPA = () => {
     >
       <Container maxWidth="lg">
         <HeadText>Tier-based Student Earnings Patterns</HeadText>
+        <SideText>
+          Tier 1 and Tier 2 students often earn 20 lakhs per annum, with more
+          overall above 10 lakhs per annum, while Tier 3 students are less seen
+          in both brackets.
+        </SideText>
         <div
           style={{
             display: 'flex',
@@ -49,11 +54,6 @@ export const GreaterThanLPA = () => {
           <Chart img="/static/charts/salaray_10lpa.png" sal={10} />
           <Chart img="/static/charts/salaray_20lpa.png" sal={20} />
         </div>
-        <SideText>
-          Tier 1 and Tier 2 students often earn 20 lakhs per annum, with more
-          overall above 10 lakhs per annum, while Tier 3 students are less seen
-          in both brackets.
-        </SideText>
       </Container>
     </div>
   )

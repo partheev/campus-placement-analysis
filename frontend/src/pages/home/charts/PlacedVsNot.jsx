@@ -12,7 +12,7 @@ export const PlacedVsNot = ({ isMobile }) => {
       opacity: 0,
     },
     onscreen: {
-      y: -135,
+      y: -195,
       x: 0,
       opacity: 1,
       transition: {
@@ -55,6 +55,11 @@ export const PlacedVsNot = ({ isMobile }) => {
       </motion.div>
       <Container maxWidth="lg">
         <HeadText>Multi-Tier Branch Placement status Overview</HeadText>
+        <SideText>
+          Combining all tiers, this graph illustrates student placement
+          percentages within each branch. Varied placement rates indicate
+          branches with promising job opportunities.
+        </SideText>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div className={styles.placedvsnot_chart}>
             <img
@@ -63,11 +68,6 @@ export const PlacedVsNot = ({ isMobile }) => {
             />
           </div>
         </div>
-        <SideText>
-          Combining all tiers, this graph illustrates student placement
-          percentages within each branch. Varied placement rates indicate
-          branches with promising job opportunities.
-        </SideText>
       </Container>
     </div>
   )
