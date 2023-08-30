@@ -1,6 +1,6 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
-
+import traceback
 from src.ml.predict import predict_college_stats
 
 
@@ -40,7 +40,7 @@ def create_app(test_config=None):
         except Exception as e:
             return {
                 'message': 'Something went wrong.',
-                'stack': str(e.__traceback__)
+                'stack': traceback.format_exc()
             }, 500
 
     return app
