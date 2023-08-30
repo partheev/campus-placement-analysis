@@ -1,5 +1,7 @@
 from flask import Flask, request
 from flask_cors import CORS, cross_origin
+import requests
+import os
 
 from src.ml.predict import predict_college_stats
 
@@ -29,5 +31,31 @@ def create_app(test_config=None):
             'status': 'file uploaded....',
             'stats': stats
         }
+    
+
+    @app.post("/api/resume-parser")
+    @cross_origin(origins='*')
+    def ResumeParser():
+        resume_file = request.files['file']
+        if(resume_file is None):
+            return {
+                'message' : 'File not found. Make sure you uploaded the resume file'
+            },400
+        resume_file_binary = resume_file.read()
+       
+        url = "https://api.affinda.com/v3/documents"
+
+        files = { "file": (resume_file.filename,resume_file_binary , "application/pdf") }
+        payload = {
+            "wait": "true",
+            "collection": "ToVgXFPJ"
+        }
+        headers = {
+            "accept": "application/json",
+            "authorization": "Bearer "+os.environ['RESUME_PARSER_API']
+        }
+
+        response = requests.post(url, data=payload, files=files, headers=headers)
+        return response.text
 
     return app
