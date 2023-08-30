@@ -9,8 +9,8 @@ RUN pip install -r requirements.txt
 
 COPY . /app
 
-RUN chmod 777 /app/static
-RUN chmod 777 /app/static/temp
+RUN chmod 777 /app/src/static
+RUN chmod 777 /app/src/static/temp
 
 EXPOSE 5000
 
