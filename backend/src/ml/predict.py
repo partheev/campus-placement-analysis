@@ -295,21 +295,21 @@ def predict_college_stats(excel_file):
     Final_list['cdf_sal_by_branch'] = cdf_sal_by_branch
 
     expected_sal_by_no_of_projects = {
-        'X': data.no_of_projects.astype(int).tolist(),
-        'Y': data.salary_as_fresher.astype(int).tolist()
+      'No_of_projects':data.groupby('no_of_projects')['salary_as_fresher'].mean().index.tolist(),
+      'Salary':np.round(data.groupby('no_of_projects')['salary_as_fresher'].mean().values).tolist()
     }
     Final_list['expected_sal_by_no_of_projects'] = expected_sal_by_no_of_projects
 
     expected_sal_by_no_of_internships = {
-        'X': data.internships.astype(int).tolist(),
-        'Y': data.salary_as_fresher.astype(int).tolist()
+     'No_of_internships':data.groupby('internships')['salary_as_fresher'].mean().index.tolist(),
+      'Salary':np.round(data.groupby('internships')['salary_as_fresher'].mean().values).tolist()
     }
     Final_list['expected_sal_by_no_of_internships'] = expected_sal_by_no_of_internships
 
     expected_sal_by_no_of_programming_lan = {
-        'X': data.no_of_programming_languages.astype(int).tolist(),
-        'Y': data.salary_as_fresher.astype(int).tolist()
+     'No_of_programming_languages':data.groupby('no_of_programming_languages')['salary_as_fresher'].mean().index.tolist(),
+      'Salary':np.round(data.groupby('no_of_programming_languages')['salary_as_fresher'].mean().values).tolist()
     }
     Final_list['expected_sal_by_no_of_programming_lan'] = expected_sal_by_no_of_programming_lan
-
+    Final_list['Average_sal']=np.round(data['salary_as_fresher'].mean())
     return Final_list
