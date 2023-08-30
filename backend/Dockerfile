@@ -8,6 +8,10 @@ RUN pip install -r requirements.txt
 
 
 COPY . /app
+
+RUN chmod 777 /app/static
+RUN chmod 777 /app/static/temp
+
 EXPOSE 5000
 
 CMD [ "gunicorn", "--bind", "0.0.0.0:5000", "-w", "2" , "src:create_app()"]
