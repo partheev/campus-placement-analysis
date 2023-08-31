@@ -175,10 +175,6 @@ def get_row_data(row):
 # Loop through the rows of the dataset
 
 
-def get_isplaced_probability(data):
-    return is_placed_model.predict_proba(data)
-
-
 def load_data(excel_file):
     # importing the csv file
     file_name = excel_file.filename
@@ -197,7 +193,8 @@ def get_predicted_data(dataset):
     placed_prediction_feature_data = transform_placed_prediction(dataset)
     salary_prediction_feature_data = transform_salary_prediction(dataset)
 
-    isplaced_predictions = predict_isplaced_api(placed_prediction_feature_data)
+    isplaced_predictions, isplaced_probability = predict_isplaced_api(
+        placed_prediction_feature_data)
     salary_predictions = predict_salary_api(salary_prediction_feature_data)
 
     salary_predictions = convert_is_placed_to_zero_ifnot_placed(
@@ -205,5 +202,6 @@ def get_predicted_data(dataset):
 
     dataset['is_placed'] = isplaced_predictions
     dataset['salary_as_fresher'] = salary_predictions
+    dataset['placement_probability'] = isplaced_probability
 
     return dataset

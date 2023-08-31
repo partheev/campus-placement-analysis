@@ -3,6 +3,7 @@ from flask_cors import CORS, cross_origin
 import traceback
 import requests
 import os
+from src.ml.utils import check_columns_and_datatypes
 
 from src.ml.predict import predict_college_stats, predict_student_placement
 
@@ -35,6 +36,11 @@ def create_app(test_config=None):
                 return {
                     'message': '[file] key not found in the form-data. Please upload excel file to fetch insights.'
                 }, 400
+
+            # if check_columns_and_datatypes(campus_data_file) is False:
+            #     return {
+            #         'message': 'File is not in the expected format. Check column names and data values.'
+            #     }, 400
 
             stats, download_url = predict_college_stats(campus_data_file)
 

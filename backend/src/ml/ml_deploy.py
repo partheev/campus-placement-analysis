@@ -113,14 +113,17 @@ def predict_isplaced_api(feature_values):
         "MECH"
     ], "values":feature_values}]}
 
-    response_scoring = requests.post('https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/e91a8129-b756-4fd3-8533-b22f4219d8bf/predictions?version=2021-05-01', json=payload_scoring,
+    response_scoring = requests.post('https://eu-gb.ml.cloud.ibm.com/ml/v4/deployments/f266280b-2055-4112-8ad6-3facb3934342/predictions?version=2021-05-01', json=payload_scoring,
+
                                      headers={'Authorization': 'Bearer ' + mltoken})
 
     data = response_scoring.json()['predictions'][0]['values']
 
     predictions = []
+    probability = []
 
     for pred in data:
         predictions.append(pred[0])
+        probability.append(pred[1][1])
 
-    return predictions
+    return predictions, probability

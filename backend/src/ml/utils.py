@@ -1,6 +1,8 @@
+import pandas as pd
 import os
 import pickle
 from uuid import uuid4
+import traceback
 # Prepared data in the format required by deployed model
 
 
@@ -114,3 +116,38 @@ def convert_is_placed_to_zero_ifnot_placed(is_placed, salary):
             salary[i] = 0
 
     return salary
+
+
+def check_columns_and_datatypes(excel_file):
+    expected_columns = [
+        "s_id", "name", "tier", "gender", "branch", "cgpa", "inter_gpa",
+        "ssc_gpa", "internships", "no_of_projects", "is_participate_hackathon",
+        "is_participated_extracurricular", "no_of_programming_languages",
+        "dsa", "mobile_dev", "web_dev", "Machine Learning", "cloud", "other_skills"
+    ]
+    expected_datatypes = {
+        "s_id": int, "name": str, "tier": int, "gender": str, "branch": str,
+        "cgpa": float, "inter_gpa": float, "ssc_gpa": float, "internships": int,
+        "no_of_projects": int, "is_participate_hackathon": int,
+        "is_participated_extracurricular": int, "no_of_programming_languages": int,
+        "dsa": int, "mobile_dev": int, "web_dev": int, "Machine Learning": int,
+        "cloud": int, "other_skills": str
+    }
+    try:
+        if excel_file.filename.endswith(".xlsx"):
+            df = pd.read_excel(excel_file)
+        elif excel_file.filename.endswith(".csv"):
+            df = pd.read_csv(excel_file)
+        else:
+            return False
+        if set(expected_columns) != set(df.columns):
+            return False
+
+        for column, datatype in expected_datatypes.items():
+            if column in df.columns and df[column].dtype != datatype:
+                df[column] = df[column].astype(datatype)
+
+        return True
+    except Exception as e:
+        print("An error occurred:", traceback.format_exc())
+        return False
