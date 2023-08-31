@@ -20,14 +20,13 @@ def predict_student_placement(student_dict):
     dataframe = pd.DataFrame(student_dict)
 
     df_predicted = get_predicted_data(dataframe)
-
-    print(df_predicted)
-
     is_placed = df_predicted.loc[0, 'is_placed']
     predicted_salary = df_predicted.loc[0, 'salary_as_fresher']
+    placement_probability = df_predicted.loc[0, 'placement_probability']
 
     return {'is_placed': int(is_placed),
-            'predicted_salary': int(predicted_salary)}
+            'predicted_salary': float(predicted_salary),
+            'placement_probability': (placement_probability)}
 
 
 '''

@@ -124,6 +124,5 @@ def predict_isplaced_api(feature_values):
 
     for pred in data:
         predictions.append(pred[0])
-        probability.append(pred[1][1])
-
+        probability.append(str(pred[1][1]*100)[:5])
     return predictions, probability

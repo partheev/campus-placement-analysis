@@ -195,6 +195,7 @@ def get_predicted_data(dataset):
 
     isplaced_predictions, isplaced_probability = predict_isplaced_api(
         placed_prediction_feature_data)
+
     salary_predictions = predict_salary_api(salary_prediction_feature_data)
 
     salary_predictions = convert_is_placed_to_zero_ifnot_placed(

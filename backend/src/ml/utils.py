@@ -14,7 +14,7 @@ def transform_placed_prediction(df):
         row_values = []
         for column in placed:
             if(column != 'CSE' and column != 'IT' and column != 'MECH' and column != 'ECE'):
-                row_values.append(row[column])
+                row_values.append(float(row[column]))
 
         # Check the branch value and fill the corresponding columns
         if row[4] == "CSE":
@@ -55,7 +55,7 @@ def transform_salary_prediction(df):
         row_values = []
         for column in salary:
             if(column != 'CSE' and column != 'IT' and column != 'MECH' and column != 'ECE'):
-                row_values.append(row[column])
+                row_values.append(float(row[column]))
 
         # Check the branch value and fill the corresponding columns
         if row[4] == "CSE":

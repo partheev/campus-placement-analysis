@@ -64,9 +64,8 @@ def create_app(test_config=None):
     def PredictStudentPlacement():
         try:
             data = request.json
-
+            # print(data)
             predictions = predict_student_placement(data)
-            print(predictions)
             return predictions, 200
         except Exception as e:
             return {
@@ -182,8 +181,9 @@ def create_app(test_config=None):
 
             try:
                 studentName = data['name']['raw']
-            except: pass
-            return {"details":details,"studentName":studentName}
+            except:
+                pass
+            return {"details": details, "studentName": studentName}
 
         except Exception as e:
             return {
