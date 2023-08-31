@@ -64,9 +64,9 @@ export const BranchWiseLAH = ({ isMobile }) => {
           )}
         </div>
         <SideText>
-          This bar graph summarizes high, average, and low salaries across
-          branches, disregarding tiers, for a swift understanding of earning
-          trends within branches.
+          The graph distills branch-wise earnings, CSE and ECE exhibit superior
+          high and average packages compared to Mechincal and EEE, highlighting
+          distinct earning tendencies among disciplines.
         </SideText>
       </Container>
     </div>

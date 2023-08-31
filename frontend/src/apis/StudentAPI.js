@@ -5,3 +5,8 @@ export const ResumeParser = async (file) => {
 
   return res.data
 }
+
+export const PredictStudent = async (data) => {
+  const res = await api.post('/predict-student-placement', data)
+  return res.data
+}

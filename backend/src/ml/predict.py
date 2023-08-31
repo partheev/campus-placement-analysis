@@ -21,11 +21,13 @@ def predict_student_placement(student_dict):
 
     df_predicted = get_predicted_data(dataframe)
 
+    print(df_predicted)
+
     is_placed = df_predicted.loc[0, 'is_placed']
     predicted_salary = df_predicted.loc[0, 'salary_as_fresher']
 
-    return {'is_placed': is_placed,
-            'predicted_salary': predicted_salary}
+    return {'is_placed': int(is_placed),
+            'predicted_salary': int(predicted_salary)}
 
 
 '''

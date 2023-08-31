@@ -66,7 +66,7 @@ def create_app(test_config=None):
             data = request.json
 
             predictions = predict_student_placement(data)
-
+            print(predictions)
             return predictions, 200
         except Exception as e:
             return {
@@ -121,15 +121,13 @@ def create_app(test_config=None):
                 "IT": 0,
                 "MECH": 0
             }
-            # print(response.text)
+
             data = response.json()["data"]
-            print(data)
+
             try:
                 if data['education'] is not None:
-                    print("tada")
                     for i in data["education"]:
                         if(i.get('accreditation') is not None and i["accreditation"].get("education") is not None and i.get('organization') is not None):
-                            print("edu ", i["accreditation"])
 
                             if ((i["accreditation"]["educationLevel"] is not None and 'bachelors' in i["accreditation"]["educationLevel"].lower()) or (i["accreditation"]["inputStr"] is not None and ('bachelors' in i["accreditation"]["inputStr"].lower() or 'btech' in i["accreditation"]["inputStr"].lower())) or (i["organization"] is not None and 'engineering' in i["organization"].lower())):
 
@@ -148,7 +146,7 @@ def create_app(test_config=None):
                             elif((i["organization"] is not None and 'school' in i["organization"].lower()) or (i["accreditation"]["inputStr"] is not None and 'ssc' in i["accreditation"]["inputStr"].lower())):
                                 details["ssc_gpa"] = i["grade"]["value"]
             except:
-                print()
+                pass
 
             try:
                 if 'hackathon' in data["rawText"]:
@@ -156,7 +154,7 @@ def create_app(test_config=None):
                 if compare(['member', 'contest', 'participated', 'volunteer', 'activit'], data['rawText']):
                     details['is_participated_extracurricular'] = 1
             except:
-                print()
+                pass
 
             try:
                 for i in data["skills"]:
@@ -174,15 +172,18 @@ def create_app(test_config=None):
                     if compare(['java', 'c++', 'python', 'golang', 'javascript', 'c#', 'php'], name):
                         details['no_of_programming_languages'] += 1
             except:
-                print()
+                pass
 
             try:
                 if data['workExperience'] is not None:
                     details['internships'] = len(data["workExperience"])
             except:
-                print()
+                pass
 
-            return details
+            try:
+                studentName = data['name']['raw']
+            except: pass
+            return {"details":details,"studentName":studentName}
 
         except Exception as e:
             return {

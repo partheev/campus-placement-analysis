@@ -56,9 +56,10 @@ export const PlacedVsNot = ({ isMobile }) => {
       <Container maxWidth="lg">
         <HeadText>Multi-Tier Branch Placement status Overview</HeadText>
         <SideText>
-          Combining all tiers, this graph illustrates student placement
-          percentages within each branch. Varied placement rates indicate
-          branches with promising job opportunities.
+          The bar graph highlights branch-specific placement differences, with
+          CSE leading in placements, followed by ECE and EEE, leaving Mechanical
+          with lower placements. This suggests varying levels of employability
+          across branches.{' '}
         </SideText>
         <div style={{ display: 'flex', justifyContent: 'center' }}>
           <div className={styles.placedvsnot_chart}>
