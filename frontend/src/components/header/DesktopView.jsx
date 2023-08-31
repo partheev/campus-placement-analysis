@@ -1,9 +1,11 @@
 import { Container } from '@mui/material';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import styles from './navbar.module.css';
+import { PAGE_PATHS } from '../../constants/PagePaths';
 
 const DesktopView = ({ NAV_PAGES }) => {
+    const navigate = useNavigate();
     return (
         <div>
             <div
@@ -17,12 +19,27 @@ const DesktopView = ({ NAV_PAGES }) => {
             >
                 <Container
                     sx={{
+                        alignItems: 'center',
                         display: 'flex',
                     }}
                     maxWidth='lg'
                 >
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        logo
+                    <div
+                        onClick={() => {
+                            navigate(PAGE_PATHS.INSIGHTS);
+                        }}
+                        style={{
+                            display: 'flex',
+                            padding: '0.5rem 0',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <img
+                            style={{
+                                width: '4rem',
+                            }}
+                            src='/assets/images/logo.png'
+                        />
                     </div>
                     <div
                         style={{
