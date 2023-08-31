@@ -61,7 +61,7 @@ export const Student = () => {
 
   const [selectedSkills, setselectedSkills] = useState([])
   const [branch, setbranch] = useState('')
-  const [predictedData, setPredictedData] = useState(null)
+  const [predictedData, setPredictedData] = useState(true)
   const [loading, setloading] = useState(false)
 
   const predictedComponentRef = useRef(null)
@@ -122,7 +122,7 @@ export const Student = () => {
     } catch (err) {
       console.log(err)
       setloading(false)
-      handleOpenSnackBar(err.message)
+      handleOpenSnackBar(err.response.data.message)
     }
   }
 
@@ -213,7 +213,7 @@ export const Student = () => {
     } catch (err) {
       console.log(err)
       setloading(false)
-      handleOpenSnackBar(err.message)
+      handleOpenSnackBar(err.response.data.message)
     }
   }
   return (
@@ -230,9 +230,9 @@ export const Student = () => {
         style={{
           minHeight: '90vh',
           height: 'fit-content',
-          backgroundImage:
-            'linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% )',
           paddingBottom: '20px',
+          background:
+            'linear-gradient(45deg, rgba(248,232,238,1) 0%, rgba(249,245,246,1) 57%)',
         }}
       >
         {loading ? (
