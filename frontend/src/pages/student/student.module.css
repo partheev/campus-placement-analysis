@@ -3,7 +3,7 @@
   align-content: center;
   justify-content: space-evenly;
   grid-template-columns: 20rem 20rem;
-  row-gap: 10px;
+  row-gap: 16px;
   align-items: center;
 }
 
@@ -18,18 +18,24 @@
   font-size: 2rem;
 }
 .predicted_screen {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 1rem;
+  /* background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(3.6px);
   -webkit-backdrop-filter: blur(3.6px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
-  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.3); */
+
+  padding: 20px 30px;
+  background: rgba(54, 142, 208, 0.2);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(54, 142, 208, 0.3);
 }
 .recommendedSkills {
   background: rgba(255, 255, 255, 0.1);
-  border-radius: 0.3rem;
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  border-radius: 0.4rem;
+  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
   backdrop-filter: blur(3.6px);
   -webkit-backdrop-filter: blur(3.6px);
   border: 1px solid rgba(255, 255, 255, 0.3);
