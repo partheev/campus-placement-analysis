@@ -132,9 +132,14 @@ export const Analysis = ({ campusStats, onBack, downloadURL }) => {
                 </Grid>
                 {/* <CDFSalaryBranch /> */}
 
-                <Grid container columnSpacing={'1rem'} rowSpacing={'1rem'}>
-                    <Grid item md={6} xs={12}>
-                        <Stack rowGap={'1rem'}>
+                <Grid
+                    container
+                    alignItems={'stretch'}
+                    columnSpacing={'1rem'}
+                    rowSpacing={'1rem'}
+                >
+                    <Grid item md={6} xs={12} height={'100%'}>
+                        <Stack rowGap={'1rem'} height={'100%'}>
                             <MinimumInternshipProjectsAvgSalary
                                 minimumInternships={
                                     campusStats.min_no_of_internships_to_get_avg_sal
@@ -154,7 +159,7 @@ export const Analysis = ({ campusStats, onBack, downloadURL }) => {
                         </Stack>
                     </Grid>
 
-                    <Grid item md={6} xs={12}>
+                    <Grid item md={6} xs={12} height={'100%'}>
                         <HighAvgLeastEachBranch
                             data={
                                 campusStats.Highest_avg_least_sal_in_each_branch
@@ -180,7 +185,7 @@ export const Analysis = ({ campusStats, onBack, downloadURL }) => {
                             </Grid>
                         </Grid>
                     </Grid>
-                    <Grid item md={8} xs={12} sx={{ height: '100%' }}>
+                    <Grid item md={8} xs={12}>
                         <PlacedVsNotPlacedEachBranch
                             data={
                                 campusStats.percent_placed_notplaced_ineach_branch

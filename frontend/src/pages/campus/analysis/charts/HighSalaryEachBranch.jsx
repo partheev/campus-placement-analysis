@@ -49,7 +49,7 @@ export const HighSalaryEachBranch = ({ branches, highest_salaries }) => {
                 }}
                 series={[{ name: 'Salary', data: highest_salaries }]}
                 type='bar'
-                // height={350}
+                height={'100%'}
             />
         </ChartCard>
     );

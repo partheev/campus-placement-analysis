@@ -7,6 +7,7 @@ export const ChartCard = ({ children, style = {}, headingTitle, subTitle }) => {
                 backgroundColor: 'white',
                 borderRadius: '30px',
                 padding: '1rem',
+                height: '100%',
                 ...style,
             }}
         >

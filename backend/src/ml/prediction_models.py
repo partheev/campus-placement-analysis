@@ -175,6 +175,10 @@ def get_row_data(row):
 # Loop through the rows of the dataset
 
 
+def get_isplaced_probability(data):
+    return is_placed_model.predict_proba(data)
+
+
 def load_data(excel_file):
     # importing the csv file
     file_name = excel_file.filename
@@ -188,10 +192,7 @@ def load_data(excel_file):
     return df
 
 
-def get_predicted_data(excel_file):
-
-    # Loading dataset
-    dataset = load_data(excel_file=excel_file)
+def get_predicted_data(dataset):
 
     placed_prediction_feature_data = transform_placed_prediction(dataset)
     salary_prediction_feature_data = transform_salary_prediction(dataset)

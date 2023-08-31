@@ -1,7 +1,8 @@
 
 
+from src.ml.utils import transform_placed_prediction
 from src.ml.utils import save_df_to_temp
-from .prediction_models import get_predicted_data
+from .prediction_models import get_predicted_data, load_data
 import numpy as np
 import pandas as pd
 
@@ -15,8 +16,16 @@ Output - student placement report | contains predicted salary, placement probabi
 '''
 
 
-def predict_student_analytics(student):
-    pass
+def predict_student_placement(student_dict):
+    dataframe = pd.DataFrame(student_dict)
+
+    df_predicted = get_predicted_data(dataframe)
+
+    is_placed = df_predicted.loc[0, 'is_placed']
+    predicted_salary = df_predicted.loc[0, 'salary_as_fresher']
+
+    return {'is_placed': is_placed,
+            'predicted_salary': predicted_salary}
 
 
 '''
@@ -32,7 +41,9 @@ Output - college placement report and new excel sheet with predictions and sugge
 
 def predict_college_stats(excel_file):
 
-    df = get_predicted_data(excel_file)
+    dataframe = load_data(excel_file=excel_file)
+
+    df = get_predicted_data(dataframe)
     download_url = save_df_to_temp(df)
 
     data = df.drop(['s_id', 'name', 'other_skills', 'gender'], axis=1)

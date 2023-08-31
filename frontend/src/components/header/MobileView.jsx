@@ -2,10 +2,12 @@ import { Fragment, useState } from 'react';
 import PropTypes from 'prop-types';
 import Menu from './Menu';
 import { motion } from 'framer-motion';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from './navbar.module.css';
+import { PAGE_PATHS } from '../../constants/PagePaths';
 const MobileView = ({ NAV_PAGES }) => {
     const [isOpen, setisOpen] = useState(false);
+    const navigate = useNavigate();
 
     const menuVariant = {
         offscreen: {
@@ -25,7 +27,7 @@ const MobileView = ({ NAV_PAGES }) => {
         <div>
             <div
                 style={{
-                    height: '60.737px',
+                    height: '75.737px',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
@@ -36,11 +38,27 @@ const MobileView = ({ NAV_PAGES }) => {
                     style={{
                         display: 'flex',
                         justifyContent: 'space-between',
-                        width: '80%',
+                        width: '90%',
+                        alignItems: 'center',
+                        marginTop: '0rem',
                     }}
                 >
-                    <div style={{ display: 'flex', alignItems: 'center' }}>
-                        logo
+                    <div
+                        onClick={() => {
+                            navigate(PAGE_PATHS.INSIGHTS);
+                        }}
+                        style={{
+                            display: 'flex',
+                            padding: '0rem 0',
+                            alignItems: 'center',
+                        }}
+                    >
+                        <img
+                            style={{
+                                width: '3.5rem',
+                            }}
+                            src='/assets/images/logo.png'
+                        />
                     </div>
                     <div onClick={() => setisOpen(!isOpen)}>
                         <Menu />
