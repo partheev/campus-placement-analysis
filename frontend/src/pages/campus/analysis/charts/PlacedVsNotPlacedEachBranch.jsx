@@ -64,7 +64,7 @@ export const PlacedVsNotPlacedEachBranch = ({ data }) => {
                     { name: 'Not Placed', data: not_placed_percentages },
                 ]}
                 type='bar'
-                // height={'100%'}
+                height={'90%'}
             />
         </ChartCard>
     );

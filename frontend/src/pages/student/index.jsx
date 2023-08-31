@@ -1,19 +1,23 @@
-import { useContext, useState } from 'react'
+import { Fragment, useContext, useRef, useState } from 'react'
 import { Header } from '../../components/header'
 import { UploadBox } from '../campus/UploadBox'
 import { motion } from 'framer-motion'
-import { ResumeParser } from '../../apis/StudentAPI'
+import { PredictStudent, ResumeParser } from '../../apis/StudentAPI'
 import {
+  Alert,
   Button,
+  CircularProgress,
   Container,
   FormControl,
   FormControlLabel,
   FormLabel,
+  IconButton,
   InputLabel,
   OutlinedInput,
   Radio,
   RadioGroup,
   Select,
+  Snackbar,
   TextField,
 } from '@mui/material'
 import MenuItem from '@mui/material/MenuItem'
@@ -21,45 +25,88 @@ import styles from './student.module.css'
 import { RxCross2 } from 'react-icons/rx'
 import { AppContext } from '../../contexts/AppContext'
 import { GiMedallist } from 'react-icons/gi'
+import { TfiHandPointRight } from 'react-icons/tfi'
+import CloseIcon from '@mui/icons-material/Close'
 
 const ITEM_HEIGHT = 48
 const ITEM_PADDING_TOP = 8
 
+const INITIAL_STATE = {
+  tier: '',
+  cgpa: '',
+  inter_gpa: '',
+  ssc_gpa: '',
+  internships: '',
+  no_of_projects: 0,
+  is_participate_hackathon: '',
+  is_participated_extracurricular: '',
+  no_of_programming_languages: '',
+  dsa: 0,
+  mobile_dev: 0,
+  web_dev: 0,
+  'Machine Learning': 0,
+  cloud: 0,
+  CSE: 0,
+  ECE: 0,
+  IT: 0,
+  MECH: 0,
+}
+
 export const Student = () => {
   const { isMobile } = useContext(AppContext)
   const [isResumeUpload, setisResumeUpload] = useState(false)
-  const [formDetails, setformDetails] = useState({
-    tier: '',
-    cgpa: '',
-    inter_gpa: '',
-    ssc_gpa: '',
-    internships: '',
-    no_of_projects: 0,
-    is_participate_hackathon: null,
-    is_participated_extracurricular: null,
-    no_of_programming_languages: '',
-    dsa: 0,
-    mobile_dev: 0,
-    web_dev: 0,
-    Machine_Learning: 0,
-    cloud: 0,
-    CSE: 0,
-    ECE: 0,
-    IT: 0,
-    MECH: 0,
-  })
+  const [formDetails, setformDetails] = useState(INITIAL_STATE)
 
   const [studentName, setstudentName] = useState('')
+
+  const [selectedSkills, setselectedSkills] = useState([])
+  const [branch, setbranch] = useState('')
+  const [predictedData, setPredictedData] = useState(null)
+  const [loading, setloading] = useState(false)
+
+  const predictedComponentRef = useRef(null)
+  const executeScroll = () => predictedComponentRef.current.scrollIntoView()
+
+  const [openSnackBar, setopenSnackBar] = useState(false)
+  const [errorMessage, seterrorMessage] = useState('')
+  const handleOpenSnackBar = (msg) => {
+    setopenSnackBar(true)
+    seterrorMessage(msg)
+  }
+
+  const handleCloseSnackBar = (event, reason) => {
+    if (reason === 'clickaway') {
+      return
+    }
+
+    setopenSnackBar(false)
+  }
+
+  const action = (
+    <Fragment>
+      <Button color="secondary" size="small" onClick={handleCloseSnackBar}>
+        UNDO
+      </Button>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleCloseSnackBar}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </Fragment>
+  )
 
   const onUploadClick = async (file) => {
     const formData = new FormData()
     formData.append('file', file)
-    console.log('filee  ', file)
     try {
+      setloading(true)
       const res = await ResumeParser(formData)
-      console.log(res)
       setstudentName(res.studentName)
       setformDetails(res.details)
+      setloading(false)
       if (res.details.CSE === 1) setbranch('CSE')
       else if (res.details.ECE === 1) setbranch('ECE')
       else if (res.details.MECH === 1) setbranch('MECH')
@@ -68,18 +115,16 @@ export const Student = () => {
       if (res.details.dsa === 1) skills.push('dsa')
       if (res.details.mobile_dev === 1) skills.push('mobile_dev')
       if (res.details.web_dev === 1) skills.push('web_dev')
-      if (res.details.Machine_Learning === 1) skills.push('Machine_Learning')
+      if (res.details['Machine Learning'] === 1) skills.push('Machine Learning')
       if (res.details.cloud === 1) skills.push('cloud')
 
       setselectedSkills(skills)
     } catch (err) {
       console.log(err)
+      setloading(false)
+      handleOpenSnackBar(err.message)
     }
   }
-
-  console.log(formDetails)
-  const [selectedSkills, setselectedSkills] = useState([])
-  const [branch, setbranch] = useState('')
 
   const MenuProps = {
     PaperProps: {
@@ -90,26 +135,30 @@ export const Student = () => {
     },
   }
 
-  const skills = ['dsa', 'mobile_dev', 'web_dev', 'Machine_Learning', 'cloud']
+  const skills = [
+    { name: 'DSA', key: 'dsa' },
+    { name: 'Mobile app development', key: 'mobile_dev' },
+    { name: 'Web development', key: 'web_dev' },
+    { name: 'Machine Learning', key: 'Machine Learning' },
+    { name: 'Cloud', key: 'cloud' },
+  ]
 
-  const handleChange = async (event) => {
+  const handleSkillsChange = async (event) => {
     const {
       target: { value },
     } = event
-    console.log(event.target.value)
     setselectedSkills(typeof value === 'string' ? value.split(',') : value)
-    console.log(selectedSkills)
     setformDetails((prevState) => {
       const newState = {
         ...prevState,
         dsa: 0,
         mobile_dev: 0,
         web_dev: 0,
-        Machine_Learning: 0,
+        'Machine Learning': 0,
         cloud: 0,
       }
       const assignSelectedSkills = {}
-      event.target.value.forEach((skill) => (assignSelectedSkills[skill] = 1))
+      value.forEach((skill) => (assignSelectedSkills[skill] = 1))
 
       return { ...newState, ...assignSelectedSkills }
     })
@@ -117,44 +166,62 @@ export const Student = () => {
 
   const handleChangeBranch = (e) => {
     e.preventDefault()
-    console.log(e.target.value)
-    setbranch(e.target.value)
-    setformDetails((prev) => {
-      return { ...prev, [e.target.value]: 1 }
+    setbranch((prevBranch) => {
+      setformDetails((prev) => {
+        return { ...prev, [prevBranch]: 0, [e.target.value]: 1 }
+      })
+      return e.target.value
     })
   }
 
-  const handlePredict = (e) => {
+  const handlePredict = async (e) => {
     e.preventDefault()
     const data = {
-      tier: [formDetails.tier],
-      cgpa: [formDetails.cgpa],
-      inter_gpa: [formDetails.inter_gpa],
-      ssc_gpa: [formDetails.ssc_gpa],
-      internships: [formDetails.internships],
-      no_of_projects: [formDetails.no_of_projects],
-      is_participate_hackathon: [formDetails.is_participate_hackathon],
+      tier: [Number(formDetails.tier)],
+      cgpa: [Number(formDetails.cgpa)],
+      inter_gpa: [Number(formDetails.inter_gpa)],
+      ssc_gpa: [Number(formDetails.ssc_gpa)],
+      internships: [Number(formDetails.internships)],
+      no_of_projects: [Number(formDetails.no_of_projects)],
+      is_participate_hackathon: [Number(formDetails.is_participate_hackathon)],
       is_participated_extracurricular: [
-        formDetails.is_participated_extracurricular,
+        Number(formDetails.is_participated_extracurricular),
       ],
-      no_of_programming_languages: [formDetails.no_of_programming_languages],
-      dsa: [formDetails.dsa],
-      mobile_dev: [formDetails.mobile_dev],
-      web_dev: [formDetails.web_dev],
-      Machine_Learning: [formDetails.Machine_Learning],
-      cloud: [formDetails.cloud],
-      CSE: [formDetails.CSE],
-      ECE: [formDetails.ECE],
-      IT: [formDetails.IT],
-      MECH: [formDetails.MECH],
+      no_of_programming_languages: [
+        Number(formDetails.no_of_programming_languages),
+      ],
+      dsa: [Number(formDetails.dsa)],
+      mobile_dev: [Number(formDetails.mobile_dev)],
+      web_dev: [Number(formDetails.web_dev)],
+      'Machine Learning': [Number(formDetails['Machine Learning'])],
+      cloud: [Number(formDetails.cloud)],
+      CSE: [Number(formDetails.CSE)],
+      ECE: [Number(formDetails.ECE)],
+      IT: [Number(formDetails.IT)],
+      MECH: [Number(formDetails.MECH)],
     }
-    console.log(data)
+
+    try {
+      setloading(true)
+      const res = await PredictStudent(data)
+      setPredictedData(res)
+      setloading(false)
+      setformDetails(INITIAL_STATE)
+      setbranch('')
+      setselectedSkills([])
+      executeScroll()
+    } catch (err) {
+      console.log(err)
+      setloading(false)
+      handleOpenSnackBar(err.message)
+    }
   }
   return (
     <div
       style={{
-        backgroundColor: 'blueviolet',
+        // backgroundImage: 'linear-gradient(19deg, #FAACA8 0%, #DDD6F3 100%)',
         fontFamily: 'var(--font-primary)',
+        backgroundImage: 'linear-gradient(90deg, #21D4FD 0%, #cb8eeb 100%)',
       }}
     >
       <Header />
@@ -166,9 +233,34 @@ export const Student = () => {
           backgroundImage:
             'linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% )',
           paddingBottom: '20px',
-          // backgroundImage: 'linear-gradient(62deg, #8EC5FC 0%, #E0C3FC 100%)',
         }}
       >
+        {loading ? (
+          <CircularProgress
+            sx={{
+              position: 'absolute',
+              left: '50%',
+              top: '50%',
+              transform: 'translate(-50%,-50%)',
+              boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5)',
+              background: 'rgba(0, 0, 0, 0.5)',
+              borderColor: 'rgba(0, 0, 0, 0.)',
+            }}
+            color="secondary"
+          />
+        ) : (
+          ''
+        )}
+        <Snackbar
+          open={openSnackBar}
+          autoHideDuration={6000}
+          onClose={handleCloseSnackBar}
+          action={action}
+        >
+          <Alert onClose={handleCloseSnackBar} severity="error">
+            {errorMessage}
+          </Alert>
+        </Snackbar>
         {!isMobile && (
           <div style={{ width: '20rem', opacity: 0.5, position: 'absolute' }}>
             <img
@@ -223,6 +315,7 @@ export const Student = () => {
             )}
           </div>
           <h1 style={{ textAlign: 'center', fontSize: '45px' }}>OR</h1>
+
           <div className={styles.grid} style={{}}>
             <div className={styles.grid_item}>
               <FormControl fullWidth>
@@ -236,20 +329,26 @@ export const Student = () => {
                   label="College Tier"
                   variant="outlined"
                   onChange={(e) =>
-                    setformDetails({ ...formDetails, tier: e.target.value })
+                    setformDetails((prev) => ({
+                      ...prev,
+                      tier: e.target.value,
+                    }))
                   }
                   sx={{ width: '100%' }}
                 >
-                  <MenuItem value={1}>1</MenuItem>
-                  <MenuItem value={2}>2</MenuItem>
-                  <MenuItem value={3}>3</MenuItem>
+                  <MenuItem value={'1'}>1</MenuItem>
+                  <MenuItem value={'2'}>2</MenuItem>
+                  <MenuItem value={'3'}>3</MenuItem>
                 </Select>
               </FormControl>
             </div>
             <div className={styles.grid_item}>
               <TextField
                 onChange={(e) =>
-                  setformDetails({ ...formDetails, cgpa: e.target.value })
+                  setformDetails((prev) => ({
+                    ...prev,
+                    cgpa: e.target.value,
+                  }))
                 }
                 id="outlined-number"
                 label="Degree CGPA"
@@ -279,10 +378,10 @@ export const Student = () => {
             <div className={styles.grid_item}>
               <TextField
                 onChange={(e) =>
-                  setformDetails({
-                    ...formDetails,
+                  setformDetails((prev) => ({
+                    ...prev,
                     inter_gpa: e.target.value,
-                  })
+                  }))
                 }
                 id="outlined-number"
                 label="Intermediate GPA"
@@ -299,19 +398,19 @@ export const Student = () => {
                   id="demo-multiple-name"
                   multiple
                   value={selectedSkills}
-                  onChange={handleChange}
+                  onChange={handleSkillsChange}
                   input={<OutlinedInput label="Name" />}
                   MenuProps={MenuProps}
                   sx={{ width: '100%' }}
                 >
-                  {skills.map((name) => (
+                  {skills.map((skill, idx) => (
                     <MenuItem
-                      key={name}
-                      value={name}
+                      key={idx}
+                      value={skill.key}
                       // selected
                       // style={getStyles(name, selectedSkills, theme)}
                     >
-                      {name}
+                      {skill.name}
                     </MenuItem>
                   ))}
                 </Select>
@@ -320,7 +419,10 @@ export const Student = () => {
             <div className={styles.grid_item}>
               <TextField
                 onChange={(e) =>
-                  setformDetails({ ...formDetails, ssc_gpa: e.target.value })
+                  setformDetails((prev) => ({
+                    ...prev,
+                    ssc_gpa: e.target.value,
+                  }))
                 }
                 id="outlined-number"
                 label="SSC GPA"
@@ -332,10 +434,10 @@ export const Student = () => {
             <div className={styles.grid_item}>
               <TextField
                 onChange={(e) =>
-                  setformDetails({
-                    ...formDetails,
+                  setformDetails((prev) => ({
+                    ...prev,
                     internships: e.target.value,
-                  })
+                  }))
                 }
                 id="outlined-number"
                 label="Number Of Internships"
@@ -354,10 +456,10 @@ export const Student = () => {
                 name="row-radio-buttons-group"
                 value={formDetails.is_participated_extracurricular}
                 onChange={(e) =>
-                  setformDetails({
-                    ...formDetails,
+                  setformDetails((prev) => ({
+                    ...prev,
                     is_participated_extracurricular: parseInt(e.target.value),
-                  })
+                  }))
                 }
               >
                 <FormControlLabel value={1} control={<Radio />} label="YES" />
@@ -367,10 +469,10 @@ export const Student = () => {
             <div className={styles.grid_item}>
               <TextField
                 onChange={(e) =>
-                  setformDetails({
-                    ...formDetails,
+                  setformDetails((prev) => ({
+                    ...prev,
                     no_of_projects: e.target.value,
-                  })
+                  }))
                 }
                 id="outlined-number"
                 label="Number Of Projects"
@@ -389,10 +491,10 @@ export const Student = () => {
                 name="controlled-radio-buttons-group"
                 value={formDetails.is_participate_hackathon}
                 onChange={(e) =>
-                  setformDetails({
-                    ...formDetails,
+                  setformDetails((prev) => ({
+                    ...prev,
                     is_participate_hackathon: parseInt(e.target.value),
-                  })
+                  }))
                 }
               >
                 <FormControlLabel value={1} control={<Radio />} label="YES" />
@@ -403,10 +505,10 @@ export const Student = () => {
             <div className={styles.grid_item}>
               <TextField
                 onChange={(e) =>
-                  setformDetails({
-                    ...formDetails,
+                  setformDetails((prev) => ({
+                    ...prev,
                     no_of_programming_languages: e.target.value,
-                  })
+                  }))
                 }
                 id="outlined-number"
                 label="Number Of Programming Languages"
@@ -420,72 +522,82 @@ export const Student = () => {
             style={{
               display: 'flex',
               justifyContent: 'center',
-              margin: '12px',
+              margin: '20px',
             }}
           >
             <Button
               onClick={handlePredict}
               variant="contained"
-              sx={{ padding: '10px 20px' }}
+              sx={{ fontSize: '18px', fontWeight: 500 }}
             >
               PREDICT
             </Button>
           </div>
-          <div className={styles.predicted_screen}>
-            <h1 style={{ fontSize: '40px', textAlign: 'center' }}>
-              Here&apos;s your Prediction
-            </h1>
-            {studentName ? (
-              <h1 style={{ fontSize: '30px' }}>HELLO! {studentName}</h1>
-            ) : (
-              ''
-            )}
-            <div>
-              <div
-                style={{
-                  display: 'flex',
-                  alignItems: 'center',
-                }}
-                className={styles.percentage_text}
-              >
-                <GiMedallist /> Chances Of Getting Placed -
-                <span className={styles.percentageBody}>
-                  <span className={styles.percentage}>94%</span>
-                </span>
-              </div>
-              <h1>
-                Predicted Salary:{' '}
-                <span style={{ color: '#9d44c0' }}>{4}LPA</span>
+
+          {predictedData && (
+            <div
+              ref={predictedComponentRef}
+              className={styles.predicted_screen}
+            >
+              <h1 style={{ fontSize: '40px', textAlign: 'center' }}>
+                Here&apos;s your Prediction
               </h1>
+              {studentName ? (
+                <h1 style={{ fontSize: '30px' }}>HELLO! {studentName}</h1>
+              ) : (
+                ''
+              )}
               <div>
-                <p style={{ fontSize: '20px', marginTop: '1rem' }}>
-                  Recommended Skills To Increase Your Chances Of Getting Placed
-                </p>
                 <div
                   style={{
                     display: 'flex',
-                    flexDirection: 'row',
-                    columnGap: '10px',
-                    rowGap: '10px',
-                    flexWrap: 'wrap',
+                    alignItems: 'center',
                   }}
+                  className={styles.percentage_text}
                 >
+                  <GiMedallist style={{ fontSize: 'inherit' }} /> Chances Of
+                  Getting Placed -
+                  <span className={styles.percentageBody}>
+                    <span className={styles.percentage}>94%</span>
+                  </span>
+                </div>
+                <h1>
+                  <TfiHandPointRight /> Predicted Salary:{' '}
+                  <span style={{ color: '#9d44c0' }}>
+                    {predictedData.predicted_salary}LPA
+                  </span>
+                </h1>
+                <div>
+                  <p style={{ fontSize: '20px', marginTop: '1rem' }}>
+                    <TfiHandPointRight /> Recommended Skills To Increase Your
+                    Chances Of Getting Placed:
+                  </p>
                   <div
-                    className={styles.recommendedSkills}
-                    style={{ padding: '10px 20px', fontSize: '20px' }}
+                    style={{
+                      display: 'flex',
+                      flexDirection: 'row',
+                      columnGap: '10px',
+                      rowGap: '10px',
+                      flexWrap: 'wrap',
+                    }}
                   >
-                    WEB Development
-                  </div>
-                  <div
-                    className={styles.recommendedSkills}
-                    style={{ padding: '10px 20px', fontSize: '20px' }}
-                  >
-                    WEB Development
+                    <div
+                      className={styles.recommendedSkills}
+                      style={{ padding: '10px 20px', fontSize: '20px' }}
+                    >
+                      WEB Development
+                    </div>
+                    <div
+                      className={styles.recommendedSkills}
+                      style={{ padding: '10px 20px', fontSize: '20px' }}
+                    >
+                      WEB Development
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
         </Container>
       </div>
     </div>

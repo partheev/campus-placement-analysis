@@ -58,9 +58,8 @@ export const LeastAvgHighest = ({ isMobile }) => {
           </div>
         </div>
         <SideText>
-          The graph shows pay differences in tiers (1, 2, and 3) with high,
-          average, and low salaries, giving a full picture of tier-based pay
-          range.
+          Tier 1 boasts the highest incomes, Tier 2 maintains moderate earnings,
+          and Tier 3 records the lowest wages, showcasing clear salary gradation
         </SideText>
       </Container>
     </div>

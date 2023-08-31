@@ -53,8 +53,9 @@ export const Factors = ({ isMobile }) => {
       <Container maxWidth="lg">
         <HeadText>Key Placement Influencers</HeadText>
         <SideText style={{ width: '100%' }}>
-          The pie chart gives an overview of diverse factors in placements,
-          highlighting their intricate role in shaping student employability.
+          The pie chart visually breaks down factors influencing placement,
+          showing their relative impact through percentages, which determines
+          student employability.{' '}
         </SideText>
         <div
           style={{

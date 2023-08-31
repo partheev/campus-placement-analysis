@@ -9,7 +9,10 @@ const Chart = ({ img, tier }) => {
     <div>
       <div className={styles.distribution_chart}>
         <h3
-          style={{ textAlign: 'center', fontFamily: 'var(--font-secondary)' }}
+          style={{
+            textAlign: 'center',
+            fontFamily: 'var(--font-secondary)',
+          }}
         >
           TIER {tier}
         </h3>
@@ -45,13 +48,13 @@ export const DistributionOfSalary = () => {
       }}
     >
       <Container maxWidth="lg">
-        <HeadText style={{ marginBottom: '5rem' }}>
+        <HeadText style={{ marginBottom: '3rem' }}>
           A Comparative Analysis on Tier-wise Student Salary Distribution{' '}
         </HeadText>
         <SideText>
-          In the tier spectrum, Tier 1 and 2 favor mid-range salaries, while
-          Tier 3 leans to lower pay, reflecting diverse student package
-          acquisition.
+          Tier 1 boasts the highest incomes, Tier 2 maintains moderate earnings,
+          and Tier 3 records the lowest wages, showcasing clear salary
+          gradation.
         </SideText>
 
         <div

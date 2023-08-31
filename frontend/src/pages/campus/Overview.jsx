@@ -1,5 +1,12 @@
 import { UploadBox } from './UploadBox';
-import { Alert, Box, Container, Snackbar, Typography } from '@mui/material';
+import {
+    Alert,
+    Box,
+    CircularProgress,
+    Container,
+    Snackbar,
+    Typography,
+} from '@mui/material';
 import DoneOutlineIcon from '@mui/icons-material/DoneOutline';
 import { PredictCampusPlacements } from '../../apis/CampusAPI.js';
 import { Header } from '../../components/header';
@@ -15,17 +22,21 @@ const NotePoints = [
 
 export const Overview = ({ setcampusStats, setdownloadURL }) => {
     const { isMobile } = useContext(AppContext);
+    const [isLoading, setisLoading] = useState(false);
     const [error, setError] = useState(null);
 
     const onUploadClick = async (file) => {
         const formData = new FormData();
         formData.append('file', file);
         try {
+            setisLoading(true);
             const res = await PredictCampusPlacements(formData);
 
+            setisLoading(false);
             setdownloadURL(backend_endpoint + res.download_url);
             setcampusStats(res.stats);
         } catch (err) {
+            setisLoading(false);
             console.log(err);
             if (err.response) {
                 // The request was made and the server responded with a status code
@@ -202,7 +213,26 @@ export const Overview = ({ setcampusStats, setdownloadURL }) => {
                             </a>
                         </div>
                     </Container>
-                    <UploadBox onUploadClick={onUploadClick} />
+
+                    {isLoading ? (
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                marginTop: '3rem',
+                            }}
+                        >
+                            <CircularProgress
+                                sx={{
+                                    color: 'white',
+                                }}
+                            />
+                        </div>
+                    ) : (
+                        <UploadBox onUploadClick={onUploadClick}>
+                            Upload .excel or .csv file in the mentioned format
+                        </UploadBox>
+                    )}
                 </Container>
             </div>
         </div>
