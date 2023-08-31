@@ -188,7 +188,7 @@ export const Cgpa = ({ isMobile }) => {
                 className={styles.decors}
                 style={{
                   position: 'absolute',
-                  top: 1100,
+                  top: 1300,
                   left: 40,
                   transform: 'rotate(235deg)',
                   zIndex: 2,

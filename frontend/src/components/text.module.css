@@ -1,6 +1,6 @@
 .text {
   text-align: center;
-  font-size: 56px;
+  font-size: 40px;
   font-weight: 700;
 }
 .sideText {
@@ -14,7 +14,7 @@
 }
 @media screen and (max-width: 920px) {
   .text {
-    font-size: 40px;
+    font-size: 35px;
     font-weight: 600;
   }
 }
