@@ -1,13 +1,15 @@
 import requests
 import os
 
-API_KEY = os.getenv('ML_DEPLOYMENT_API_KEY')
-# NOTE: you must manually set API_KEY below using information retrieved from your IBM Cloud account.
-token_response = requests.post('https://iam.cloud.ibm.com/identity/token', data={"apikey":
-                                                                                 API_KEY, "grant_type": 'urn:ibm:params:oauth:grant-type:apikey'})
-mltoken = token_response.json()["access_token"]
 
-print("Model model connected.")
+def generate_access_token():
+    API_KEY = os.getenv('ML_DEPLOYMENT_API_KEY')
+    # NOTE: you must manually set API_KEY below using information retrieved from your IBM Cloud account.
+    token_response = requests.post('https://iam.cloud.ibm.com/identity/token', data={"apikey":
+                                                                                     API_KEY, "grant_type": 'urn:ibm:params:oauth:grant-type:apikey'})
+    mltoken = token_response.json()["access_token"]
+    return mltoken
+
 
 """
 input_fields - array of fields
@@ -37,6 +39,8 @@ input_fields - array of fields
 
 
 def predict_salary_api(feature_values):
+
+    mltoken = generate_access_token()
 
     header = {'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + mltoken}
@@ -81,6 +85,8 @@ def predict_salary_api(feature_values):
 
 
 def predict_isplaced_api(feature_values):
+
+    mltoken = generate_access_token()
 
     header = {'Content-Type': 'application/json',
               'Authorization': 'Bearer ' + mltoken}
