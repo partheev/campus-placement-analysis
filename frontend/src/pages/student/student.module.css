@@ -1,11 +1,38 @@
 .grid {
   display: grid;
-
   align-content: center;
   justify-content: space-evenly;
   grid-template-columns: 20rem 20rem;
   row-gap: 10px;
   align-items: center;
+}
+
+.percentage {
+  font-size: 3.2rem;
+  font-weight: 500;
+  width: 1rem;
+  padding: 4px;
+  color: #9d44c0;
+}
+.percentage_text {
+  font-size: 2rem;
+}
+.predicted_screen {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 1rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.6px);
+  -webkit-backdrop-filter: blur(3.6px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 20px;
+}
+.recommendedSkills {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 0.3rem;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(3.6px);
+  -webkit-backdrop-filter: blur(3.6px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 @media screen and (max-width: 713px) {
@@ -16,5 +43,12 @@
     justify-content: center;
     align-items: center;
     grid-template-columns: auto;
+  }
+
+  .percentage_text {
+    font-size: 20px;
+  }
+  .percentage {
+    font-size: 2rem;
   }
 }

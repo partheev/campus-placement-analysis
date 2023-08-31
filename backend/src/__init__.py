@@ -80,7 +80,7 @@ def create_app(test_config=None):
             url, data=payload, files=files, headers=headers)
 
         details = {
-            "tier": None,
+            "tier": '',
             "cgpa": None,
             "inter_gpa": None,
             "ssc_gpa": None,
@@ -99,16 +99,15 @@ def create_app(test_config=None):
             "IT": 0,
             "MECH": 0
         }
+        studentName = ""
         # print(response.text)
         data = response.json()["data"]
         print(data)
         try:
             if data['education'] is not None:
-                print("tada")
                 for i in data["education"]:
                     if(i.get('accreditation') is not None and i["accreditation"].get("education") is not None and i.get('organization') is not None):
-                        print("edu ", i["accreditation"])
-
+                        
                         if ((i["accreditation"]["educationLevel"] is not None and 'bachelors' in i["accreditation"]["educationLevel"].lower()) or (i["accreditation"]["inputStr"] is not None and ('bachelors' in i["accreditation"]["inputStr"].lower() or 'btech' in i["accreditation"]["inputStr"].lower())) or (i["organization"] is not None and 'engineering' in i["organization"].lower())):
 
                             details["cgpa"] = i["grade"]["value"]
@@ -160,6 +159,10 @@ def create_app(test_config=None):
         except:
             print()
 
-        return details
+        try:
+            studentName = data['name']['raw']
+        except: print()
+
+        return {"details":details,"studentName":studentName}
 
     return app
