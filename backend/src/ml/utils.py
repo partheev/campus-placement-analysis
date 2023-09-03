@@ -109,6 +109,28 @@ def save_df_to_temp(df):
     return '/temp/'+unique_id+'.csv'
 
 
+def deleteTempFiles():
+    directory_path = temp_file_url_path = os.path.join(
+        os.path.dirname(__file__), '..', 'static', 'temp')
+
+    # List all files in the directory
+    file_list = os.listdir(directory_path)
+
+    # Iterate through the files and delete them
+    for filename in file_list:
+        file_path = os.path.join(directory_path, filename)
+        try:
+            if os.path.isfile(file_path):
+                file_extension = os.path.splitext(file_path)[1]
+                print(file_extension)
+                if file_extension != '.txt':
+                    os.remove(file_path)
+
+                    print(f"Deleted file: {file_path}")
+        except Exception as e:
+            print(f"Error deleting {file_path}: {e}")
+
+
 def convert_is_placed_to_zero_ifnot_placed(is_placed, salary):
 
     for i in range(len(is_placed)):
@@ -151,3 +173,11 @@ def check_columns_and_datatypes(excel_file):
     except Exception as e:
         print("An error occurred:", traceback.format_exc())
         return False
+
+
+def delete_file(pathname):
+    try:
+        os.remove(pathname)
+        print(f"Deleted file: {pathname}")
+    except Exception as e:
+        print(f"Error deleting file: {e}")

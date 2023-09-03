@@ -148,14 +148,23 @@ export const Analysis = ({ campusStats, onBack, downloadURL }) => {
                                     campusStats.min_no_of_projects_to_get_avg_sal
                                 }
                             />
-                            <SkillsRequiredForAvgSalary
-                                skills={campusStats.skills_req_to_get_avg_sal}
-                            />
-                            <ImpTechnicalSkills
-                                technical_skills={
-                                    campusStats.imp_technical_skills
-                                }
-                            />
+                            {campusStats.skills_req_to_get_avg_sal &&
+                                campusStats.skills_req_to_get_avg_sal.length >
+                                    0 && (
+                                    <SkillsRequiredForAvgSalary
+                                        skills={
+                                            campusStats.skills_req_to_get_avg_sal
+                                        }
+                                    />
+                                )}
+                            {campusStats.imp_technical_skills &&
+                                campusStats.imp_technical_skills.length > 0 && (
+                                    <ImpTechnicalSkills
+                                        technical_skills={
+                                            campusStats.imp_technical_skills
+                                        }
+                                    />
+                                )}
                         </Stack>
                     </Grid>
 

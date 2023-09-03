@@ -3,9 +3,15 @@ from flask_cors import CORS, cross_origin
 import traceback
 import requests
 import os
+import threading
+from src.ml.utils import deleteTempFiles
+from src.ml.utils import delete_file
 from src.ml.utils import check_columns_and_datatypes
 
 from src.ml.predict import predict_college_stats, predict_student_placement
+
+
+deleteTempFiles()
 
 
 def compare(compare_list, compare_str):
@@ -16,6 +22,7 @@ def compare(compare_list, compare_str):
 
 
 def create_app(test_config=None):
+
     app = Flask(__name__, static_url_path='', static_folder='static')
     CORS(app)
 
@@ -37,12 +44,19 @@ def create_app(test_config=None):
                     'message': '[file] key not found in the form-data. Please upload excel file to fetch insights.'
                 }, 400
 
-            # if check_columns_and_datatypes(campus_data_file) is False:
-            #     return {
-            #         'message': 'File is not in the expected format. Check column names and data values.'
-            #     }, 400
+            if check_columns_and_datatypes(campus_data_file) is False:
+                return {
+                    'message': 'File is not in the expected format. Check column names and data values.'
+                }, 400
 
             stats, download_url = predict_college_stats(campus_data_file)
+
+            temp_file_url_path = os.path.join(
+                os.path.dirname(__file__), 'static', 'temp', download_url.split('/')[2])
+
+            timer = threading.Timer(
+                60*60, delete_file, args=[temp_file_url_path])
+            timer.start()
 
             return {
                 'status': 'file uploaded....',

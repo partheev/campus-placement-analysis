@@ -75,12 +75,12 @@ const Item = ({ children, Icon, description }) => {
                     width: '100%',
                 }}
             >
-                <Grid container>
-                    <Grid item xs={1.5}>
+                <Grid container columnSpacing={'1rem'}>
+                    <Grid item xs={'auto'}>
                         <Icon sx={{ fontSize: '2.5rem', color: '#35F2DF' }} />
                     </Grid>
 
-                    <Grid item xs={10.5}>
+                    <Grid item xs>
                         <Stack>
                             <Typography
                                 sx={{
