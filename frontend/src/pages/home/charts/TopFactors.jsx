@@ -57,6 +57,7 @@ const Item = ({ children, Icon, description }) => {
                 delay: 0,
                 ease: [0, 0.71, 0.2, 1.01],
             }}
+            viewport={{ once: true }}
             className={styles.item}
             style={{
                 height: '100%',

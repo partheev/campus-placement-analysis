@@ -1,10 +1,13 @@
 import ReactApexChart from 'react-apexcharts';
 import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
+import { ApexColourPalette } from '../../../../data/ApexChartsColourPalette';
 
 export const AvgProjWithAndWithoutSkills = ({ data }) => {
     const labels = Object.keys(data);
     const values = Object.values(data);
+    console.log(labels);
+    console.log(values);
     return (
         <ChartCard
             subTitle={
@@ -50,9 +53,17 @@ export const AvgProjWithAndWithoutSkills = ({ data }) => {
                     fill: {
                         opacity: 1,
                     },
+                    colors: [],
                 }}
-                series={[{ name: 'Projects', data: values }]}
+                series={[
+                    {
+                        name: 'Projects',
+                        data: values,
+                        color: ApexColourPalette[2],
+                    },
+                ]}
                 type='bar'
+
                 // height={350}
             />
         </ChartCard>

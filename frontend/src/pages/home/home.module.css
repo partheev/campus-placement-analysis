@@ -118,6 +118,18 @@
 .mainImg {
     opacity: 0.8;
 }
+.gdp_chart {
+    margin: 0 auto;
+    width: 50rem;
+}
+.title {
+    /* font-family: 'Russo One', sans-serif; */
+    letter-spacing: 4px;
+    color: #c4b0ff;
+    font-family: 'Acme', sans-serif;
+    font-size: 3.5rem;
+    margin-left: 100px;
+}
 @media screen and (max-width: 920px) {
     .cgpa_chart_background {
         width: 35rem;
@@ -144,6 +156,13 @@
     .mainImg_div {
         width: 20rem;
     }
+    .gdp_chart {
+        width: 30rem;
+    }
+    .title {
+        margin-left: 50px;
+        font-size: 2rem;
+    }
 }
 
 @media screen and (max-width: 680px) {
@@ -168,5 +187,12 @@
     }
     .placedvsnot_chart {
         width: 30rem;
+    }
+    .gdp_chart {
+        width: 20rem;
+    }
+    .title {
+        margin-left: 20px;
+        font-size: 2.5rem;
     }
 }

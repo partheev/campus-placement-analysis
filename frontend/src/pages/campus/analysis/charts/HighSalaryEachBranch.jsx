@@ -1,6 +1,7 @@
 import ReactApexChart from 'react-apexcharts';
 import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
+import { ApexColourPalette } from '../../../../data/ApexChartsColourPalette';
 export const HighSalaryEachBranch = ({ branches, highest_salaries }) => {
     return (
         <ChartCard>
@@ -47,7 +48,13 @@ export const HighSalaryEachBranch = ({ branches, highest_salaries }) => {
                         categories: branches,
                     },
                 }}
-                series={[{ name: 'Salary', data: highest_salaries }]}
+                series={[
+                    {
+                        name: 'Salary',
+                        data: highest_salaries,
+                        color: ApexColourPalette[5],
+                    },
+                ]}
                 type='bar'
                 height={'100%'}
             />

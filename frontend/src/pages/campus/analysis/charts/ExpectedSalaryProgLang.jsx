@@ -1,6 +1,7 @@
 import ReactApexChart from 'react-apexcharts';
 import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
+import { ApexColourPalette } from '../../../../data/ApexChartsColourPalette';
 
 export const ExpectedSalaryProgLang = ({ data }) => {
     const labels = data.No_of_programming_languages;
@@ -53,6 +54,7 @@ export const ExpectedSalaryProgLang = ({ data }) => {
                         name: 'Salary',
                         type: 'column',
                         data: values,
+                        color: ApexColourPalette[3],
                     },
                     // {
                     //     name: 'Social Media',

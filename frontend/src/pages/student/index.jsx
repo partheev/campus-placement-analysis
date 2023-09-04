@@ -2,7 +2,11 @@ import { Fragment, useContext, useRef, useState } from 'react';
 import { Header } from '../../components/header';
 import { UploadBox } from '../campus/UploadBox';
 import { motion } from 'framer-motion';
-import { PredictStudent, ResumeParser } from '../../apis/StudentAPI';
+import {
+    PredictStudent,
+    RecommendSkills,
+    ResumeParser,
+} from '../../apis/StudentAPI';
 import {
     Alert,
     Button,
@@ -37,10 +41,10 @@ const INITIAL_STATE = {
     inter_gpa: '',
     ssc_gpa: '',
     internships: '',
-    no_of_projects: 0,
     is_participate_hackathon: '',
     is_participated_extracurricular: '',
     no_of_programming_languages: '',
+    no_of_projects: '',
     dsa: 0,
     mobile_dev: 0,
     web_dev: 0,
@@ -62,16 +66,24 @@ export const Student = () => {
     const [selectedSkills, setselectedSkills] = useState([]);
     const [branch, setbranch] = useState('');
     const [predictedData, setPredictedData] = useState(null);
-    const [loading, setloading] = useState(false);
-
+    const [recommendedSkills, setrecommendedSkills] = useState([]);
+    const [predictLoading, setpredictLoading] = useState(false);
+    const [resumeParseLoading, setresumeParseLoading] = useState(false);
     const predictedComponentRef = useRef(null);
     const executeScroll = () => predictedComponentRef.current.scrollIntoView();
 
     const [openSnackBar, setopenSnackBar] = useState(false);
-    const [errorMessage, seterrorMessage] = useState('');
-    const handleOpenSnackBar = (msg) => {
+
+    const [snackBarOptions, setsnackBarOptions] = useState({
+        msg: '',
+        severity: '',
+    });
+    const handleOpenSnackBar = (msg, severity) => {
         setopenSnackBar(true);
-        seterrorMessage(msg);
+        setsnackBarOptions({
+            msg: msg,
+            severity: severity,
+        });
     };
 
     const handleCloseSnackBar = (event, reason) => {
@@ -101,16 +113,42 @@ export const Student = () => {
             </IconButton>
         </Fragment>
     );
+    const formstyles = {
+        width: '100%',
+        backgroundColor: '#e5eff0',
+        borderRadius: '4px',
 
+        fieldset: {
+            borderColor: '#e5eff0',
+        },
+        '&:active fieldset': { borderColor: 'red' },
+        '& label.Mui-focused': {
+            color: '#b7c2c4',
+        },
+        '& .MuiInput-underline:after': {
+            borderBottomColor: 'black',
+        },
+        '& .MuiOutlinedInput-root': {
+            '& fieldset': {
+                borderColor: '#e5eff0',
+            },
+            '&:hover fieldset': {
+                borderColor: '#b7c2c4',
+            },
+            '&.Mui-focused fieldset': {
+                borderColor: '#b7c2c4',
+            },
+        },
+    };
     const onUploadClick = async (file) => {
         const formData = new FormData();
         formData.append('file', file);
         try {
-            setloading(true);
+            setresumeParseLoading(true);
             const res = await ResumeParser(formData);
             setstudentName(res.studentName);
             setformDetails(res.details);
-            setloading(false);
+            setresumeParseLoading(false);
             if (res.details.CSE === 1) setbranch('CSE');
             else if (res.details.ECE === 1) setbranch('ECE');
             else if (res.details.MECH === 1) setbranch('MECH');
@@ -125,9 +163,8 @@ export const Student = () => {
 
             setselectedSkills(skills);
         } catch (err) {
-            console.log(err);
-            setloading(false);
-            handleOpenSnackBar(err.message);
+            setresumeParseLoading(false);
+            handleOpenSnackBar(err.response.data.message, 'error');
         }
     };
 
@@ -181,46 +218,61 @@ export const Student = () => {
 
     const handlePredict = async (e) => {
         e.preventDefault();
-        const data = {
-            tier: [Number(formDetails.tier)],
-            cgpa: [Number(formDetails.cgpa)],
-            inter_gpa: [Number(formDetails.inter_gpa)],
-            ssc_gpa: [Number(formDetails.ssc_gpa)],
-            internships: [Number(formDetails.internships)],
-            no_of_projects: [Number(formDetails.no_of_projects)],
-            is_participate_hackathon: [
-                Number(formDetails.is_participate_hackathon),
-            ],
-            is_participated_extracurricular: [
-                Number(formDetails.is_participated_extracurricular),
-            ],
-            no_of_programming_languages: [
-                Number(formDetails.no_of_programming_languages),
-            ],
-            dsa: [Number(formDetails.dsa)],
-            mobile_dev: [Number(formDetails.mobile_dev)],
-            web_dev: [Number(formDetails.web_dev)],
-            'Machine Learning': [Number(formDetails['Machine Learning'])],
-            cloud: [Number(formDetails.cloud)],
-            CSE: [Number(formDetails.CSE)],
-            ECE: [Number(formDetails.ECE)],
-            IT: [Number(formDetails.IT)],
-            MECH: [Number(formDetails.MECH)],
-        };
+        const data = {};
+        for (const key in formDetails) {
+            if (key) {
+                if (
+                    key == 'tier' ||
+                    key === 'cgpa' ||
+                    key === 'inter_gpa' ||
+                    key === 'ssc_gpa' ||
+                    key === 'internships' ||
+                    key === 'is_participate_hackathon' ||
+                    key === 'is_participated_extracurricular' ||
+                    key === 'no_of_programming_languages' ||
+                    key === 'no_of_projects'
+                ) {
+                    if (formDetails[key] === INITIAL_STATE[key]) {
+                        handleOpenSnackBar(
+                            'Please fill out all the fields',
+                            'info'
+                        );
+                        return;
+                    }
+                    if (formDetails[key] < 0) {
+                        handleOpenSnackBar(
+                            'Make sure to fill the form with correct values',
+                            'info'
+                        );
+                        return;
+                    }
+                } else if (!branch) {
+                    handleOpenSnackBar('Branch is missing', 'info');
+                    return;
+                } else if (selectedSkills.length === 0) {
+                    handleOpenSnackBar('skills are missing', 'info');
+                    return;
+                }
+                data[key] = [Number(formDetails[key])];
+            }
+        }
 
         try {
-            setloading(true);
+            setpredictLoading(true);
             const res = await PredictStudent(data);
             setPredictedData(res);
-            setloading(false);
+            const recommendedSkills = await RecommendSkills({
+                skills: selectedSkills,
+            });
+            setrecommendedSkills(recommendedSkills);
+            setpredictLoading(false);
             setformDetails(INITIAL_STATE);
             setbranch('');
             setselectedSkills([]);
             executeScroll();
         } catch (err) {
-            console.log(err);
-            setloading(false);
-            handleOpenSnackBar(err.message);
+            setpredictLoading(false);
+            handleOpenSnackBar(err.response.data.message, 'error');
         }
     };
     return (
@@ -238,35 +290,22 @@ export const Student = () => {
                 style={{
                     minHeight: '90vh',
                     height: 'fit-content',
-                    backgroundImage:
-                        'linear-gradient( 174.2deg,  rgba(255,244,228,1) 7.1%, rgba(240,246,238,1) 67.4% )',
+
                     paddingBottom: '20px',
+                    // backgroundImage: 'linear-gradient(19deg, #21D4FD 0%, #B721FF 100%)',
                 }}
             >
-                {loading ? (
-                    <CircularProgress
-                        sx={{
-                            position: 'absolute',
-                            left: '50%',
-                            top: '50%',
-                            transform: 'translate(-50%,-50%)',
-                            boxShadow: '0 0 0 9999px rgba(0, 0, 0, 0.5)',
-                            background: 'rgba(0, 0, 0, 0.5)',
-                            borderColor: 'rgba(0, 0, 0, 0.)',
-                        }}
-                        color='secondary'
-                    />
-                ) : (
-                    ''
-                )}
                 <Snackbar
                     open={openSnackBar}
                     autoHideDuration={6000}
                     onClose={handleCloseSnackBar}
                     action={action}
                 >
-                    <Alert onClose={handleCloseSnackBar} severity='error'>
-                        {errorMessage}
+                    <Alert
+                        onClose={handleCloseSnackBar}
+                        severity={snackBarOptions.severity}
+                    >
+                        {snackBarOptions.msg}
                     </Alert>
                 </Snackbar>
                 {!isMobile && (
@@ -318,359 +357,439 @@ export const Student = () => {
                                 }}
                                 style={{ display: 'flex' }}
                             >
-                                <UploadBox
-                                    acceptFiles='.pdf'
-                                    onUploadClick={onUploadClick}
-                                >
-                                    Upload Resume. Accepted Formats: .pdf
-                                </UploadBox>
-                                <div
-                                    style={{
-                                        marginTop: '15px',
-                                        cursor: 'pointer',
-                                    }}
-                                    onClick={() => setisResumeUpload(false)}
-                                >
-                                    <RxCross2 />
-                                </div>
+                                {resumeParseLoading ? (
+                                    <CircularProgress
+                                        size='4rem'
+                                        sx={{ color: '#000' }}
+                                    />
+                                ) : (
+                                    <div style={{ display: 'flex' }}>
+                                        {' '}
+                                        <UploadBox
+                                            acceptFiles='.pdf'
+                                            onUploadClick={onUploadClick}
+                                        >
+                                            Upload Resume. Accepted Formats:
+                                            .pdf
+                                        </UploadBox>
+                                        <div
+                                            style={{
+                                                marginTop: '15px',
+                                                cursor: 'pointer',
+                                            }}
+                                            onClick={() =>
+                                                setisResumeUpload(false)
+                                            }
+                                        >
+                                            <RxCross2 />
+                                        </div>
+                                    </div>
+                                )}
                             </motion.div>
                         )}
                     </div>
                     <h1 style={{ textAlign: 'center', fontSize: '45px' }}>
                         OR
                     </h1>
-
-                    <div className={styles.grid} style={{}}>
-                        <div className={styles.grid_item}>
-                            <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-helper-label'>
-                                    College Tier
-                                </InputLabel>
-                                <Select
-                                    labelId='demo-simple-select-label'
-                                    id='demo-simple-select'
-                                    value={formDetails.tier}
-                                    label='College Tier'
-                                    variant='outlined'
+                    <div className={styles.form}>
+                        <div className={styles.grid}>
+                            <div className={styles.grid_item}>
+                                <FormControl fullWidth>
+                                    <InputLabel id='demo-simple-select-helper-label'>
+                                        College Tier
+                                    </InputLabel>
+                                    <Select
+                                        labelId='demo-simple-select-label'
+                                        id='demo-simple-select'
+                                        value={formDetails.tier}
+                                        label='College Tier'
+                                        variant='outlined'
+                                        onChange={(e) =>
+                                            setformDetails((prev) => ({
+                                                ...prev,
+                                                tier: e.target.value,
+                                            }))
+                                        }
+                                        sx={{
+                                            ...formstyles,
+                                        }}
+                                    >
+                                        <MenuItem value={'1'}>1</MenuItem>
+                                        <MenuItem value={'2'}>2</MenuItem>
+                                        <MenuItem value={'3'}>3</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
+                            <div className={styles.grid_item}>
+                                <TextField
                                     onChange={(e) =>
                                         setformDetails((prev) => ({
                                             ...prev,
-                                            tier: e.target.value,
+                                            cgpa: e.target.value,
                                         }))
                                     }
-                                    sx={{ width: '100%' }}
-                                >
-                                    <MenuItem value={'1'}>1</MenuItem>
-                                    <MenuItem value={'2'}>2</MenuItem>
-                                    <MenuItem value={'3'}>3</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </div>
-                        <div className={styles.grid_item}>
-                            <TextField
-                                onChange={(e) =>
-                                    setformDetails((prev) => ({
-                                        ...prev,
-                                        cgpa: e.target.value,
-                                    }))
-                                }
-                                id='outlined-number'
-                                label='Degree CGPA'
-                                type='number'
-                                sx={{ width: '100%' }}
-                                value={formDetails.cgpa}
-                            />
-                        </div>
-                        <div className={styles.grid_item}>
-                            <FormControl fullWidth>
-                                <InputLabel id='demo-simple-select-label'>
-                                    BRANCH
-                                </InputLabel>
-                                <Select
-                                    // sx={{ width: '100%' }}
-                                    labelId='demo-simple-select-label'
-                                    id='demo-simple-select'
-                                    value={branch}
-                                    label='BRANCH'
-                                    onChange={handleChangeBranch}
-                                >
-                                    <MenuItem value={'CSE'}>CSE</MenuItem>
-                                    <MenuItem value={'ECE'}>ECE</MenuItem>
-                                    <MenuItem value={'MECH'}>MECH</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </div>
-
-                        <div className={styles.grid_item}>
-                            <TextField
-                                onChange={(e) =>
-                                    setformDetails((prev) => ({
-                                        ...prev,
-                                        inter_gpa: e.target.value,
-                                    }))
-                                }
-                                id='outlined-number'
-                                label='Intermediate GPA'
-                                type='number'
-                                sx={{ width: '100%' }}
-                                value={formDetails.inter_gpa}
-                            />
-                        </div>
-                        <FormControl>
-                            <div className={styles.grid_item}>
-                                <InputLabel id='demo-multiple-name-label'>
-                                    Skills
-                                </InputLabel>
-                                <Select
-                                    labelId='demo-multiple-name-label'
-                                    id='demo-multiple-name'
-                                    multiple
-                                    value={selectedSkills}
-                                    onChange={handleSkillsChange}
-                                    input={<OutlinedInput label='Name' />}
-                                    MenuProps={MenuProps}
-                                    sx={{ width: '100%' }}
-                                >
-                                    {skills.map((skill, idx) => (
-                                        <MenuItem
-                                            key={idx}
-                                            value={skill.key}
-                                            // selected
-                                            // style={getStyles(name, selectedSkills, theme)}
-                                        >
-                                            {skill.name}
-                                        </MenuItem>
-                                    ))}
-                                </Select>
+                                    id='outlined-number'
+                                    label='Degree CGPA'
+                                    type='number'
+                                    sx={{
+                                        ...formstyles,
+                                    }}
+                                    value={formDetails.cgpa}
+                                />
                             </div>
-                        </FormControl>
-                        <div className={styles.grid_item}>
-                            <TextField
-                                onChange={(e) =>
-                                    setformDetails((prev) => ({
-                                        ...prev,
-                                        ssc_gpa: e.target.value,
-                                    }))
-                                }
-                                id='outlined-number'
-                                label='SSC GPA'
-                                type='number'
-                                sx={{ width: '100%' }}
-                                value={formDetails.ssc_gpa}
-                            />
-                        </div>
-                        <div className={styles.grid_item}>
-                            <TextField
-                                onChange={(e) =>
-                                    setformDetails((prev) => ({
-                                        ...prev,
-                                        internships: e.target.value,
-                                    }))
-                                }
-                                id='outlined-number'
-                                label='Number Of Internships'
-                                type='number'
-                                sx={{ width: '100%' }}
-                                value={formDetails.internships}
-                            />
-                        </div>
-                        <div className={styles.grid_item}>
-                            <FormLabel id='demo-controlled-radio-buttons-group'>
-                                Participated In Extra Curricular Activities
-                            </FormLabel>
-                            <RadioGroup
-                                row
-                                aria-labelledby='demo-row-radio-buttons-group-label'
-                                name='row-radio-buttons-group'
-                                value={
-                                    formDetails.is_participated_extracurricular
-                                }
-                                onChange={(e) =>
-                                    setformDetails((prev) => ({
-                                        ...prev,
-                                        is_participated_extracurricular:
-                                            parseInt(e.target.value),
-                                    }))
-                                }
-                            >
-                                <FormControlLabel
-                                    value={1}
-                                    control={<Radio />}
-                                    label='YES'
-                                />
-                                <FormControlLabel
-                                    value={0}
-                                    control={<Radio />}
-                                    label='NO'
-                                />
-                            </RadioGroup>
-                        </div>
-                        <div className={styles.grid_item}>
-                            <TextField
-                                onChange={(e) =>
-                                    setformDetails((prev) => ({
-                                        ...prev,
-                                        no_of_projects: e.target.value,
-                                    }))
-                                }
-                                id='outlined-number'
-                                label='Number Of Projects'
-                                type='number'
-                                sx={{ width: '100%' }}
-                            />
-                        </div>
+                            <div className={styles.grid_item}>
+                                <FormControl fullWidth>
+                                    <InputLabel id='demo-simple-select-label'>
+                                        BRANCH
+                                    </InputLabel>
+                                    <Select
+                                        //
+                                        labelId='demo-simple-select-label'
+                                        id='demo-simple-select'
+                                        value={branch}
+                                        label='BRANCH'
+                                        onChange={handleChangeBranch}
+                                        sx={{
+                                            ...formstyles,
+                                        }}
+                                    >
+                                        <MenuItem value={'CSE'}>CSE</MenuItem>
+                                        <MenuItem value={'ECE'}>ECE</MenuItem>
+                                        <MenuItem value={'MECH'}>MECH</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </div>
 
-                        <div className={styles.grid_item}>
-                            <FormLabel id='demo-controlled-radio-buttons-group'>
-                                Participated In Hackathons
-                            </FormLabel>
-                            <RadioGroup
-                                row
-                                aria-labelledby='demo-controlled-radio-buttons-group'
-                                name='controlled-radio-buttons-group'
-                                value={formDetails.is_participate_hackathon}
-                                onChange={(e) =>
-                                    setformDetails((prev) => ({
-                                        ...prev,
-                                        is_participate_hackathon: parseInt(
-                                            e.target.value
-                                        ),
-                                    }))
-                                }
-                            >
-                                <FormControlLabel
-                                    value={1}
-                                    control={<Radio />}
-                                    label='YES'
+                            <div className={styles.grid_item}>
+                                <TextField
+                                    sx={{
+                                        ...formstyles,
+                                    }}
+                                    onChange={(e) =>
+                                        setformDetails((prev) => ({
+                                            ...prev,
+                                            inter_gpa: e.target.value,
+                                        }))
+                                    }
+                                    id='outlined-number'
+                                    label='Intermediate GPA'
+                                    type='number'
+                                    value={formDetails.inter_gpa}
                                 />
-                                <FormControlLabel
-                                    value={0}
-                                    control={<Radio />}
-                                    label='NO'
+                            </div>
+                            <FormControl>
+                                <div className={styles.grid_item}>
+                                    <InputLabel id='demo-multiple-name-label'>
+                                        Skills
+                                    </InputLabel>
+                                    <Select
+                                        labelId='demo-multiple-name-label'
+                                        id='demo-multiple-name'
+                                        multiple
+                                        value={selectedSkills}
+                                        onChange={handleSkillsChange}
+                                        input={<OutlinedInput label='Name' />}
+                                        MenuProps={MenuProps}
+                                        sx={{
+                                            ...formstyles,
+                                        }}
+                                    >
+                                        {skills.map((skill, idx) => (
+                                            <MenuItem
+                                                key={idx}
+                                                value={skill.key}
+                                                // selected
+                                                // style={getStyles(name, selectedSkills, theme)}
+                                            >
+                                                {skill.name}
+                                            </MenuItem>
+                                        ))}
+                                    </Select>
+                                </div>
+                            </FormControl>
+                            <div className={styles.grid_item}>
+                                <TextField
+                                    sx={{
+                                        ...formstyles,
+                                    }}
+                                    onChange={(e) =>
+                                        setformDetails((prev) => ({
+                                            ...prev,
+                                            ssc_gpa: e.target.value,
+                                        }))
+                                    }
+                                    id='outlined-number'
+                                    label='SSC GPA'
+                                    type='number'
+                                    value={formDetails.ssc_gpa}
                                 />
-                            </RadioGroup>
-                        </div>
+                            </div>
+                            <div className={styles.grid_item}>
+                                <TextField
+                                    sx={{
+                                        ...formstyles,
+                                    }}
+                                    onChange={(e) =>
+                                        setformDetails((prev) => ({
+                                            ...prev,
+                                            internships: e.target.value,
+                                        }))
+                                    }
+                                    id='outlined-number'
+                                    label='Number Of Internships'
+                                    type='number'
+                                    value={formDetails.internships}
+                                />
+                            </div>
+                            <div className={styles.grid_item}>
+                                <FormLabel id='demo-controlled-radio-buttons-group'>
+                                    Participated In Extra Curricular Activities
+                                </FormLabel>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby='demo-row-radio-buttons-group-label'
+                                    name='row-radio-buttons-group'
+                                    value={
+                                        formDetails.is_participated_extracurricular
+                                    }
+                                    onChange={(e) =>
+                                        setformDetails((prev) => ({
+                                            ...prev,
+                                            is_participated_extracurricular:
+                                                parseInt(e.target.value),
+                                        }))
+                                    }
+                                >
+                                    <FormControlLabel
+                                        value={1}
+                                        control={
+                                            <Radio
+                                                sx={{
+                                                    '&, &.Mui-checked': {
+                                                        color: '#b7c2c4',
+                                                    },
+                                                }}
+                                            />
+                                        }
+                                        label='YES'
+                                    />
+                                    <FormControlLabel
+                                        value={0}
+                                        control={
+                                            <Radio
+                                                sx={{
+                                                    '&, &.Mui-checked': {
+                                                        color: '#b7c2c4',
+                                                    },
+                                                }}
+                                            />
+                                        }
+                                        label='NO'
+                                    />
+                                </RadioGroup>
+                            </div>
+                            <div className={styles.grid_item}>
+                                <TextField
+                                    sx={{
+                                        ...formstyles,
+                                    }}
+                                    onChange={(e) =>
+                                        setformDetails((prev) => ({
+                                            ...prev,
+                                            no_of_projects: e.target.value,
+                                        }))
+                                    }
+                                    id='outlined-number'
+                                    label='Number Of Projects'
+                                    type='number'
+                                />
+                            </div>
 
-                        <div className={styles.grid_item}>
-                            <TextField
-                                onChange={(e) =>
-                                    setformDetails((prev) => ({
-                                        ...prev,
-                                        no_of_programming_languages:
-                                            e.target.value,
-                                    }))
-                                }
-                                id='outlined-number'
-                                label='Number Of Programming Languages'
-                                type='number'
-                                sx={{ width: '100%' }}
-                                value={formDetails.no_of_programming_languages}
-                            />
+                            <div className={styles.grid_item}>
+                                <FormLabel id='demo-controlled-radio-buttons-group'>
+                                    Participated In Hackathons
+                                </FormLabel>
+                                <RadioGroup
+                                    row
+                                    aria-labelledby='demo-controlled-radio-buttons-group'
+                                    name='controlled-radio-buttons-group'
+                                    value={formDetails.is_participate_hackathon}
+                                    onChange={(e) =>
+                                        setformDetails((prev) => ({
+                                            ...prev,
+                                            is_participate_hackathon: parseInt(
+                                                e.target.value
+                                            ),
+                                        }))
+                                    }
+                                >
+                                    <FormControlLabel
+                                        value={1}
+                                        control={
+                                            <Radio
+                                                sx={{
+                                                    '&, &.Mui-checked': {
+                                                        color: '#b7c2c4',
+                                                    },
+                                                }}
+                                            />
+                                        }
+                                        label='YES'
+                                    />
+                                    <FormControlLabel
+                                        value={0}
+                                        control={
+                                            <Radio
+                                                sx={{
+                                                    '&, &.Mui-checked': {
+                                                        color: '#b7c2c4',
+                                                    },
+                                                }}
+                                            />
+                                        }
+                                        label='NO'
+                                    />
+                                </RadioGroup>
+                            </div>
+
+                            <div className={styles.grid_item}>
+                                <TextField
+                                    onChange={(e) =>
+                                        setformDetails((prev) => ({
+                                            ...prev,
+                                            no_of_programming_languages:
+                                                e.target.value,
+                                        }))
+                                    }
+                                    id='outlined-number'
+                                    label='Number Of Programming Languages'
+                                    type='number'
+                                    value={
+                                        formDetails.no_of_programming_languages
+                                    }
+                                    sx={{
+                                        ...formstyles,
+                                    }}
+                                />
+                            </div>
                         </div>
-                    </div>
-                    <div
-                        style={{
-                            display: 'flex',
-                            justifyContent: 'center',
-                            margin: '20px',
-                        }}
-                    >
-                        <Button
-                            onClick={handlePredict}
-                            variant='contained'
-                            sx={{ fontSize: '18px', fontWeight: 500 }}
+                        <div
+                            style={{
+                                display: 'flex',
+                                justifyContent: 'center',
+                                margin: '20px',
+                            }}
                         >
-                            PREDICT
-                        </Button>
-                    </div>
-                    <div ref={predictedComponentRef}></div>
-                    {predictedData && (
-                        <div className={styles.predicted_screen}>
-                            <h1
+                            <button
+                                onClick={handlePredict}
                                 style={{
-                                    fontSize: '40px',
-                                    textAlign: 'center',
+                                    fontSize: '18px',
+                                    backgroundColor: '#06cca2',
+                                    color: 'white',
+                                    border: '1px solid #06cca2',
+                                    padding: '8px 12px',
+                                    width: '12rem',
+                                    boxShadow:
+                                        'rgba(0, 0, 0, 0.24) 0px 3px 8px',
+                                    fontFamily: 'var(--font-secondary)',
                                 }}
                             >
-                                Here&apos;s your Prediction
-                            </h1>
-                            {studentName ? (
-                                <h1 style={{ fontSize: '30px' }}>
-                                    HELLO! {studentName}
-                                </h1>
-                            ) : (
-                                ''
-                            )}
-                            <div>
-                                <div
+                                {predictLoading ? (
+                                    <CircularProgress
+                                        size='18px'
+                                        sx={{ color: 'white' }}
+                                        color='secondary'
+                                    />
+                                ) : (
+                                    ''
+                                )}{' '}
+                                PREDICT
+                            </button>
+                        </div>
+                    </div>
+                    <div ref={predictedComponentRef}>
+                        {predictedData && (
+                            <div className={styles.predicted_screen}>
+                                <h1
                                     style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
+                                        fontSize: '40px',
+                                        textAlign: 'center',
                                     }}
-                                    className={styles.percentage_text}
                                 >
-                                    <GiMedallist
-                                        style={{ fontSize: 'inherit' }}
-                                    />{' '}
-                                    Chances Of Getting Placed -
-                                    <span className={styles.percentageBody}>
-                                        <span className={styles.percentage}>
+                                    Here&apos;s your Prediction
+                                </h1>
+                                {studentName ? (
+                                    <h1 style={{ fontSize: '30px' }}>
+                                        HELLO! {studentName}
+                                    </h1>
+                                ) : (
+                                    ''
+                                )}
+                                <div>
+                                    <h2 style={{ fontWeight: 200 }}>
+                                        <GiMedallist /> Chances Of Getting
+                                        Placed:{' '}
+                                        <span style={{ color: '#9d44c0' }}>
                                             {
                                                 predictedData.placement_probability
                                             }
                                             %
                                         </span>
-                                    </span>
-                                </div>
-                                <h1>
-                                    <TfiHandPointRight /> Predicted Salary:{' '}
-                                    <span style={{ color: '#9d44c0' }}>
-                                        {predictedData.predicted_salary}LPA
-                                    </span>
-                                </h1>
-                                <div>
-                                    <p
-                                        style={{
-                                            fontSize: '20px',
-                                            marginTop: '1rem',
-                                        }}
-                                    >
-                                        <TfiHandPointRight /> Recommended Skills
-                                        To Increase Your Chances Of Getting
-                                        Placed:
-                                    </p>
-                                    <div
-                                        style={{
-                                            display: 'flex',
-                                            flexDirection: 'row',
-                                            columnGap: '10px',
-                                            rowGap: '10px',
-                                            flexWrap: 'wrap',
-                                        }}
-                                    >
-                                        <div
-                                            className={styles.recommendedSkills}
+                                    </h2>
+                                    <h1>
+                                        <TfiHandPointRight /> Predicted Salary:{' '}
+                                        <span style={{ color: '#9d44c0' }}>
+                                            {predictedData.predicted_salary}LPA
+                                        </span>
+                                    </h1>
+                                    <div>
+                                        <p
                                             style={{
-                                                padding: '10px 20px',
                                                 fontSize: '20px',
+                                                marginTop: '1rem',
                                             }}
                                         >
-                                            Deep Learning
-                                        </div>
+                                            <TfiHandPointRight /> Recommended
+                                            Skills To Increase Your Chances Of
+                                            Getting Placed:
+                                        </p>
+
                                         <div
-                                            className={styles.recommendedSkills}
                                             style={{
-                                                padding: '10px 20px',
-                                                fontSize: '20px',
+                                                display: 'flex',
+                                                flexDirection: 'row',
+                                                columnGap: '10px',
+                                                rowGap: '10px',
+                                                flexWrap: 'wrap',
                                             }}
                                         >
-                                            Blockchain
+                                            {recommendedSkills &&
+                                                recommendedSkills.map(
+                                                    (skill, idx) => {
+                                                        return (
+                                                            <div
+                                                                key={idx}
+                                                                className={
+                                                                    styles.recommendedSkills
+                                                                }
+                                                                style={{
+                                                                    padding:
+                                                                        '10px 20px',
+                                                                    fontSize:
+                                                                        '20px',
+                                                                }}
+                                                            >
+                                                                {skill}
+                                                            </div>
+                                                        );
+                                                    }
+                                                )}
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </Container>
             </div>
         </div>

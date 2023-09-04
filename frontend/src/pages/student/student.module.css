@@ -6,39 +6,38 @@
   row-gap: 16px;
   align-items: center;
 }
+.form {
+  background-image: url(/static/images/form_background2.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  padding: 8rem 2rem 2rem 2rem;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
 
-.percentage {
-  font-size: 3.2rem;
-  font-weight: 500;
-  width: 1rem;
-  padding: 4px;
-  color: #9d44c0;
-}
-.percentage_text {
-  font-size: 2rem;
-}
 .predicted_screen {
-  /* background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-  backdrop-filter: blur(3.6px);
-  -webkit-backdrop-filter: blur(3.6px);
-  border: 1px solid rgba(255, 255, 255, 0.3); */
-
   padding: 20px 30px;
-  background: rgba(54, 142, 208, 0.2);
-  border-radius: 16px;
+  background-image: url(/static/images/predicted_background.jpg);
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  border-radius: 3px;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  margin-top: 3rem;
+}
+.recommendedSkills {
+  border-radius: 4px;
   box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
-  border: 1px solid rgba(54, 142, 208, 0.3);
-}
-.recommendedSkills {
-  background: rgba(255, 255, 255, 0.1);
-  border-radius: 0.4rem;
-  /* box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1); */
-  backdrop-filter: blur(3.6px);
-  -webkit-backdrop-filter: blur(3.6px);
-  border: 1px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(223, 176, 176, 0.3);
 }
 
 @media screen and (max-width: 713px) {
@@ -50,11 +49,7 @@
     align-items: center;
     grid-template-columns: auto;
   }
-
-  .percentage_text {
-    font-size: 20px;
-  }
-  .percentage {
-    font-size: 2rem;
+  .form {
+    padding: 3rem 1rem 1rem 1rem;
   }
 }

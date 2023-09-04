@@ -10,3 +10,8 @@ export const PredictStudent = async (data) => {
   const res = await api.post('/predict-student-placement', data)
   return res.data
 }
+
+export const RecommendSkills = async (data) => {
+  const res = await api.post('/recommendSkills', data)
+  return res.data
+}

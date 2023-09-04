@@ -37,14 +37,13 @@ export const Overview = ({ setcampusStats, setdownloadURL }) => {
             setcampusStats(res.stats);
         } catch (err) {
             setisLoading(false);
-            console.log(err);
             if (err.response) {
                 // The request was made and the server responded with a status code
                 // that falls out of the range of 2xx
                 setError(err.response.data.message);
             } else {
                 // Something happened in setting up the request that triggered an err
-                setError(err.message);
+                setError(err.message || 'Something went wrong.');
             }
         }
     };

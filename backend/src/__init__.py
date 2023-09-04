@@ -44,9 +44,12 @@ def create_app(test_config=None):
                     'message': '[file] key not found in the form-data. Please upload excel file to fetch insights.'
                 }, 400
 
-            if check_columns_and_datatypes(campus_data_file) is False:
+            isError, errorMessage = check_columns_and_datatypes(
+                campus_data_file)
+
+            if isError == True:
                 return {
-                    'message': 'File is not in the expected format. Check column names and data values.'
+                    'message': errorMessage
                 }, 400
 
             stats, download_url = predict_college_stats(campus_data_file)
@@ -204,5 +207,34 @@ def create_app(test_config=None):
                 'message': 'Something went wrong.',
                 'stack': traceback.format_exc()
             }, 500
+
+    @app.post("/api/recommendSkills")
+    @cross_origin(origins='*')
+    def RecommendSkills():
+        body = request.get_json()
+        print("hit", body['skills'])
+        url = "https://api.affinda.com/v3/resume_search/suggestion_skill?"
+        skill = ""
+        for i in body['skills']:
+            if i == 'mobile_dev':
+                skill = "mobile"
+            elif i == 'web_dev':
+                skill = "web"
+            elif i == 'dsa':
+                skill = "data structures"
+            else:
+                skill = i
+
+            url = url + 'skills='+skill+'&'
+        print(url)
+
+        headers = {
+            "accept": "application/json",
+            "authorization": "Bearer aff_804629cb290c541d48c4f3f75753be18d1f05ab0"
+        }
+
+        response = requests.get(url, headers=headers)
+
+        return response.json()
 
     return app

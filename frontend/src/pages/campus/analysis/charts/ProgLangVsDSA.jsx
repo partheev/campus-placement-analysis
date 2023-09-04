@@ -1,6 +1,7 @@
 import ReactApexChart from 'react-apexcharts';
 import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
+import { ApexColourPalette } from '../../../../data/ApexChartsColourPalette';
 
 export const ProgLangVsDSA = ({ data }) => {
     const labels = Object.keys(data);
@@ -53,6 +54,7 @@ export const ProgLangVsDSA = ({ data }) => {
                     {
                         name: 'Avg. Number of Programming Languages',
                         data: values,
+                        color: ApexColourPalette[0],
                     },
                 ]}
                 type='bar'

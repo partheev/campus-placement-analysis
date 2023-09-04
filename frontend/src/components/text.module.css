@@ -4,13 +4,13 @@
   font-weight: 700;
 }
 .sideText {
-  font-size: 1.02em + 0.53vw;
+  font-size: 1.2rem;
   font-weight: 600;
   font-family: var(--font-secondary);
 }
 .sideText_div {
   width: 80%;
-  margin: 0 auto;
+  margin: 1rem auto;
 }
 @media screen and (max-width: 920px) {
   .text {

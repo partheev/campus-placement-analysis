@@ -1,6 +1,7 @@
 import ReactApexChart from 'react-apexcharts';
 import { ChartCard } from '../../../../components/ChartCard';
 import PropTypes from 'prop-types';
+import { ApexColourPalette } from '../../../../data/ApexChartsColourPalette';
 
 export const ExpectedSalaryInternships = ({ data }) => {
     const labels = data.No_of_internships;
@@ -51,6 +52,7 @@ export const ExpectedSalaryInternships = ({ data }) => {
                         name: 'Salary',
                         type: 'column',
                         data: values,
+                        color: ApexColourPalette[1],
                     },
                     // {
                     //     name: 'Social Media',
