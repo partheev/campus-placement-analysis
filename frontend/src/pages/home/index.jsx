@@ -11,6 +11,7 @@ import { TopFactors } from './charts/TopFactors'
 import styles from './home.module.css'
 import PropTypes from 'prop-types'
 import { AppContext } from '../../contexts/AppContext'
+import { Gdp } from './charts/Gdp'
 
 export const Home = () => {
   const { isMobile } = useContext(AppContext)
@@ -29,10 +30,20 @@ export const Home = () => {
         </div>
         <h1
           style={{
+            position: 'absolute',
+            top: 100,
+            zIndex: 4,
+          }}
+          className={styles.title}
+        >
+          PLACEMENTRACK
+        </h1>
+        <h1
+          style={{
             fontFamily: 'sans-serif',
             color: 'hsl(0 0% 98%)',
             position: 'absolute',
-            top: 100,
+            top: 200,
             zIndex: 4,
           }}
           className={styles.mainText}
@@ -63,14 +74,13 @@ export const Home = () => {
             ''
           )}
         </div>
-
         <Cgpa isMobile={isMobile} />
         <DistributionOfSalary />
         <GreaterThanLPA />
         <LeastAvgHighest isMobile={isMobile} />
         <BranchWiseLAH isMobile={isMobile} />
-
         <PlacedVsNot isMobile={isMobile} />
+        <Gdp isMobile={isMobile} />
         <Factors isMobile={isMobile} />
         <TopFactors isMobile={isMobile} />
       </div>

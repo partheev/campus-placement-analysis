@@ -1,172 +1,198 @@
 .bg_img {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    position: absolute;
-    top: 0;
-    height: 90vh;
-    width: 100%;
-    object-fit: cover;
-    z-index: 3;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  position: absolute;
+  top: 0;
+  height: 90vh;
+  width: 100%;
+  object-fit: cover;
+  z-index: 3;
 }
 
 .mainText {
-    position: absolute;
-    top: 40;
-    width: 40rem;
-    margin-left: 100px;
-    font-size: 4.5rem;
+  position: absolute;
+  top: 40;
+  width: 40rem;
+  margin-left: 100px;
+  font-size: 4.5rem;
 }
 .mainImg_div {
-    width: 25rem;
-    opacity: 0.8;
+  width: 25rem;
+  opacity: 0.8;
 }
 .textHover {
-    display: inline-block;
-    color: #f9f5f5;
-    transition: color 250ms, text-shadow 250ms;
-    text-decoration: none;
-    text-shadow: 0px 1px 0px rgb(0, 0, 0);
+  display: inline-block;
+  color: #f9f5f5;
+  transition: color 250ms, text-shadow 250ms;
+  text-decoration: none;
+  text-shadow: 0px 1px 0px rgb(0, 0, 0);
 
-    position: relative;
-    z-index: 0;
+  position: relative;
+  z-index: 0;
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    content: '';
+    width: 100%;
+    height: 3px;
+    background-color: #ffffff;
+    transition: all 250ms;
+  }
+
+  &:hover {
+    color: rgb(0, 0, 0);
+    text-shadow: 0px 1px 0px rgb(249, 246, 246);
 
     &::after {
-        position: absolute;
-        z-index: -1;
-        bottom: -5px;
-        left: 50%;
-        transform: translateX(-50%);
-        content: '';
-        width: 100%;
-        height: 3px;
-        background-color: #ffffff;
-        transition: all 250ms;
+      height: 105%;
+      width: 105%;
     }
-
-    &:hover {
-        color: rgb(0, 0, 0);
-        text-shadow: 0px 1px 0px rgb(249, 246, 246);
-
-        &::after {
-            height: 105%;
-            width: 105%;
-        }
-    }
+  }
 }
 .distribution_chart {
-    max-width: 22rem;
-    padding: 1rem;
-    border-radius: 4px;
-    box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
-    margin: 1rem;
-    background: rgba(254, 233, 209, 0.31);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(7.7px);
-    -webkit-backdrop-filter: blur(7.7px);
-    border: 1px solid rgba(254, 233, 209, 0.3);
+  max-width: 22rem;
+  padding: 1rem;
+  border-radius: 4px;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  margin: 1rem;
+  background: rgba(254, 233, 209, 0.31);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(7.7px);
+  -webkit-backdrop-filter: blur(7.7px);
+  border: 1px solid rgba(254, 233, 209, 0.3);
 }
 .distribution_chart_img {
-    width: 100%;
-    object-fit: cover;
+  width: 100%;
+  object-fit: cover;
 }
 
 .cgpa_chart_img {
-    width: 100%;
+  width: 100%;
 }
 .cgpa_chart_background {
-    background: rgba(255, 255, 255, 0.26);
-    border-radius: 10px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(14.4px);
-    -webkit-backdrop-filter: blur(14.4px);
-    border: 1px solid rgba(255, 255, 255, 0.56);
-    padding: 10px 18px 0 18px;
-    width: 42rem;
+  background: rgba(255, 255, 255, 0.26);
+  border-radius: 10px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(14.4px);
+  -webkit-backdrop-filter: blur(14.4px);
+  border: 1px solid rgba(255, 255, 255, 0.56);
+  padding: 10px 18px 0 18px;
+  width: 42rem;
 }
 .cgpa_tier {
-    font-size: 40px;
+  font-size: 40px;
 }
 
 .greater_chart {
-    width: 35rem;
+  width: 35rem;
 }
 .decors {
-    width: 25rem;
+  width: 25rem;
 }
 .placedvsnot_chart {
-    width: 60rem;
-    background: rgba(255, 255, 255, 0.08);
-    border-radius: 16px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(6.5px);
-    -webkit-backdrop-filter: blur(6.5px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
+  width: 60rem;
+  background: rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(6.5px);
+  -webkit-backdrop-filter: blur(6.5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 .factors_chart {
-    width: 40rem;
+  width: 40rem;
 }
 .item {
-    background: rgba(255, 255, 255, 0);
-    border-radius: 4px;
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
-    backdrop-filter: blur(18.2px);
-    -webkit-backdrop-filter: blur(18.2px);
-    border: 0px solid rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0);
+  border-radius: 4px;
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(18.2px);
+  -webkit-backdrop-filter: blur(18.2px);
+  border: 0px solid rgba(255, 255, 255, 0.3);
 }
 .mainImg {
-    opacity: 0.8;
+  opacity: 0.8;
+}
+.gdp_chart {
+  margin: 0 auto;
+  width: 50rem;
+}
+.title {
+  /* font-family: 'Russo One', sans-serif; */
+  letter-spacing: 4px;
+  color: #c4b0ff;
+  font-family: 'Acme', sans-serif;
+  font-size: 3.5rem;
+  margin-left: 100px;
 }
 @media screen and (max-width: 920px) {
-    .cgpa_chart_background {
-        width: 35rem;
-    }
-    .cgpa_tier {
-        font-size: 30px;
-    }
-    .mainText {
-        position: absolute;
-        width: 25rem;
-        margin-left: 50px;
-        top: 40;
-        font-size: 3.5rem;
-    }
-    .greater_chart {
-        width: 30rem;
-    }
-    .decors {
-        width: 10rem;
-    }
-    .placedvsnot_chart {
-        width: 40rem;
-    }
-    .mainImg_div {
-        width: 20rem;
-    }
+  .cgpa_chart_background {
+    width: 35rem;
+  }
+  .cgpa_tier {
+    font-size: 30px;
+  }
+  .mainText {
+    position: absolute;
+    width: 25rem;
+    margin-left: 50px;
+    top: 40;
+    font-size: 3.5rem;
+  }
+  .greater_chart {
+    width: 30rem;
+  }
+  .decors {
+    width: 10rem;
+  }
+  .placedvsnot_chart {
+    width: 40rem;
+  }
+  .mainImg_div {
+    width: 20rem;
+  }
+  .gdp_chart {
+    width: 30rem;
+  }
+  .title {
+    margin-left: 50px;
+    font-size: 2rem;
+  }
 }
 
 @media screen and (max-width: 680px) {
-    .cgpa_chart_background {
-        width: 22rem;
-    }
-    .cgpa_tier {
-        font-size: 16px;
-    }
-    .mainText {
-        position: absolute;
-        top: 80;
-        width: 18rem;
-        margin-left: 20px;
-        font-size: 3rem;
-    }
-    .greater_chart {
-        width: 20rem;
-    }
-    .decors {
-        width: 16rem;
-    }
-    .placedvsnot_chart {
-        width: 30rem;
-    }
+  .cgpa_chart_background {
+    width: 22rem;
+  }
+  .cgpa_tier {
+    font-size: 16px;
+  }
+  .mainText {
+    position: absolute;
+    top: 80;
+    width: 18rem;
+    margin-left: 20px;
+    font-size: 3rem;
+  }
+  .greater_chart {
+    width: 20rem;
+  }
+  .decors {
+    width: 16rem;
+  }
+  .placedvsnot_chart {
+    width: 30rem;
+  }
+  .gdp_chart {
+    width: 20rem;
+  }
+  .title {
+    margin-left: 20px;
+    font-size: 2.5rem;
+  }
 }
