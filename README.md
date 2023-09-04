@@ -11,10 +11,10 @@ Backend: https://hub.docker.com/r/partheev8/campus-backend
 Frontend: https://hub.docker.com/r/partheev8/campus-frontend
 
 ## Block Diagram
-![block-diagram](https://github.com/poornesh-chenna/campus-placement-analysis/assets/30794881/50d6e95b-2b6a-4b82-bc51-5984de023b1b)
+![block-diagram](https://github.com/smartinternz02/SBSPS-Challenge-9964-Identifying-Patterns-and-Trends-in-Campus-Placement-Data-using-Machine-Learning/assets/30794881/b9702a6a-d0fd-49b3-88d1-fe48db35e068)
 
 ## Flow Chart
-<img alt="flow chart" src="https://github.com/poornesh-chenna/campus-placement-analysis/assets/30794881/f6ac0eb2-cf5e-4c97-9df8-a8af31263ba8" width="50%" height="50%" />
+<img alt="flow chart" src="https://github.com/smartinternz02/SBSPS-Challenge-9964-Identifying-Patterns-and-Trends-in-Campus-Placement-Data-using-Machine-Learning/assets/30794881/da5f704b-bc3d-45d8-b9c7-f7a0fd12d7e5" width="50%" height="50%" />
 
 
 ### Folder Structure
@@ -52,7 +52,7 @@ Clone the repo
 
 > Note: Node runtime must be installed to run the above commands. Create .env.local file and add VITE_BACKEND_URL variable name with endpoint as value.
 
-keep VITE_BACKEND_URL=http://localhost:5000 while running application locally in development mode.
+keep VITE_BACKEND_URL=http://localhost:5000 while running the application locally in development mode.
 
 ### Run backend
 
