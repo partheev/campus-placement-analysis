@@ -2,11 +2,20 @@
 
 The PlacemenTrack is a cutting-edge application that revolutionizes the way educational institutions, students, and recruiters approach campus placements. This app harnesses the power of data analysis, machine learning, and web technologies to provide a comprehensive solution for optimizing the placement process.
 
+#### Website Live URL: https://placementrack-frontend-nomig6337-dev.apps.sandbox-m3.1530.p1.openshiftapps.com/placement-insights
+
 ## Docker images:
 
 Backend: https://hub.docker.com/r/partheev8/campus-backend
 
 Frontend: https://hub.docker.com/r/partheev8/campus-frontend
+
+## Block Diagram
+![block-diagram](https://github.com/poornesh-chenna/campus-placement-analysis/assets/30794881/50d6e95b-2b6a-4b82-bc51-5984de023b1b)
+
+## Flow Chart
+<img alt="flow chart" src="https://github.com/poornesh-chenna/campus-placement-analysis/assets/30794881/f6ac0eb2-cf5e-4c97-9df8-a8af31263ba8" width="50%" height="50%" />
+
 
 ### Folder Structure
 
