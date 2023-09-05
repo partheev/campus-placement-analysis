@@ -179,7 +179,7 @@ export const Overview = ({ setcampusStats, setdownloadURL }) => {
                                 This file helps you to understand the format
                             </Typography>
                             <a
-                                href='/assets/sample_format.csv'
+                                href='/assets/sample_format.xlsx'
                                 download
                                 style={{
                                     textDecoration: 'none',
