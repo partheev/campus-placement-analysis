@@ -235,22 +235,22 @@ export const Student = () => {
                     if (formDetails[key] === INITIAL_STATE[key]) {
                         handleOpenSnackBar(
                             'Please fill out all the fields',
-                            'info'
+                            'error'
                         );
                         return;
                     }
                     if (formDetails[key] < 0) {
                         handleOpenSnackBar(
                             'Make sure to fill the form with correct values',
-                            'info'
+                            'error'
                         );
                         return;
                     }
                 } else if (!branch) {
-                    handleOpenSnackBar('Branch is missing', 'info');
+                    handleOpenSnackBar('Branch is missing', 'error');
                     return;
                 } else if (selectedSkills.length === 0) {
-                    handleOpenSnackBar('skills are missing', 'info');
+                    handleOpenSnackBar('skills are missing', 'error');
                     return;
                 }
                 data[key] = [Number(formDetails[key])];
@@ -259,11 +259,28 @@ export const Student = () => {
 
         try {
             setpredictLoading(true);
-            const res = await PredictStudent(data);
+
+            /*
+                Promise.all() is used send api requests concurrently.
+                It improves the performance because an API request no need to wait for other requests to finish.
+                Here PredictStudent() and RecommendSkills() are two independent apis, which are not required to call 
+                synchronously.
+
+            */
+
+            // const res = await PredictStudent(data);
+            // const recommendedSkills = await RecommendSkills({
+            //     skills: selectedSkills,
+            // });
+
+            const [res, recommendedSkills] = await Promise.all(
+                PredictStudent(data),
+                RecommendSkills({
+                    skills: selectedSkills,
+                })
+            );
+
             setPredictedData(res);
-            const recommendedSkills = await RecommendSkills({
-                skills: selectedSkills,
-            });
             setrecommendedSkills(recommendedSkills);
             setpredictLoading(false);
             setformDetails(INITIAL_STATE);
