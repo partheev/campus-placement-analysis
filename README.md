@@ -108,4 +108,18 @@ keep VITE_BACKEND_URL=http://localhost:5000 while running the application locall
 
 Add these enviroment variables - ML_DEPLOYMENT_API_KEY, RESUME_PARSER_API, RECOMMEND_SKILLS_API
 
+
+### configure .env file 
+```
+You will need two API keys from Affinda for the resume parser and recommend skills features
+
+1. Login to the official Affinda website
+
+2. Create a workspace by selecting resumes under the recruitment category
+  
+3. Select "Generate an API Key" to generate a unique key for the resume workspace. Then, add the key to the env variable RESUME_PARSER_API.
+
+Using the same procedures, establish a Resume Redacts workspace and update the RECOMMEND_SKILLS_API env variable with the key.
+```
+
 You can visit the application at http://localhost:3000 in development mode.
